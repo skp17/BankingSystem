@@ -24,8 +24,6 @@ class Date {
         unsigned int getYear() const;
 
         void printDate() const; // Format dd/mm/yyyy
-
-
 };
 
 #endif

@@ -13,16 +13,22 @@ Date::Date(unsigned int d, unsigned int m, unsigned int y) {
 
     if (d >= 1 && d <= 31) 
         day = d;
-    else
+    else {
         cerr << "Invalid day entered!\n";
+        d = 1;
+    }
     if (m >= 1 && m <= 12) 
         month = m;
-    else
+    else {
         cerr << "Invalid month entered!\n";
+        m = 1;
+    }
     if (y >= 1900 && y <= 2100) 
         year = y;
-    else
+    else {
         cerr << "Invalid year entered!\n";
+        year = 1970;
+    }
 
 }
 
@@ -30,6 +36,10 @@ Date::Date(const Date &date) {
     day = date.day;
     month = date.month;
     year = date.year;
+}
+
+Date::~Date() {
+
 }
 
 void Date::setDate(unsigned int d, unsigned int m, unsigned int y) {
@@ -57,7 +67,7 @@ void Date::setDay(unsigned int d) {
 
 void Date::setMonth(unsigned int m) {
     if (m >= 1 && m <= 12) 
-        month = y;
+        month = m;
     else
         cerr << "Invalid month entered!\n";
 }

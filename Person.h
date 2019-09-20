@@ -1,22 +1,39 @@
 #ifndef PERSON_H
 #define PERSON_H
 
+#include "Date.h"
+#include <string>
+
+using namespace std;
+
 class Person {
     private:
-        const char *fname, *lname;
+        string fname, lname;
+        const Date dateOfBirth;
         unsigned int age;
-        //const Date dateOfBirth;
-        const double SSN;
+        const unsigned int SSN;
 
     public:
         Person();
-        Person(const char*, const char*, unsigned int, double);
+        Person(string, string, unsigned int,
+            unsigned int, unsigned int, unsigned int);
         Person(const Person&);
         ~Person();
 
         // set functions
+        void setFName(string);
+        void setLName(string);
+        void setBirthDate(unsigned int, unsigned int, unsigned int);
+        void setBirthDate(const Date&);
 
         // get functions
+        string getFName() const;
+        string getLName() const;
+        const Date* getBirthDate(const Date&) const;
+        unsigned int getAge() const;
+        const unsigned int getSSN() const;
+
+        void printPersonInfo() const;
 };
 
 
