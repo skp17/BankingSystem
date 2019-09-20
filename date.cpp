@@ -1,34 +1,22 @@
-#include "Date.h"
+#include "date.h"
 #include <iostream>
 
 using namespace std;
 
-Date::Date() {
-    day = 1;
-    month = 1;
-    year = 1970;
-}
-
-Date::Date(unsigned int d, unsigned int m, unsigned int y) {
+Date::Date(uint d, uint m, uint y) {
 
     if (d >= 1 && d <= 31) 
         day = d;
-    else {
+    else
         cerr << "Invalid day entered!\n";
-        d = 1;
-    }
     if (m >= 1 && m <= 12) 
         month = m;
-    else {
+    else
         cerr << "Invalid month entered!\n";
-        m = 1;
-    }
     if (y >= 1900 && y <= 2100) 
         year = y;
-    else {
+    else
         cerr << "Invalid year entered!\n";
-        year = 1970;
-    }
 
 }
 
@@ -38,11 +26,7 @@ Date::Date(const Date &date) {
     year = date.year;
 }
 
-Date::~Date() {
-
-}
-
-void Date::setDate(unsigned int d, unsigned int m, unsigned int y) {
+void Date::setDate(uint d, uint m, uint y) {
 
     if (d >= 1 && d <= 31) 
         day = d;
@@ -58,36 +42,42 @@ void Date::setDate(unsigned int d, unsigned int m, unsigned int y) {
         cerr << "Invalid year entered!\n";
 }
 
-void Date::setDay(unsigned int d) {
+Date &Date::setDay(uint d) {
     if (d >= 1 && d <= 31) 
         day = d;
     else
         cerr << "Invalid year entered!\n";
+
+    return *this;
 }
 
-void Date::setMonth(unsigned int m) {
+Date &Date::setMonth(uint m) {
     if (m >= 1 && m <= 12) 
         month = m;
     else
         cerr << "Invalid month entered!\n";
+
+    return *this;
 }
 
-void Date::setYear(unsigned int y) {
+Date &Date::setYear(uint y) {
     if (y >= 1900 && y <= 2100) 
         year = y;
     else
         cerr << "Invalid year entered!\n";
+
+    return *this;
 }
 
-unsigned int Date::getDay() const {
+uint Date::getDay() const {
     return day;
 }
 
-unsigned int Date::getMonth() const {
+uint Date::getMonth() const {
     return month;
 }
 
-unsigned int Date::getYear() const {
+uint Date::getYear() const {
     return year;
 }
 

@@ -1,7 +1,7 @@
 #ifndef PERSON_H
 #define PERSON_H
 
-#include "Date.h"
+#include "date.h"
 #include <string>
 
 using namespace std;
