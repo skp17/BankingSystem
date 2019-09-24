@@ -14,7 +14,7 @@ TEST_CASE( "Person objects can be created and modified" ) {
     REQUIRE( p1.getBirthYear() == 1940 );
     REQUIRE( p1.getAge() == 78 );
     REQUIRE( p1.getSSN() == 123456789 );
-
+    
     SECTION( "Objects of class Person can be copied" ) {
         Person p2 = p1;
 
@@ -26,8 +26,24 @@ TEST_CASE( "Person objects can be created and modified" ) {
         REQUIRE( p1.getAge() == 78 );
         REQUIRE( p1.getSSN() == 123456789 );
         
-    } 
+    }
     
+    SECTION( "Objects of class Person can be modified" ) {
+        Date birthdate(1,11,1961);
+        Person someone("Reed", "Richards", birthdate, 123789456);
 
+        REQUIRE( someone.getFName() == "Reed" );
+        REQUIRE( someone.getLName() == "Richards" );
+        REQUIRE( someone.getAge() == 57 );
+        REQUIRE( someone.getBirthDay() == 1 );
+        REQUIRE( someone.getBirthMonth() == 11 );
+        REQUIRE( someone.getBirthYear() == 1961 );
+        REQUIRE( someone.getSSN() == 123789456 );
+
+        someone.setName("Michael", "Scott");
+
+        REQUIRE( someone.getFName() == "Michael" );
+        REQUIRE( someone.getLName() == "Scott" );
+    }
 
 }

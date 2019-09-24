@@ -13,7 +13,7 @@ SCENARIO( "Ojects of class Date can be created and edited", "[Date]" ) {
         d1.printDate();
 
         WHEN( "date object gets modified" ) {
-            d1.setYear(1999).setMonth(12).setDay(25);
+            d1.setDate(25, 12, 1999);
 
             THEN( "objects data members change" ) {
                 REQUIRE( d1.getDay() == 25 );
@@ -32,7 +32,7 @@ SCENARIO( "Ojects of class Date can be created and edited", "[Date]" ) {
             REQUIRE( d2.getYear() == 1992 );
             
             WHEN( "object with invalid parameters") {
-                Date d3(15,4,30000);
+                Date d3(29,2,2019);
             }
         }
         catch(std::exception const& e) {

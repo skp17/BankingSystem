@@ -7,19 +7,19 @@
 using namespace std;
 using uint = unsigned int;
 
-Person::Person(const string &firstName, const string &lastName, 
+Person::Person(const string &fname, const string &lname, 
     const Date &birthDate, uint ssn)
     : dateOfBirth(birthDate), SSN(ssn)
 {
-    setName(firstName, lastName);
+    setName(fname, lname);
     setAge();
 }
 
-Person::Person(const string &firstname, const string &lastname, uint day, 
+Person::Person(const string &fname, const string &lname, uint day, 
     uint month, uint year, uint ssn) 
     : dateOfBirth(day, month, year), SSN(ssn) 
 {
-    setName(firstName, lastName);
+    setName(fname, lname);
     setAge();
 }
 

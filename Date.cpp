@@ -37,7 +37,7 @@ Date &Date::setDate(uint day, uint month, uint year) {
         isValid = false;
     } else if ((month == 2) && (year % 4 == 0) && day > 29) {
         isValid = false;
-    } else if ((month = 2) && (year % 4 != 0) && day > 28) {
+    } else if ((month == 2) && (year % 4 != 0) && day > 28) {
         isValid = false;
     }
 
@@ -45,6 +45,8 @@ Date &Date::setDate(uint day, uint month, uint year) {
         this->day = day; this->month = month; this->year = year;}
     else
 		throw invalid_argument( "Invalid Date" );
+
+    return *this;
 }
 
 uint Date::getDay() const {

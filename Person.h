@@ -23,7 +23,7 @@ class Person {
         Person(const Person&);
         ~Person();
 
-        // set functions
+        // set function
         Person &setName(const string&, const string&);
 
         // get functions
@@ -32,7 +32,7 @@ class Person {
         uint getBirthDay() const;
         uint getBirthMonth() const;
         uint getBirthYear() const;
-        uint getAge() const;        // IMPLEMENTATION!!!
+        uint getAge() const;
         const uint getSSN() const;
 
         void printPersonInfo() const;
