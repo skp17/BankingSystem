@@ -5,19 +5,15 @@ using uint = unsigned int;
 
 class Date {
     private:
-        uint year, month, day;
+        uint day, month, year;
     public:
-        Date(uint = 0, uint = 0, uint = 0);
+        Date(uint day = 1, uint month = 1, uint year = 1970);
         Date(const Date&);
         ~Date();
 
-        // set functions
-        void setDate(uint, uint, uint); // Format dd/mm/yyyy
-        Date &setDay(uint);        
-        Date &setMonth(uint);
-        Date &setYear(uint);
+        // Format dd/mm/yyyy
+        Date &setDate(uint day, uint month, uint year); 
 
-        //get functions
         uint getDay() const;
         uint getMonth() const;
         uint getYear() const;
