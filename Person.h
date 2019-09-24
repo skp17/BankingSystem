@@ -14,7 +14,7 @@ class Person {
         uint age;
         const uint SSN; // Social Security Number
         void setAge();
-
+        // Address, Tel #, email
     public:
         Person(const string &, const string &, 
             const Date &, uint);
