@@ -12,9 +12,9 @@ class Person {
         string firstName, lastName;
         const Date dateOfBirth;
         uint age;
-        const uint SSN; // Social Security Number
         void setAge();
-        // Address, Tel #, email
+        const uint SSN; // Social Security Number
+        string address, telephone, email;
     public:
         Person(const string &, const string &, 
             const Date &, uint);
@@ -23,8 +23,11 @@ class Person {
         Person(const Person&);
         ~Person();
 
-        // set function
+        // set functions
         Person &setName(const string&, const string&);
+        Person &setAddress(string);
+        Person &setTelephone(string);
+        Person &setEmail(string);
 
         // get functions
         string getFName() const;
@@ -33,6 +36,9 @@ class Person {
         uint getBirthMonth() const;
         uint getBirthYear() const;
         uint getAge() const;
+        string getAddress() const;
+        string getTelephone() const;
+        string getEmail() const;
         const uint getSSN() const;
 
         void printPersonInfo() const;

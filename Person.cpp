@@ -12,6 +12,7 @@ Person::Person(const string &fname, const string &lname,
     : dateOfBirth(birthDate), SSN(ssn)
 {
     setName(fname, lname);
+    setAddress("").setTelephone("").setEmail("");
     setAge();
 }
 
@@ -20,12 +21,15 @@ Person::Person(const string &fname, const string &lname, uint day,
     : dateOfBirth(day, month, year), SSN(ssn) 
 {
     setName(fname, lname);
+    setAddress("").setTelephone("").setEmail("");
     setAge();
 }
 
 Person::Person(const Person &p)
     : dateOfBirth(p.dateOfBirth), age(p.age), SSN(p.SSN),
-      firstName(p.firstName), lastName(p.lastName) {}
+      firstName(p.firstName), lastName(p.lastName), 
+      address(p.address), telephone(p.telephone),
+      email(p.email) {}
 
 Person::~Person() {}
 
@@ -40,6 +44,21 @@ Person &Person::setName(const string &fname, const string &lname) {
     else
         throw invalid_argument( "must enter last name" );
 
+    return *this;
+}
+
+Person &Person::setAddress(string add) {
+    address = add;
+    return *this;
+}
+
+Person &Person::setTelephone(string tel) {
+    telephone = tel;
+    return *this;
+}
+
+Person &Person::setEmail(string e) {
+    email = e;
     return *this;
 }
 
@@ -80,6 +99,18 @@ void Person::setAge() {
 
 uint Person::getAge() const {
     return age;
+}
+
+string Person::getTelephone() const {
+    return telephone;
+}
+
+string Person::getEmail() const {
+    return email;
+}
+
+string Person::getAddress() const {
+    return address;
 }
 
 const uint Person::getSSN() const {

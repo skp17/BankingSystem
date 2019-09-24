@@ -6,6 +6,8 @@
 TEST_CASE( "Person objects can be created and modified" ) {
 
     Person p1("John", "Lennon", 9, 10, 1940, 123456789);
+    p1.setAddress("9 St-Catherine Est").setTelephone("514-777-7777");
+    p1.setEmail("jlennon@gmail.com");
 
     REQUIRE( p1.getFName() == "John" );
     REQUIRE( p1.getLName() == "Lennon" );
@@ -14,6 +16,9 @@ TEST_CASE( "Person objects can be created and modified" ) {
     REQUIRE( p1.getBirthYear() == 1940 );
     REQUIRE( p1.getAge() == 78 );
     REQUIRE( p1.getSSN() == 123456789 );
+    REQUIRE( p1.getAddress() == "9 St-Catherine Est");
+    REQUIRE( p1.getTelephone() == "514-777-7777");
+    REQUIRE( p1.getEmail() == "jlennon@gmail.com");
     
     SECTION( "Objects of class Person can be copied" ) {
         Person p2 = p1;
