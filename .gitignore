@@ -33,6 +33,7 @@
 
 # OTHER
 .vscode/*
+./objects/*
 testDate
 testPerson
 test
