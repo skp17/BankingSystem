@@ -26,8 +26,8 @@ Person::Person(const string &fname, const string &lname, uint day,
 }
 
 Person::Person(const Person &p)
-    : dateOfBirth(p.dateOfBirth), age(p.age), SSN(p.SSN),
-      firstName(p.firstName), lastName(p.lastName), 
+    : dateOfBirth(p.dateOfBirth), SSN(p.SSN),
+      firstName(p.firstName), lastName(p.lastName), age(p.age),
       address(p.address), telephone(p.telephone),
       email(p.email) {}
 

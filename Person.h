@@ -9,12 +9,12 @@ using uint = unsigned int;
 
 class Person {
     private:
-        string firstName, lastName;
         const Date dateOfBirth;
-        uint age;
-        void setAge();
         const uint SSN; // Social Security Number
+        string firstName, lastName;
+        uint age;
         string address, telephone, email;
+        void setAge();
     public:
         Person(const string &, const string &, 
             const Date &, uint);

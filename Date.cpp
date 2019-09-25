@@ -18,7 +18,7 @@ Date &Date::setDate(uint day, uint month, uint year) {
     // Get current year
     time_t now = time(0);
     struct tm *t = localtime(&now);
-    int current_year = t->tm_year + 1900;
+    uint current_year = t->tm_year + 1900;
 
     bool isValid = true;
     if (day < 1 || day > 31) {
