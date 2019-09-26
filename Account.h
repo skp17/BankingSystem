@@ -2,6 +2,7 @@
 #define ACCOUNT_H
 
 #include <string>
+#include <ctime>    /* struct tm */
 #include "Date.h"
 #include "Person.h"
 using uint = unsigned int;
@@ -9,23 +10,26 @@ using uint = unsigned int;
 
 class Account {
     private:
-        const uint accNum;
-        Person *accOwner;
-        const Date dateCreated;
-        double amount;
+        static uint count;
+        uint accNum;
+        const Person *accOwner;
+        struct tm *dateCreated;
+        double balance;
+
+        virtual void setAccNum();
 
     public:
-        Account();
-        Account(const Person &p);
-        Account(const Account &acc);
-        ~Account();
+        Account(const Person&);
+        Account(const Account&);
+        virtual ~Account();
 
-        virtual string getAccOwner() const = 0;
-        virtual uint getAccNum() const = 0;
-        virtual bool deposit(double) = 0;
-        virtual bool withdraw(double) = 0;
-        virtual bool deleteAccount() = 0;
-        virtual void print() = 0;
+        //virtual string getAccOwner() const;
+        uint getAccNum() const;
+        void deposit(double);
+        bool withdraw(double);
+        virtual bool deleteAccount();
+        string getDateCreated() const;
+        virtual void print() const = 0;
 };
 
 #endif

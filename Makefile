@@ -40,7 +40,3 @@ Person.cpp: Person.h
 
 clean:
 	rm ${ODIR}/*.o
-
-
-
-
