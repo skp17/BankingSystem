@@ -16,8 +16,8 @@ class Person {
         string address, telephone, email;
         void setAge();
     public:
-        Person(const string &, const string &, 
-            const Date &, uint);
+        Person(const string &firstname, const string &lastname, 
+            const Date &dateOfBirth, uint SSN);
         Person(const string &, const string &, uint day, 
             uint month, uint year, uint);
         Person(const Person&);

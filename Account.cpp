@@ -7,26 +7,23 @@
 
 using namespace std;
 
-time_t now = time(0); // Returns number of seconds since 1970.
-
 uint Account::count = 0;
 
-Account::Account(const Person &p)
-    : accOwner(&p), dateCreated(localtime(&now))
+Account::Account()
 {
     ++count;
+    time_t now = time(0); // Returns number of seconds since 1970.
+    dateCreated = localtime(&now);
     balance = 0;
 }
 
 Account::Account(const Account &acc)
-    : accNum(acc.accNum), accOwner(accOwner), 
-      dateCreated(acc.dateCreated)
+    : accNum(acc.accNum), dateCreated(acc.dateCreated)
 {
     balance = acc.balance;
 }
 
 Account::~Account() {
-    accOwner = NULL;
     dateCreated = NULL;
 }
 
@@ -58,9 +55,8 @@ bool Account::withdraw(double amount) {
 
 bool Account::deleteAccount() {
     if (balance > 0) {
-        accOwner = NULL;
         dateCreated = NULL;
-        return false;
+        return true;
     }
     else {
         return false;

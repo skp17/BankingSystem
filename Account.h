@@ -10,20 +10,18 @@ using uint = unsigned int;
 
 class Account {
     private:
-        static uint count;
-        uint accNum;
-        const Person *accOwner;
+        static uint count;      // Keeps track no of accounts
+        uint accNum;            // Account number
         struct tm *dateCreated;
         double balance;
 
         virtual void setAccNum();
 
     public:
-        Account(const Person&);
+        Account();
         Account(const Account&);
         virtual ~Account();
 
-        //virtual string getAccOwner() const;
         uint getAccNum() const;
         void deposit(double);
         bool withdraw(double);
@@ -32,4 +30,4 @@ class Account {
         virtual void print() const = 0;
 };
 
-#endif
+#endif // ACCOUNT_H
