@@ -9,7 +9,7 @@ using uint = unsigned int;
 
 class Person {
     private:
-        const Date dateOfBirth;
+        Date dateOfBirth;
         uint SSN; // Social Security Number
         string firstName, lastName;
         uint age;
@@ -25,12 +25,12 @@ class Person {
         ~Person();
 
         // set functions
-        Person &setDateofBirth(Date&);
+        Person &setDateofBirth(const Date&);
         Person &setSSN(uint);
         Person &setName(const string&, const string&);
-        Person &setAddress(string);
-        Person &setTelephone(string);
-        Person &setEmail(string);
+        Person &setAddress(const string&);
+        Person &setTelephone(const string&);
+        Person &setEmail(const string&);
 
         // get functions
         string getFName() const;

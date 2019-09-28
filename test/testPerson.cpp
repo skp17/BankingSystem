@@ -44,11 +44,20 @@ TEST_CASE( "Person objects can be created and modified" ) {
         REQUIRE( someone.getBirthMonth() == 11 );
         REQUIRE( someone.getBirthYear() == 1961 );
         REQUIRE( someone.getSSN() == 123789456 );
+        REQUIRE( someone.getAddress() == "");
+        REQUIRE( someone.getTelephone() == "");
+        REQUIRE( someone.getEmail() == "");
 
         someone.setName("Michael", "Scott");
+        Date newBirth(17, 12, 1992);
+        someone.setDateofBirth(newBirth);
 
         REQUIRE( someone.getFName() == "Michael" );
         REQUIRE( someone.getLName() == "Scott" );
+        REQUIRE( someone.getBirthDay() == 17 );
+        REQUIRE( someone.getBirthMonth() == 12 );
+        REQUIRE( someone.getBirthYear() == 1992);
+        REQUIRE( someone.getAge() == 26);
     }
 
 }

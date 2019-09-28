@@ -2,7 +2,6 @@
 #define ACCOUNT_H
 
 #include <ctime>    /* struct tm */
-#include "Person.h"
 using uint = unsigned int;
 
 
@@ -10,7 +9,7 @@ class Account {
     protected:
         uint accNum;            // Account number
         uint accountTypeNumber; // number that identifies account type
-        struct tm *dateCreated;
+        struct tm dateCreated;
         double balance;
 
         virtual void setAccNum() = 0;
@@ -24,9 +23,9 @@ class Account {
         uint getAccNum() const;
         void setAccTypeNum(uint);
         uint getAccTypeNum() const;
-        uint getBalance() const;
+        double getBalance() const;
         void deposit(double);
-        bool withdraw(double);
+        void withdraw(double);
         bool deleteAccount();
         struct tm getDateCreated() const;
         virtual void print() const = 0;

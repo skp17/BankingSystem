@@ -1,8 +1,6 @@
 #include <iostream>
 #include <string>
 #include <ctime>    /* time_t, struct tm */
-#include "Date.h"
-#include "Person.h"
 #include "Account.h"
 
 using namespace std;
@@ -10,7 +8,7 @@ using namespace std;
 Account::Account()
 {
     time_t now = time(0); // Returns number of seconds since 1970.
-    dateCreated = localtime(&now);
+    dateCreated = *( localtime(&now) );
     balance = 0;
 }
 
@@ -18,20 +16,18 @@ Account::Account(const Account &acc)
     : accNum(acc.accNum), accountTypeNumber(acc.accountTypeNumber)
 {
     balance = acc.balance;
-    dateCreated = new struct tm;
-    *dateCreated = *acc.dateCreated;
+    dateCreated = acc.dateCreated;
 }
 
 Account &Account::operator=(const Account &acc) {
     accNum = acc.accNum;
     accountTypeNumber = acc.accountTypeNumber;
-    *dateCreated = *acc.dateCreated;
+    dateCreated = acc.dateCreated;
     balance = acc.balance;
+    return *this;
 }
 
-Account::~Account() {
-    delete dateCreated;
-}
+Account::~Account() {}
 
 uint Account::getAccNum() const {
     return accNum;
@@ -45,7 +41,7 @@ uint Account::getAccTypeNum() const {
     return accountTypeNumber;
 }
 
-uint Account::getBalance() const {
+double Account::getBalance() const {
     return balance;
 }
 
@@ -56,19 +52,15 @@ void Account::deposit(double amount) {
         throw invalid_argument( "Cannot deposit negative value" );
 }
 
-bool Account::withdraw(double amount) {
-    if (amount <= balance) {
+void Account::withdraw(double amount) {
+    if (amount <= balance)
         balance -= amount;
-        return true;
-    }
-    else {
-        return false;
-    }
+    else
+        throw invalid_argument( "Insufficient funds" );
 }
 
-bool Account::deleteAccount() {
-    if (balance > 0) {
-        delete dateCreated;
+bool Account::deleteAccount() { // Needs modifying
+    if (balance == 0) {
         return true;
     }
     else {
@@ -77,12 +69,13 @@ bool Account::deleteAccount() {
 }
 
 struct tm Account::getDateCreated() const {
-    struct tm tmp = *dateCreated;
-    return tmp;
+    return dateCreated;
 }
 
-
-
+void Account::setAccNum() {
+    accountTypeNumber = 999;
+    accNum = accountTypeNumber*1e3;
+}
 
 
       

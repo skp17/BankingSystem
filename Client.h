@@ -1,7 +1,6 @@
 #ifndef CLIENT_H
 #define CLIENT_H
 
-#include <vector>
 #include "Date.h"
 #include "Person.h"
 #include "Account.h"
@@ -12,7 +11,7 @@ enum accountType {Chequing, Savings};
 
 class Client: public Person {
     private:
-        uint accessNumber;
+        uint accessNumber;          // user's banking access number 
         uint PIN;                   // user's pin 
         Account *chequingAccounts;  // Contains pointers to chequing accounts
         Account *savingsAccounts;   // Contains pointers to savings accounts

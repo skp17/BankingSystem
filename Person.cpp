@@ -41,8 +41,15 @@ Person::Person(const Person &p)
 
 Person::~Person() {}
 
+Person &Person::setDateofBirth(const Date &birth) {
+    dateOfBirth = birth;
+    setAge();
+    return *this;
+}
+
 Person &Person::setSSN(uint ssn) {
     SSN = ssn;
+    return *this;
 }
 
 Person &Person::setName(const string &fname, const string &lname) {
@@ -59,17 +66,17 @@ Person &Person::setName(const string &fname, const string &lname) {
     return *this;
 }
 
-Person &Person::setAddress(string add) {
+Person &Person::setAddress(const string &add) {
     address = add;
     return *this;
 }
 
-Person &Person::setTelephone(string tel) {
+Person &Person::setTelephone(const string &tel) {
     telephone = tel;
     return *this;
 }
 
-Person &Person::setEmail(string e) {
+Person &Person::setEmail(const string &e) {
     email = e;
     return *this;
 }

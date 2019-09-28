@@ -1,10 +1,11 @@
 #include <iostream>
 #include <string>
 #include <ctime>    /* time_t, struct tm */
-#include "Date.h"
-#include "Person.h"
+#include <iomanip>  /* setprecision */
 #include "Account.h"
 #include "SavingsAccount.h"
+
+using namespace std;
 
 uint SavingsAccount::savingsCount = 0;
 
@@ -20,8 +21,9 @@ SavingsAccount::SavingsAccount(const SavingsAccount &sa)
 SavingsAccount &SavingsAccount::operator=(const SavingsAccount &sa) {
     accNum = sa.accNum;
     accountTypeNumber = sa.accountTypeNumber;
-    *dateCreated = *sa.dateCreated;
+    dateCreated = sa.dateCreated;
     balance = sa.balance;
+    return *this;
 }
 
 SavingsAccount::~SavingsAccount() {}
@@ -33,5 +35,6 @@ void SavingsAccount::setAccNum() {
 void SavingsAccount::print() const {
     cout << "----Savings Account----\n";
     cout << "  Account number: " << accNum << endl;
-    cout << "  Balance: " << balance << endl;
+    cout << "  Balance: $" << setprecision(2) << fixed
+        << balance << endl << endl;
 }
