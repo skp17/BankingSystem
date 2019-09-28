@@ -5,14 +5,14 @@ using uint = unsigned int;
 
 class Date {
     private:
-        uint day, month, year;
+        uint m_day, m_month, m_year;
     public:
-        Date(uint day = 1, uint month = 1, uint year = 1970);
+        Date(uint m_day = 1, uint m_month = 1, uint m_year = 1970);
         Date(const Date&);
         ~Date();
 
         // Format dd/mm/yyyy
-        Date &setDate(uint day, uint month, uint year); 
+        Date &setDate(uint m_day, uint m_month, uint m_year); 
 
         uint getDay() const;
         uint getMonth() const;

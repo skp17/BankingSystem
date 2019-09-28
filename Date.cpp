@@ -4,13 +4,11 @@
 
 using namespace std;
 
-Date::Date(uint day, uint month, uint year) {
-    setDate(day, month ,year);
-}
+Date::Date(uint day, uint month, uint year) 
+    : m_day(day), m_month(month), m_year(year) {}
 
 Date::Date(const Date &date)
-    : day(date.day), month(date.month), year(date.year) {
-}
+    : m_day(date.m_day), m_month(date.m_month), m_year(date.m_year) {}
 
 Date::~Date() {}
 
@@ -42,7 +40,7 @@ Date &Date::setDate(uint day, uint month, uint year) {
     }
 
 	if (isValid) {
-        this->day = day; this->month = month; this->year = year;}
+        m_day = day; m_month = month; m_year = year;}
     else
 		throw invalid_argument( "Invalid Date" );
 
@@ -50,17 +48,17 @@ Date &Date::setDate(uint day, uint month, uint year) {
 }
 
 uint Date::getDay() const {
-    return day;
+    return m_day;
 }
 
 uint Date::getMonth() const {
-    return month;
+    return m_month;
 }
 
 uint Date::getYear() const {
-    return year;
+    return m_year;
 }
 
 void Date::printDate() const {
-    cout << day << "/" << month << "/" << year << endl;
+    cout << m_day << "/" << m_month << "/" << m_year << endl;
 }

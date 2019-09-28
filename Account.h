@@ -1,32 +1,34 @@
 #ifndef ACCOUNT_H
 #define ACCOUNT_H
 
-#include <string>
 #include <ctime>    /* struct tm */
-#include "Date.h"
 #include "Person.h"
 using uint = unsigned int;
 
 
 class Account {
-    private:
-        static uint count;      // Keeps track no of accounts
+    protected:
         uint accNum;            // Account number
+        uint accountTypeNumber; // number that identifies account type
         struct tm *dateCreated;
         double balance;
 
-        virtual void setAccNum();
+        virtual void setAccNum() = 0;
 
     public:
         Account();
         Account(const Account&);
+        Account& operator=(const Account&);
         virtual ~Account();
 
         uint getAccNum() const;
+        void setAccTypeNum(uint);
+        uint getAccTypeNum() const;
+        uint getBalance() const;
         void deposit(double);
         bool withdraw(double);
-        virtual bool deleteAccount();
-        string getDateCreated() const;
+        bool deleteAccount();
+        struct tm getDateCreated() const;
         virtual void print() const = 0;
 };
 

@@ -7,33 +7,46 @@
 
 using namespace std;
 
-uint Account::count = 0;
-
 Account::Account()
 {
-    ++count;
     time_t now = time(0); // Returns number of seconds since 1970.
     dateCreated = localtime(&now);
     balance = 0;
 }
 
 Account::Account(const Account &acc)
-    : accNum(acc.accNum), dateCreated(acc.dateCreated)
+    : accNum(acc.accNum), accountTypeNumber(acc.accountTypeNumber)
 {
+    balance = acc.balance;
+    dateCreated = new struct tm;
+    *dateCreated = *acc.dateCreated;
+}
+
+Account &Account::operator=(const Account &acc) {
+    accNum = acc.accNum;
+    accountTypeNumber = acc.accountTypeNumber;
+    *dateCreated = *acc.dateCreated;
     balance = acc.balance;
 }
 
 Account::~Account() {
-    dateCreated = NULL;
-}
-
-void Account::setAccNum() {
-    int accType = 101000;
-    accNum = accType + count;
+    delete dateCreated;
 }
 
 uint Account::getAccNum() const {
     return accNum;
+}
+
+void Account::setAccTypeNum(uint num) {
+    accountTypeNumber = num;
+}
+
+uint Account::getAccTypeNum() const {
+    return accountTypeNumber;
+}
+
+uint Account::getBalance() const {
+    return balance;
 }
 
 void Account::deposit(double amount) {
@@ -55,7 +68,7 @@ bool Account::withdraw(double amount) {
 
 bool Account::deleteAccount() {
     if (balance > 0) {
-        dateCreated = NULL;
+        delete dateCreated;
         return true;
     }
     else {
@@ -63,15 +76,11 @@ bool Account::deleteAccount() {
     }
 }
 
-string Account::getDateCreated() const {
-    time_t t = mktime(dateCreated);
-    return ctime(&t);
+struct tm Account::getDateCreated() const {
+    struct tm tmp = *dateCreated;
+    return tmp;
 }
 
-void Account::print() const {
-    cout << "Account number: " << accNum << endl;
-    cout << "  Balance " << balance << endl;
-}
 
 
 

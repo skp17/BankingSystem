@@ -7,10 +7,17 @@
 using namespace std;
 using uint = unsigned int;
 
+Person::Person() {
+    Date birth;
+    setDateofBirth(birth).setSSN(0).setName("", "");
+    setAddress("").setTelephone("").setEmail("");
+}
+
 Person::Person(const string &fname, const string &lname, 
     const Date &birthDate, uint ssn)
-    : dateOfBirth(birthDate), SSN(ssn)
+    : dateOfBirth(birthDate)
 {
+    setSSN(ssn);
     setName(fname, lname);
     setAddress("").setTelephone("").setEmail("");
     setAge();
@@ -18,8 +25,9 @@ Person::Person(const string &fname, const string &lname,
 
 Person::Person(const string &fname, const string &lname, uint day, 
     uint month, uint year, uint ssn) 
-    : dateOfBirth(day, month, year), SSN(ssn) 
+    : dateOfBirth(day, month, year)
 {
+    setSSN(ssn);
     setName(fname, lname);
     setAddress("").setTelephone("").setEmail("");
     setAge();
@@ -32,6 +40,10 @@ Person::Person(const Person &p)
       email(p.email) {}
 
 Person::~Person() {}
+
+Person &Person::setSSN(uint ssn) {
+    SSN = ssn;
+}
 
 Person &Person::setName(const string &fname, const string &lname) {
     if (fname != "")
@@ -119,6 +131,9 @@ const uint Person::getSSN() const {
 
 void Person::printPersonInfo() const {
     cout << lastName << ", " << firstName << endl;
-    cout << "  Birthday: ";
-    dateOfBirth.printDate();
+    cout << "  Birthday: "; dateOfBirth.printDate();
+    cout << "  Age: " << age << endl;
+    cout << "  Address: " << address << endl;
+    cout << "  Telephone: " << telephone << endl;
+    cout << "  Email: " << email << endl;
 }

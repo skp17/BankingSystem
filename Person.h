@@ -10,12 +10,13 @@ using uint = unsigned int;
 class Person {
     private:
         const Date dateOfBirth;
-        const uint SSN; // Social Security Number
+        uint SSN; // Social Security Number
         string firstName, lastName;
         uint age;
         string address, telephone, email;
         void setAge();
     public:
+        Person();
         Person(const string &firstname, const string &lastname, 
             const Date &dateOfBirth, uint SSN);
         Person(const string &, const string &, uint day, 
@@ -24,6 +25,8 @@ class Person {
         ~Person();
 
         // set functions
+        Person &setDateofBirth(Date&);
+        Person &setSSN(uint);
         Person &setName(const string&, const string&);
         Person &setAddress(string);
         Person &setTelephone(string);
@@ -41,7 +44,7 @@ class Person {
         string getEmail() const;
         const uint getSSN() const;
 
-        void printPersonInfo() const;
+        virtual void printPersonInfo() const;
 };
 
 #endif
