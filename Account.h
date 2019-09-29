@@ -31,4 +31,4 @@ class Account {
         virtual void print() const = 0;
 };
 
-#endif // ACCOUNT_H
+#endif /* ACCOUNT_H */

@@ -16,4 +16,4 @@ class SavingsAccount: public Account {
         virtual void print() const;
 };
 
-#endif // SavingsACCOUNT_H
+#endif /* SavingsACCOUNT_H */

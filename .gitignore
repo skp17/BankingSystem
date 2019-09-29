@@ -33,5 +33,9 @@
 
 # OTHER
 .vscode/*
-./objects/*
-BankingSystem
+./objects/
+*
+!*.cpp
+!*.h
+!*.md
+!Makefile

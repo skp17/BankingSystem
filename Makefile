@@ -5,21 +5,26 @@
 .PHONY = all clean
 
 CXX = g++
-CXXFLAGS = -I. -std=c++11 -Wall
+CXXFLAGS = -I. -std=c++11 -Wall -MMD -MD
 LINKERFLAG = -lm
 DEPS = $(wildcard *.h)
-SRCS := Date.cpp Person.cpp BankingSystem.cpp
+SRCS :=  $(wildcard *.cpp)
 OBJS := $(SRCS:$.cpp=o)
-ODIR = objects
-TDIR = test
+ODIR = ./build
+TDIR = ./test
 
-all: BankingSystem
+-include ${DEPS}
+
+%.o: %.cpp %.h
+	${CXX} ${CXXFLAGS} -c $< -o ${ODIR}/$@
+
+build: $(OBJS)
 
 BankingSystem: ${ODIR}/Date.o ${ODIR}/Person.o ${ODIR}/BankingSystem.o
 	${CXX} ${CXXFLAGS} $^ -o $@
 
-${ODIR}/Date.o: Date.cpp Date.h
-	${CXX} ${CXXFLAGS} $< -c -o $@
+Date: ${OBJS}
+	${CXX} ${CXXFLAGS} -c $< -o $@
 
 ${ODIR}/Person.o: Person.cpp Person.h
 	${CXX} ${CXXFLAGS} $< -c -o $@
@@ -36,8 +41,6 @@ ${ODIR}/SavingsAccount.o: SavingsAccount.cpp SavingsAccount.h
 ${ODIR}/BankManager.o: ${ODIR}/Date.o ${ODIR}/Person.o BankingManager.cpp
 	${CXX} ${CXXFLAGS} $^ -c -o $@
 
-%.cpp: %.h
-
 testDate: ${ODIR}/Date.o ${TDIR}/testDate.cpp
 	${CXX} ${CXXFLAGS} $^ -o ${TDIR}/$@
 
@@ -49,12 +52,6 @@ testClient: ${ODIR}/Date.o ${ODIR}/Person.o ${ODIR}/Client.o ${ODIR}/Account.o $
 
 testAccount: ${ODIR}/Account.o ${ODIR}/ChequingAccount.o ${ODIR}/SavingsAccount.o ${TDIR}/testAccount.cpp
 	${CXX} ${CXXFLAGS} $^ -o ${TDIR}/$@
-
-Date.cpp: Date.h
-
-Person.cpp: Date.h Date.cpp Person.h
-
-Client.cpp: Date.h Date.cpp Person.h Person.cpp Client.h Client.cpp Account.h Account.cpp ChequingAccount.h ChequingAccount.cpp SavingsAccount.h SavingsAccount.cpp
 
 clean:
 	rm ${ODIR}/*.o

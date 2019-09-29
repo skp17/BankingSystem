@@ -16,4 +16,4 @@ class ChequingAccount: public Account {
         virtual void print() const;
 };
 
-#endif // CHEQUINGACCOUNT_H
+#endif /* CHEQUINGACCOUNT_H */

@@ -10,8 +10,6 @@
 using namespace std;
 using uint = unsigned int;
 
-enum accountType {Chequing, Savings};
-
 uint Client::clientCount = 0;
 
 Client::Client() {
@@ -46,11 +44,11 @@ Client::Client(const Client &c)
     setEmail(c.getEmail());
     
     chequingAccounts = new ChequingAccount[numOfChequingAcc];
-    for (int i = 0; i < numOfChequingAcc; i++)
+    for (uint i = 0; i < numOfChequingAcc; i++)
         chequingAccounts[i] = c.chequingAccounts[i];
 
     savingsAccounts = new SavingsAccount[numOfSavingsAcc];
-    for (int i = 0; i < numOfSavingsAcc; i++)
+    for (uint i = 0; i < numOfSavingsAcc; i++)
         savingsAccounts[i] = c.savingsAccounts[i];
 }
 
@@ -66,13 +64,13 @@ void Client::setAccessNum() {
         + getBirthDay();
 }
 
-uint Client::createAccount(int accType) { // Chequing = 0, Savings = 1
-    if(accType == Chequing) { // New Chequing account
+uint Client::createAccount(accountType accType) { // Chequing = 0, Savings = 1
+    if(accType == accountType::Chequing) { // New Chequing account
         
         Account *tmp_arr = chequingAccounts;
         chequingAccounts = new ChequingAccount[numOfChequingAcc + 1];
         ChequingAccount cheqAcc; // Create new ChequingAccount object
-        int i = 0;
+        uint i = 0;
         for (; i < numOfChequingAcc + 1; i++) {
             chequingAccounts[i] = tmp_arr[i];
         }
@@ -82,11 +80,11 @@ uint Client::createAccount(int accType) { // Chequing = 0, Savings = 1
         return cheqAcc.getAccNum();
     }
         
-    if (accType == Savings) { // New Savings account
+    if (accType == accountType::Savings) { // New Savings account
         Account *tmp_arr = savingsAccounts;
         savingsAccounts = new SavingsAccount[numOfSavingsAcc + 1];
         SavingsAccount cheqAcc; // Create new SavingsAccount object
-        int i = 0;
+        uint i = 0;
         for (; i < numOfSavingsAcc + 1; i++) {
             savingsAccounts[i] = tmp_arr[i];
         }

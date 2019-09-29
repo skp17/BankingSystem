@@ -47,4 +47,4 @@ class Person {
         virtual void printPersonInfo() const;
 };
 
-#endif
+#endif /* PERSON_H */

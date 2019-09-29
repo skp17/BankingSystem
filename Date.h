@@ -21,4 +21,4 @@ class Date {
         void printDate() const; // Format dd/mm/yyyy
 };
 
-#endif
+#endif /* DATE_H */

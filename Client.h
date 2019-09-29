@@ -7,7 +7,7 @@
 #include "SavingsAccount.h"
 #include "ChequingAccount.h"
 
-enum accountType {Chequing, Savings};
+enum class accountType {Chequing, Savings};
 
 class Client: public Person {
     private:
@@ -32,7 +32,7 @@ class Client: public Person {
 
         Account* getCheqAccounts() const;
         Account* getSavAccounts() const;
-        uint createAccount(int);
+        uint createAccount(accountType);
         bool validateLogin(uint accessNumber, uint pin) const;
         void setPIN(uint pin);
         uint getAccessNum() const;
@@ -42,4 +42,4 @@ class Client: public Person {
 };
 
 
-#endif // CLIENT_H
+#endif /* CLIENT_H */
