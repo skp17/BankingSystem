@@ -26,7 +26,7 @@ Client::Client(const string &firstName, const string &lastName,
     clientCount++;
     this->PIN = pin;
     setAccessNum();
-    chequingAccounts = new ChequingAccount();
+    chequingAccounts = new ChequingAccount[1]();
     numOfChequingAcc++;
 }
 
@@ -73,6 +73,29 @@ void Client::setAccessNum() {
     // clientID birthMonth birthDay
     accessNumber =  clientCount*1e4 + getBirthMonth()*1e2
         + getBirthDay();
+}
+
+Account* Client::getAccount(uint accNum) {
+    Account* account = NULL;
+    bool found = false;
+
+    // Search chequing accounts
+    for (uint i = 0; (i < numOfChequingAcc) || !found; i++) {
+        if (chequingAccounts[i].getAccNum() == accNum) {
+            account = &chequingAccounts[i];
+            found = true;
+        }
+    }
+
+    // Search savings accounts
+    for (uint i = 0; (i < numOfSavingsAcc) || !found; i++) {
+        if (savingsAccounts[i].getAccNum() == accNum) {
+            account = &savingsAccounts[i];
+            found = true;
+        }
+    }
+
+    return account;
 }
 
 uint Client::createAccount(accountType accType) { // Chequing = 0, Savings = 1
@@ -132,6 +155,7 @@ uint Client::getNumOfSavAccounts() const {
     return numOfSavingsAcc;
 }
 
+/*
 Account *Client::getCheqAccounts() const {
     return chequingAccounts;
 }
@@ -139,13 +163,34 @@ Account *Client::getCheqAccounts() const {
 Account *Client::getSavAccounts() const {
     return savingsAccounts;
 }
+*/
 
 bool Client::depositToAccount(uint accountNum, double amount) {
-    return false; 
+    bool success = false;
+    if( getAccount(accountNum) != NULL) {
+        getAccount(accountNum)->deposit(amount);
+        success = true;
+    }
+    else {
+        cerr << "No account with account number " << accountNum << " exists.\n";
+        success = false;
+    }
+
+    return success;
 }
 
 bool Client::withdrawFromAccount(uint accountNum, double amount) {
-    return false; 
+    bool success = false;
+    if( getAccount(accountNum) != NULL) {
+        success = getAccount(accountNum)->withdraw(amount);
+        
+    }
+    else {
+        cerr << "No account with account number " << accountNum << " exists.\n";
+        success = false;
+    }
+    
+    return success; 
 }
 
 void Client::listsAccounts() const {

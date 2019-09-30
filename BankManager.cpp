@@ -24,6 +24,11 @@ int main() {
     catch ( string &e) {
         cerr << "Exception: " << e << endl << endl;
     }
+    catch ( const exception &exc )
+    {
+        // catch anything thrown within try block that derives from std::exception
+        cerr << exc.what();
+    }
 
 
     return 0;

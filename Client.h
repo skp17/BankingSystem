@@ -19,8 +19,10 @@ class Client: public Person {
         uint numOfSavingsAcc;       // no. of savings accounts user has
         uint chequingAccountsSize;  // Current size of chequingAccounts array
         uint savingsAccountsSize;   // Current size of savingsAccounts array
-        void setAccessNum();
         static uint clientCount;    // Keep track of number of clients created
+
+        Account* getAccount(uint accountNumber);  // Get account
+        void setAccessNum();
 
     public:
         Client();
@@ -30,16 +32,15 @@ class Client: public Person {
         Client& operator=(const Client&);
         ~Client();
 
-        /* Get specific account instead of all accounts */
-        Account* getCheqAccounts() const;
-        Account* getSavAccounts() const;
+        // Account* getCheqAccounts() const;    // Get all chequing accounts
+        // Account* getSavAccounts() const;     // Get all savings accounts
         uint createAccount(accountType);
         bool validateLogin(uint accessNumber, uint pin) const;
         void setPIN(uint pin);
         uint getAccessNum() const;
         uint getNumOfCheqAccounts() const;
         uint getNumOfSavAccounts() const;
-        bool depositToAccount(uint accountNumber,double amount);       // IMPLEMEMT
+        bool depositToAccount(uint accountNumber, double amount);       // IMPLEMEMT
         bool withdrawFromAccount(uint accountNumber, double amount);    // IMPLEMENT
         void listsAccounts() const;     // Implement
         void print() const;

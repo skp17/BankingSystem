@@ -11,6 +11,7 @@ class Account {
         uint accountTypeNumber; // number that identifies account type
         struct tm dateCreated;
         double balance;
+        // Account* Owner;
 
         virtual void setAccNum() = 0;
 
@@ -25,9 +26,10 @@ class Account {
         uint getAccTypeNum() const;
         double getBalance() const;
         void deposit(double);
-        void withdraw(double);
+        bool withdraw(double);
         bool deleteAccount();
         struct tm getDateCreated() const;
+        // const Client* getAccountOwner() const;
         virtual void print() const = 0;
 };
 

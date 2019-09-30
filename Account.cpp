@@ -46,17 +46,24 @@ double Account::getBalance() const {
 }
 
 void Account::deposit(double amount) {
-    if (amount > 0)
+    if (amount >= 0)
         balance += amount;
     else
         throw invalid_argument( "Cannot deposit negative value" );
 }
 
-void Account::withdraw(double amount) {
-    if (amount <= balance)
+bool Account::withdraw(double amount) {
+    bool success = false;
+    if (amount <= balance) {
         balance -= amount;
-    else
+        success = true;
+    }
+    else {
+        success = false;
         throw invalid_argument( "Insufficient funds" );
+    }
+
+    return success;
 }
 
 bool Account::deleteAccount() { // Needs modifying
