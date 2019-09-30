@@ -2,56 +2,47 @@
 # make        # compile all binary
 # make clean  # remove ALL binaries and objects
 
-.PHONY = all clean
+.PHONY = clean
 
-CXX = g++
-CXXFLAGS = -I. -std=c++11 -Wall -MMD -MD
-LINKERFLAG = -lm
 DEPS = $(wildcard *.h)
 SRCS :=  $(wildcard *.cpp)
 OBJS := $(SRCS:$.cpp=o)
 ODIR = ./build
 TDIR = ./test
+INC_PATH := -I. -I $(ODIR)
 
--include ${DEPS}
+CXX = g++
+CXXFLAGS = -std=c++11 -Wall
+LINKERFLAG = -lm
 
-%.o: %.cpp %.h
-	${CXX} ${CXXFLAGS} -c $< -o ${ODIR}/$@
+build: $(SRCS) $(DEPS)
+	$(CXX) $(CXXFLAGS) -c *.cpp
+	mkdir -p $(ODIR)
+	mv *.o $(ODIR)
 
-build: $(OBJS)
+BankingSystem: Date.o Person.o BankingSystem.o
+	$(CXX) $(CXXFLAGS) $(INC_PATH) $^ -o $@
 
-BankingSystem: ${ODIR}/Date.o ${ODIR}/Person.o ${ODIR}/BankingSystem.o
-	${CXX} ${CXXFLAGS} $^ -o $@
+Date: Date.o
+	$(CXX) $(CXXFLAGS) $(INC_PATH) $^ -o $@
 
-Date: ${OBJS}
-	${CXX} ${CXXFLAGS} -c $< -o $@
+Client: $(OBJS)
+	$(CXX) $(CXXFLAGS) $(INC_PATH) $^ -o $@
 
-${ODIR}/Person.o: Person.cpp Person.h
-	${CXX} ${CXXFLAGS} $< -c -o $@
+Account: Account.o ChequingAccount.o SavingsAccount.o
+	$(CXX) $(CXXFLAGS) $(INC_PATH) $^ -o $@
 
-${ODIR}/Account.o: Account.cpp Account.h
-	${CXX} ${CXXFLAGS} $< -c -o $@
+testDate: Date.o $(TDIR)/testDate.cpp
+	$(CXX) $(CXXFLAGS) $(INC_PATH) $^ -o $(TDIR)/$@
 
-${ODIR}/ChequingAccount.o: ChequingAccount.cpp ChequingAccount.h
-	${CXX} ${CXXFLAGS} $< -c -o $@
+testPerson: Date.o Person.o $(TDIR)/testPerson.cpp
+	$(CXX) $(CXXFLAGS) $(INC_PATH) $^ -o $(TDIR)/$@
 
-${ODIR}/SavingsAccount.o: SavingsAccount.cpp SavingsAccount.h
-	${CXX} ${CXXFLAGS} $< -c -o $@
+testClient: Date.o Person.o Client.o Account.o ChequingAccount.o SavingsAccount.o $(TDIR)/testClient.cpp
+	$(CXX) $(CXXFLAGS) $(INC_PATH) $^ -o $(TDIR)/$@
 
-${ODIR}/BankManager.o: ${ODIR}/Date.o ${ODIR}/Person.o BankingManager.cpp
-	${CXX} ${CXXFLAGS} $^ -c -o $@
-
-testDate: ${ODIR}/Date.o ${TDIR}/testDate.cpp
-	${CXX} ${CXXFLAGS} $^ -o ${TDIR}/$@
-
-testPerson: ${ODIR}/Date.o ${ODIR}/Person.o ${TDIR}/testPerson.cpp
-	${CXX} ${CXXFLAGS} $^ -o ${TDIR}/$@
-
-testClient: ${ODIR}/Date.o ${ODIR}/Person.o ${ODIR}/Client.o ${ODIR}/Account.o ${ODIR}/ChequingAccount.o ${ODIR}/SavingsAccount.o ${TDIR}/testClient.cpp
-	${CXX} ${CXXFLAGS} $^ -o ${TDIR}/$@
-
-testAccount: ${ODIR}/Account.o ${ODIR}/ChequingAccount.o ${ODIR}/SavingsAccount.o ${TDIR}/testAccount.cpp
-	${CXX} ${CXXFLAGS} $^ -o ${TDIR}/$@
+testAccount: Account.o ChequingAccount.o SavingsAccount.o $(TDIR)/testAccount.cpp
+	$(CXX) $(CXXFLAGS) $(INC_PATH) $^ -o $(TDIR)/$@
 
 clean:
-	rm ${ODIR}/*.o
+	find . -name '*.o' -delete

@@ -31,13 +31,13 @@ Client::Client(const string &firstName, const string &lastName,
 }
 
 Client::Client(const Client &c)
-    : accessNumber(c.accessNumber), PIN(c.PIN),
+    : Person( c.getFName(), c.getLName(), c.getBirthDay(),
+      c.getBirthMonth(), c.getBirthYear(), c.getSSN() ),
+      accessNumber(c.accessNumber), PIN(c.PIN),
       numOfChequingAcc(c.numOfChequingAcc),
       numOfSavingsAcc(c.numOfSavingsAcc),
       chequingAccountsSize(c.numOfChequingAcc),
-      savingsAccountsSize(c.numOfSavingsAcc),
-      Person( c.getFName(), c.getLName(), c.getBirthDay(),
-      c.getBirthMonth(), c.getBirthYear(), c.getSSN() ) 
+      savingsAccountsSize(c.numOfSavingsAcc)
 {
     setAddress(c.getAddress());
     setTelephone(c.getTelephone());
@@ -65,7 +65,8 @@ void Client::setAccessNum() {
 }
 
 uint Client::createAccount(accountType accType) { // Chequing = 0, Savings = 1
-    if(accType == accountType::Chequing) { // New Chequing account
+    uint newAccountNumber;
+    if(accType == accountType::Chequing) { // Create new Chequing account
         
         Account *tmp_arr = chequingAccounts;
         chequingAccounts = new ChequingAccount[numOfChequingAcc + 1];
@@ -77,10 +78,10 @@ uint Client::createAccount(accountType accType) { // Chequing = 0, Savings = 1
         chequingAccounts[++i] = cheqAcc;
         numOfChequingAcc++;
         delete [] tmp_arr;
-        return cheqAcc.getAccNum();
+        newAccountNumber =  cheqAcc.getAccNum();
     }
         
-    if (accType == accountType::Savings) { // New Savings account
+    if (accType == accountType::Savings) { // Create new Savings account
         Account *tmp_arr = savingsAccounts;
         savingsAccounts = new SavingsAccount[numOfSavingsAcc + 1];
         SavingsAccount cheqAcc; // Create new SavingsAccount object
@@ -91,8 +92,10 @@ uint Client::createAccount(accountType accType) { // Chequing = 0, Savings = 1
         savingsAccounts[++i] = cheqAcc;
         numOfSavingsAcc++;
         delete [] tmp_arr;
-        return cheqAcc.getAccNum();
+        newAccountNumber =  cheqAcc.getAccNum();
     }
+
+    return newAccountNumber;
 }
 
 bool Client::validateLogin(uint accNum, uint pin) const {
