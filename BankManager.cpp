@@ -10,6 +10,8 @@ using namespace std;
 
 int main() {
 
+    // Keep track of SSN to avoid duplicates
+
     try {
 
     }

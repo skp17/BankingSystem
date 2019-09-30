@@ -53,8 +53,19 @@ Client::Client(const Client &c)
 }
 
 Client::~Client() {
-    delete [] chequingAccounts;
-    delete [] savingsAccounts;
+    if(numOfChequingAcc != 0) {
+        if(numOfChequingAcc == 1)
+            delete chequingAccounts;
+        else if(numOfChequingAcc > 1)
+            delete [] chequingAccounts;
+    }
+
+    if(numOfSavingsAcc != 0) {
+        if(numOfSavingsAcc == 1)
+            delete savingsAccounts;
+        else if(numOfSavingsAcc > 1)
+            delete [] savingsAccounts;
+    }
 }
 
 void Client::setAccessNum() {
@@ -65,7 +76,7 @@ void Client::setAccessNum() {
 }
 
 uint Client::createAccount(accountType accType) { // Chequing = 0, Savings = 1
-    uint newAccountNumber;
+    uint newAccountNumber = 0;
     if(accType == accountType::Chequing) { // Create new Chequing account
         
         Account *tmp_arr = chequingAccounts;
@@ -127,6 +138,18 @@ Account *Client::getCheqAccounts() const {
 
 Account *Client::getSavAccounts() const {
     return savingsAccounts;
+}
+
+bool Client::depositToAccount(uint accountNum, double amount) {
+    return false; 
+}
+
+bool Client::withdrawFromAccount(uint accountNum, double amount) {
+    return false; 
+}
+
+void Client::listsAccounts() const {
+
 }
 
 void Client::print() const {

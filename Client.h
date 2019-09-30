@@ -25,11 +25,12 @@ class Client: public Person {
     public:
         Client();
         Client(const string &firstName, const string &lastName, 
-            const Date &dayeOfBirth, uint SSN, uint pin);
+            const Date &dateOfBirth, uint SSN, uint pin);
         Client(const Client&);
         Client& operator=(const Client&);
         ~Client();
 
+        /* Get specific account instead of all accounts */
         Account* getCheqAccounts() const;
         Account* getSavAccounts() const;
         uint createAccount(accountType);
@@ -38,6 +39,9 @@ class Client: public Person {
         uint getAccessNum() const;
         uint getNumOfCheqAccounts() const;
         uint getNumOfSavAccounts() const;
+        bool depositToAccount(uint accountNumber,double amount);       // IMPLEMEMT
+        bool withdrawFromAccount(uint accountNumber, double amount);    // IMPLEMENT
+        void listsAccounts() const;     // Implement
         void print() const;
 };
 
