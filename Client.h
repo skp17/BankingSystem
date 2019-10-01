@@ -34,15 +34,16 @@ class Client: public Person {
 
         // Account* getCheqAccounts() const;    // Get all chequing accounts
         // Account* getSavAccounts() const;     // Get all savings accounts
-        uint createAccount(accountType);
+        uint createAccount(accountType);// Needs modifying
         bool validateLogin(uint accessNumber, uint pin) const;
         void setPIN(uint pin);
         uint getAccessNum() const;
         uint getNumOfCheqAccounts() const;
         uint getNumOfSavAccounts() const;
-        bool depositToAccount(uint accountNumber, double amount);       // IMPLEMEMT
-        bool withdrawFromAccount(uint accountNumber, double amount);    // IMPLEMENT
-        void listsAccounts() const;     // Implement
+        bool depositToAccount(uint accountNumber, double amount);
+        bool withdrawFromAccount(uint accountNumber, double amount);
+        bool deleteAccount(uint accessNumber);  // IMPLEMENT
+        void listsAccounts() const;
         void print() const;
 };
 

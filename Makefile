@@ -38,7 +38,7 @@ testDate: Date.o $(TDIR)/testDate.cpp
 testPerson: Date.o Person.o $(TDIR)/testPerson.cpp
 	$(CXX) $(CXXFLAGS) $(INC_PATH) $^ -o $(TDIR)/$@
 
-testClient: Date.o Person.o Client.o Account.o ChequingAccount.o SavingsAccount.o $(TDIR)/testClient.cpp
+testClient: $(ODIR)/Date.o $(ODIR)/Person.o $(ODIR)/Client.o $(ODIR)/Account.o $(ODIR)/ChequingAccount.o $(ODIR)/SavingsAccount.o $(TDIR)/testClient.cpp
 	$(CXX) $(CXXFLAGS) $(INC_PATH) $^ -o $(TDIR)/$@
 
 testAccount: Account.o ChequingAccount.o SavingsAccount.o $(TDIR)/testAccount.cpp

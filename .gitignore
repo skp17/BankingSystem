@@ -32,10 +32,9 @@
 *.app
 
 # OTHER
-.vscode/*
-./objects/
 *
 !*.cpp
 !*.h
 !*.md
 !Makefile
+!/test/

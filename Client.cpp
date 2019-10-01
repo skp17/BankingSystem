@@ -14,8 +14,10 @@ uint Client::clientCount = 0;
 
 Client::Client() {
     clientCount++;
-    chequingAccounts = new ChequingAccount();
-    numOfChequingAcc++;
+    chequingAccounts = new ChequingAccount[1];
+    savingsAccounts = new SavingsAccount[1];
+    numOfChequingAcc = 1;
+    numOfSavingsAcc = 1;
     setAccessNum();
 }
 
@@ -26,8 +28,10 @@ Client::Client(const string &firstName, const string &lastName,
     clientCount++;
     this->PIN = pin;
     setAccessNum();
-    chequingAccounts = new ChequingAccount[1]();
-    numOfChequingAcc++;
+    chequingAccounts = new ChequingAccount[1];
+    savingsAccounts = new SavingsAccount[1];
+    numOfChequingAcc = 1;
+    numOfSavingsAcc = 1;
 }
 
 Client::Client(const Client &c)
@@ -53,19 +57,8 @@ Client::Client(const Client &c)
 }
 
 Client::~Client() {
-    if(numOfChequingAcc != 0) {
-        if(numOfChequingAcc == 1)
-            delete chequingAccounts;
-        else if(numOfChequingAcc > 1)
-            delete [] chequingAccounts;
-    }
-
-    if(numOfSavingsAcc != 0) {
-        if(numOfSavingsAcc == 1)
-            delete savingsAccounts;
-        else if(numOfSavingsAcc > 1)
-            delete [] savingsAccounts;
-    }
+   delete [] chequingAccounts;
+   delete [] savingsAccounts;
 }
 
 void Client::setAccessNum() {
@@ -76,28 +69,25 @@ void Client::setAccessNum() {
 }
 
 Account* Client::getAccount(uint accNum) {
-    Account* account = NULL;
-    bool found = false;
 
     // Search chequing accounts
-    for (uint i = 0; (i < numOfChequingAcc) || !found; i++) {
+    for (uint i = 0; (i < numOfChequingAcc); i++) {
         if (chequingAccounts[i].getAccNum() == accNum) {
-            account = &chequingAccounts[i];
-            found = true;
+            return &chequingAccounts[i];
         }
     }
 
     // Search savings accounts
-    for (uint i = 0; (i < numOfSavingsAcc) || !found; i++) {
+    for (uint i = 0; (i < numOfSavingsAcc); i++) {
         if (savingsAccounts[i].getAccNum() == accNum) {
-            account = &savingsAccounts[i];
-            found = true;
+            return &savingsAccounts[i];
         }
     }
 
-    return account;
+    // return NULL if not found
+    return NULL;
 }
-
+// Needs modifying
 uint Client::createAccount(accountType accType) { // Chequing = 0, Savings = 1
     uint newAccountNumber = 0;
     if(accType == accountType::Chequing) { // Create new Chequing account
@@ -183,7 +173,6 @@ bool Client::withdrawFromAccount(uint accountNum, double amount) {
     bool success = false;
     if( getAccount(accountNum) != NULL) {
         success = getAccount(accountNum)->withdraw(amount);
-        
     }
     else {
         cerr << "No account with account number " << accountNum << " exists.\n";
@@ -194,7 +183,11 @@ bool Client::withdrawFromAccount(uint accountNum, double amount) {
 }
 
 void Client::listsAccounts() const {
+    for(uint i = 0; i < numOfChequingAcc; i++)
+        chequingAccounts[i].print();
 
+    for(uint i = 0; i < numOfSavingsAcc; i++)
+        savingsAccounts[i].print();
 }
 
 void Client::print() const {
@@ -205,5 +198,5 @@ void Client::print() const {
     cout << "  Number of Chequing Accounts: " << numOfChequingAcc;
     cout << endl;
     cout << "  Number of Savings Accounts: " << numOfSavingsAcc;
-    cout << endl;
+    cout << endl << endl;
 }
