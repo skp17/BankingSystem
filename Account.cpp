@@ -49,7 +49,7 @@ void Account::deposit(double amount) {
     if (amount >= 0)
         balance += amount;
     else
-        throw invalid_argument( "Cannot deposit negative value" );
+        cerr << "Cannot deposit negative value\n";
 }
 
 bool Account::withdraw(double amount) {
@@ -60,7 +60,7 @@ bool Account::withdraw(double amount) {
     }
     else {
         success = false;
-        throw invalid_argument( "Insufficient funds" );
+        cerr << "Insufficient funds\n";
     }
 
     return success;

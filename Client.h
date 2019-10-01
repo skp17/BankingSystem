@@ -6,6 +6,7 @@
 #include "Account.h"
 #include "SavingsAccount.h"
 #include "ChequingAccount.h"
+#include <ctime>
 
 enum class accountType {Chequing, Savings};
 
@@ -32,14 +33,14 @@ class Client: public Person {
         Client& operator=(const Client&);
         ~Client();
 
-        // Account* getCheqAccounts() const;    // Get all chequing accounts
-        // Account* getSavAccounts() const;     // Get all savings accounts
         uint createAccount(accountType);// Needs modifying
         bool validateLogin(uint accessNumber, uint pin) const;
         void setPIN(uint pin);
         uint getAccessNum() const;
         uint getNumOfCheqAccounts() const;
         uint getNumOfSavAccounts() const;
+        double getAccBalance(uint accountNumber);
+        struct tm getAccDateCreation(uint accountNumber);
         bool depositToAccount(uint accountNumber, double amount);
         bool withdrawFromAccount(uint accountNumber, double amount);
         bool deleteAccount(uint accessNumber);  // IMPLEMENT

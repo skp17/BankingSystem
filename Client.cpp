@@ -87,36 +87,69 @@ Account* Client::getAccount(uint accNum) {
     // return NULL if not found
     return NULL;
 }
-// Needs modifying
+
 uint Client::createAccount(accountType accType) { // Chequing = 0, Savings = 1
     uint newAccountNumber = 0;
     if(accType == accountType::Chequing) { // Create new Chequing account
         
-        Account *tmp_arr = chequingAccounts;
-        chequingAccounts = new ChequingAccount[numOfChequingAcc + 1];
-        ChequingAccount cheqAcc; // Create new ChequingAccount object
-        uint i = 0;
-        for (; i < numOfChequingAcc + 1; i++) {
-            chequingAccounts[i] = tmp_arr[i];
+        // Create temporary space to store accounts
+        Account *tmp_arr = new ChequingAccount[numOfChequingAcc];
+        for(uint i = 0; i < numOfChequingAcc; i++)
+            tmp_arr[i] = chequingAccounts[i];
+
+        // Allocate new space for new account
+        delete [] chequingAccounts;
+        chequingAccounts = new (nothrow) ChequingAccount[numOfChequingAcc + 1];
+        
+        // If new allocation fails, restore accounts from tmp_arr
+        if (chequingAccounts == nullptr) {
+            chequingAccounts = new ChequingAccount[numOfChequingAcc];
+            for(uint i = 0; i < numOfChequingAcc; i++)
+                chequingAccounts[i] = tmp_arr[i];
         }
-        chequingAccounts[++i] = cheqAcc;
-        numOfChequingAcc++;
+        else { // Continue if allocation is succesful
+
+            ChequingAccount cheqAcc; // Create new ChequingAccount
+            uint i = 0;
+            for (; i < numOfChequingAcc; i++) {
+                chequingAccounts[i] = tmp_arr[i];
+            }
+            chequingAccounts[i] = cheqAcc;
+            numOfChequingAcc++;
+            newAccountNumber =  cheqAcc.getAccNum();
+        }
         delete [] tmp_arr;
-        newAccountNumber =  cheqAcc.getAccNum();
     }
         
     if (accType == accountType::Savings) { // Create new Savings account
-        Account *tmp_arr = savingsAccounts;
-        savingsAccounts = new SavingsAccount[numOfSavingsAcc + 1];
-        SavingsAccount cheqAcc; // Create new SavingsAccount object
-        uint i = 0;
-        for (; i < numOfSavingsAcc + 1; i++) {
-            savingsAccounts[i] = tmp_arr[i];
+        
+        // Create temporary space to store accounts
+        Account *tmp_arr = new SavingsAccount[numOfSavingsAcc];
+        for(uint i = 0; i < numOfSavingsAcc; i++)
+            tmp_arr[i] = savingsAccounts[i];
+
+        // Allocate new space for new account
+        delete [] savingsAccounts;
+        savingsAccounts = new (nothrow) SavingsAccount[numOfSavingsAcc + 1];
+        
+        // If new allocation fails, restore accounts from tmp_arr
+        if (savingsAccounts == nullptr) {
+            savingsAccounts = new SavingsAccount[numOfSavingsAcc];
+            for(uint i = 0; i < numOfSavingsAcc; i++)
+                savingsAccounts[i] = tmp_arr[i];
         }
-        savingsAccounts[++i] = cheqAcc;
-        numOfSavingsAcc++;
+        else { // Continue if allocation is succesful
+
+            SavingsAccount SavAcc; // Create new SavingsAccount
+            uint i = 0;
+            for (; i < numOfSavingsAcc; i++) {
+                savingsAccounts[i] = tmp_arr[i];
+            }
+            savingsAccounts[i] = SavAcc;
+            numOfSavingsAcc++;
+            newAccountNumber =  SavAcc.getAccNum();
+        }
         delete [] tmp_arr;
-        newAccountNumber =  cheqAcc.getAccNum();
     }
 
     return newAccountNumber;
@@ -145,15 +178,19 @@ uint Client::getNumOfSavAccounts() const {
     return numOfSavingsAcc;
 }
 
-/*
-Account *Client::getCheqAccounts() const {
-    return chequingAccounts;
+double Client::getAccBalance(uint accountNum) {
+    if( getAccount(accountNum) != NULL )
+        return getAccount(accountNum)->getBalance();
+    else
+        return -1; // Return -1 if account does not exist
 }
 
-Account *Client::getSavAccounts() const {
-    return savingsAccounts;
+struct tm Client::getAccDateCreation(uint accountNum) {
+    if( getAccount(accountNum) != NULL )
+        return (getAccount(accountNum)->getDateCreated());
+    else
+        return tm{-1};
 }
-*/
 
 bool Client::depositToAccount(uint accountNum, double amount) {
     bool success = false;
@@ -196,7 +233,13 @@ void Client::print() const {
     cout << "Banking profile:\n";
     cout << "  Access Number: " << accessNumber << endl;
     cout << "  Number of Chequing Accounts: " << numOfChequingAcc;
-    cout << endl;
+    cout << endl << endl;
+    for(uint i = 0; i < numOfChequingAcc; i++)
+        chequingAccounts[i].print();
+
     cout << "  Number of Savings Accounts: " << numOfSavingsAcc;
     cout << endl << endl;
+    for(uint i = 0; i < numOfSavingsAcc; i++)
+        savingsAccounts[i].print();
+    cout << endl;
 }
