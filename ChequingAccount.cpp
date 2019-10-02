@@ -11,7 +11,7 @@ uint ChequingAccount::chequingCount = 0;
 
 ChequingAccount::ChequingAccount(): Account() {
     chequingCount++;
-    accountTypeNumber = 101;
+    accountTypeNumber = 101; // This number is for chequing accounts
     setAccNum();
 }
 

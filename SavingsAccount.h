@@ -11,7 +11,7 @@ class SavingsAccount: public Account {
         SavingsAccount();
         SavingsAccount(const SavingsAccount&);
         SavingsAccount& operator=(const SavingsAccount&);
-        ~SavingsAccount();
+        virtual ~SavingsAccount();
 
         virtual void print() const;
 };

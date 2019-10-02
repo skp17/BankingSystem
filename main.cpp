@@ -27,10 +27,32 @@ int main() {
             cout << "Withdrawal unsucessful\n\n";
         //client1.listsAccounts();
 
-        client1.print();
+        //client1.print();
 
         struct tm cd = client1.getAccDateCreation(101001);
-        cout << "Chequing account created on: " << asctime( &cd ) << endl;
+        //cout << "Chequing account created on: " << asctime( &cd ) << endl;
+
+        uint newAccNum = client1.createAccount(accountType::Chequing);
+        if( client1.getNumOfCheqAccounts() != 2 ) cout << "problem at line 36\n";
+
+        if( client1.getNumOfSavAccounts() != 1 ) cout << "problem at line 38\n"; 
+
+        if( client1.getAccBalance(newAccNum) != 0 ) cout << "problem at line 40\n";
+
+        client1.depositToAccount(newAccNum, 50.75);
+        if( client1.getAccBalance(newAccNum) != 50.75 ) cout << "problem at line 43\n";
+            
+        newAccNum = client1.createAccount(accountType::Savings);
+        if( client1.getNumOfCheqAccounts() != 2 ) cout << "problem at line 46\n";
+
+        if( client1.getNumOfSavAccounts() != 2 ) cout << "problem at line 48\n";
+
+        if( client1.getAccBalance(newAccNum) != 0 ) cout << "problem at line 50\n";
+
+        client1.depositToAccount(newAccNum, 90.20);
+        if( client1.getAccBalance(newAccNum) != 90.20 ) cout << "problem at line 53\n";
+
+        client1.print();
     }
     catch ( const exception &exc )
     {

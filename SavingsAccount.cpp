@@ -11,7 +11,7 @@ uint SavingsAccount::savingsCount = 0;
 
 SavingsAccount::SavingsAccount(): Account() {
     savingsCount++;
-    accountTypeNumber = 201;
+    accountTypeNumber = 201; // This number is for savings
     setAccNum();
 }
 

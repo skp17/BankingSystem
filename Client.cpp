@@ -71,14 +71,14 @@ void Client::setAccessNum() {
 Account* Client::getAccount(uint accNum) {
 
     // Search chequing accounts
-    for (uint i = 0; (i < numOfChequingAcc); i++) {
+    for (uint i = 0; i < numOfChequingAcc; i++) {
         if (chequingAccounts[i].getAccNum() == accNum) {
             return &chequingAccounts[i];
         }
     }
 
     // Search savings accounts
-    for (uint i = 0; (i < numOfSavingsAcc); i++) {
+    for (uint i = 0; i < numOfSavingsAcc; i++) {
         if (savingsAccounts[i].getAccNum() == accNum) {
             return &savingsAccounts[i];
         }
@@ -217,6 +217,46 @@ bool Client::withdrawFromAccount(uint accountNum, double amount) {
     }
     
     return success; 
+}
+
+bool Client::deleteAccount(uint accountNum) {
+    bool success = false;
+    if( getAccount(accountNum) != NULL ) {
+        if( getAccount(accountNum)->getBalance() == 0 ) {
+            if( getAccount(accountNum)->getAccTypeNum() == 101 ) {
+
+                // Search for account inside chequing account array
+                for (uint i = 0; i < numOfChequingAcc; i++) {
+                    if (chequingAccounts[i].getAccNum() == accountNum) {
+                        for(uint j = i; j < (numOfChequingAcc-1); j++) {
+                            chequingAccounts[j] = chequingAccounts[j + 1];
+                        }
+                        success = true;
+                        break;
+                    }
+                }
+            }
+
+            if( getAccount(accountNum)->getAccTypeNum() == 201 ) {
+                // Search for account inside savings account array
+                for (uint i = 0; i < numOfSavingsAcc; i++) {
+                    if (savingsAccounts[i].getAccNum() == accountNum) {
+                        for(uint j = i; j < (numOfSavingsAcc-1); j++) {
+                            savingsAccounts[j] = savingsAccounts[j + 1];
+                        }
+                        success = true;
+                        break;
+                    }
+                }
+            }
+        }
+        else 
+            cerr << "Please withdraw all funds inside account before deleting.\n";
+    }
+    else
+        cerr << "No account with account number " << accountNum << " exists.\n";
+
+    return success;
 }
 
 void Client::listsAccounts() const {

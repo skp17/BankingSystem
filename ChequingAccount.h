@@ -11,7 +11,7 @@ class ChequingAccount: public Account {
         ChequingAccount();
         ChequingAccount(const ChequingAccount&);
         ChequingAccount& operator=(const ChequingAccount&);
-        ~ChequingAccount();
+        virtual ~ChequingAccount();
 
         virtual void print() const;
 };

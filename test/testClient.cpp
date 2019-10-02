@@ -36,8 +36,8 @@ TEST_CASE( "Create a new client" ) {
 
         REQUIRE( client1.getNumOfCheqAccounts() == 1);
         REQUIRE( client1.getNumOfSavAccounts() == 1);
-        REQUIRE( client1.getAccBalance(101001) == 0);
-        REQUIRE( client1.getAccBalance(201001) == 0);
+        REQUIRE( client1.getAccBalance(101001) == 0.0);
+        REQUIRE( client1.getAccBalance(201001) == 0.0);
 
         uint accessNumber = client1.getAccessNum();
         REQUIRE( client1.validateLogin(accessNumber, 4019) == true );
