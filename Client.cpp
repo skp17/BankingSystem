@@ -185,11 +185,11 @@ double Client::getAccBalance(uint accountNum) {
         return -1; // Return -1 if account does not exist
 }
 
-struct tm Client::getAccDateCreation(uint accountNum) {
+Date Client::getAccDateCreation(uint accountNum) {
     if( getAccount(accountNum) != NULL )
         return (getAccount(accountNum)->getDateCreated());
     else
-        return tm{-1};
+        cerr << "No account with account number " << accountNum << " exists.\n";
 }
 
 bool Client::depositToAccount(uint accountNum, double amount) {
@@ -267,7 +267,7 @@ void Client::listsAccounts() const {
         savingsAccounts[i].print();
 }
 
-void Client::print() const {
+void Client::printClientInfo() const {
     Person::printPersonInfo();
     cout << endl;
     cout << "Banking profile:\n";

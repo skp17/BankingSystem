@@ -8,7 +8,12 @@ using namespace std;
 Account::Account()
 {
     time_t now = time(0); // Returns number of seconds since 1970.
-    dateCreated = *( localtime(&now) );
+    struct tm *dt = localtime(&now);
+    dateCreated.setDate(
+        dt->tm_mday,
+        (dt->tm_mon + 1),
+        (dt->tm_year + 1900)
+    );
     balance = 0;
 }
 
@@ -75,7 +80,7 @@ bool Account::deleteAccount() { // Needs modifying
     }
 }
 
-struct tm Account::getDateCreated() const {
+Date Account::getDateCreated() const {
     return dateCreated;
 }
 

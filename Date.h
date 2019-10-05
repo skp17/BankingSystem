@@ -1,13 +1,9 @@
 #ifndef DATE_H
 #define DATE_H
 
-#include <boost/archive/binary_iarchive.hpp>
-#include <boost/archive/binary_oarchive.hpp>
-#include <boost/serialization/binary_object.hpp>
 #include <boost/serialization/version.hpp>
 #include <boost/serialization/split_member.hpp>
 
-using boost::serialization::make_binary_object;
 using namespace std;
 using uint = unsigned int;
 
@@ -17,12 +13,12 @@ class Date {
 
         friend class boost::serialization::access;
         template<class Archive>
-        void save(Archive & ar, const uint version /* file_version */) {
+        void save(Archive &ar, const uint version /* file_version */) {
             // Version is always the latest when saving
             ar & m_day & m_month & m_year;
         }
         template<class Archive>
-        void load(Archive & ar, const uint version) {
+        void load(Archive &ar, const uint version) {
             ar & m_day & m_month & m_year;
 
             // Add new data members here in future version

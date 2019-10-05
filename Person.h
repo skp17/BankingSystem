@@ -20,7 +20,7 @@ class Person {
 
         friend class boost::serialization::access;
         template<class Archive>
-        void save(Archive & ar, const uint version /* file_version */) {
+        void save(Archive &ar, const uint version /* file_version */) {
             // Version is always the latest when saving
             ar & dateOfBirth;
             ar & SSN ;
@@ -32,7 +32,7 @@ class Person {
             ar & email;
         }
         template<class Archive>
-        void load(Archive & ar, const uint version) {
+        void load(Archive &ar, const uint version) {
             ar & dateOfBirth;
             ar & SSN ;
             ar & age;

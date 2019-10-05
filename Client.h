@@ -7,6 +7,7 @@
 #include "SavingsAccount.h"
 #include "ChequingAccount.h"
 #include <ctime>
+#include <boost/serialization/base_object.hpp>
 
 enum class accountType {Chequing, Savings};
 
@@ -25,12 +26,48 @@ class Client: public Person {
         Account* getAccount(uint accountNumber);  // Get account
         void setAccessNum();
 
+        template<class Archive>
+        void save(Archive &ar, const uint version) {
+            ar & boost::serialization::base_object<Person>(*this);
+            ar.register_type(static_cast<ChequingAccount *>(NULL));
+            ar.register_type(static_cast<SavingsAccount *>(NULL));
+            ar & accessNumber;
+            ar & PIN;
+            for(uint i = 0; i < numOfChequingAcc; i++)
+                ar & chequingAccounts[i];
+            for(uint i = 0; i < numOfSavingsAcc; i++)
+                ar & savingsAccounts[i];
+            ar & numOfChequingAcc;
+            ar & numOfSavingsAcc;
+            ar & chequingAccountsSize;
+            ar & savingsAccountsSize;
+            ar & clientCount;
+        }
+        template<class Archive>
+        void load(Archive &ar, const uint version) {
+            ar & boost::serialization::base_object<Person>(*this);
+            ar.register_type(static_cast<ChequingAccount *>(NULL));
+            ar.register_type(static_cast<SavingsAccount *>(NULL));
+            ar & accessNumber;
+            ar & PIN;
+            for(uint i = 0; i < numOfChequingAcc; i++)
+                ar & chequingAccounts[i];
+            for(uint i = 0; i < numOfSavingsAcc; i++)
+                ar & savingsAccounts[i];
+            ar & numOfChequingAcc;
+            ar & numOfSavingsAcc;
+            ar & chequingAccountsSize;
+            ar & savingsAccountsSize;
+            ar & clientCount;
+        }
+        BOOST_SERIALIZATION_SPLIT_MEMBER()
+
     public:
         Client();
         Client(const string &firstName, const string &lastName, 
             const Date &dateOfBirth, uint SSN, uint pin);
         Client(const Client&);
-        Client& operator=(const Client&);
+        Client& operator=(const Client&); // IMPLEMENT
         ~Client();
 
         uint createAccount(accountType);// Needs modifying
@@ -40,13 +77,14 @@ class Client: public Person {
         uint getNumOfCheqAccounts() const;
         uint getNumOfSavAccounts() const;
         double getAccBalance(uint accountNumber);
-        struct tm getAccDateCreation(uint accountNumber);
+        Date getAccDateCreation(uint accountNumber);
         bool depositToAccount(uint accountNumber, double amount);
         bool withdrawFromAccount(uint accountNumber, double amount);
         bool deleteAccount(uint accessNumber);  // IMPLEMENT
         void listsAccounts() const;
-        void print() const;
+        void printClientInfo() const;
 };
 
+BOOST_CLASS_VERSION(Client, 0)
 
 #endif /* CLIENT_H */

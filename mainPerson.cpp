@@ -11,20 +11,17 @@
 
 using namespace std;
 using boost::serialization::make_binary_object;
-using boost::serialization::binary_object;
 
 void save(const Person &p) {
     ofstream ofs("person.dat", ofstream::binary);
     boost::archive::binary_oarchive oa(ofs, boost::archive::no_header);
-    oa & make_binary_object((Person*)&p, sizeof(Person));
+    oa << make_binary_object((Person*)&p, sizeof(Person));
 }
 
-void load() {
-    Person *p2 = new Person;
+void load(const Person *p) {
     ifstream ifs("person.dat", ifstream::binary | ifstream::in);
     boost::archive::binary_iarchive ia(ifs, boost::archive::no_header);
-    ia & make_binary_object(p2, sizeof(Person));
-    p2->printPersonInfo();
+    ia >> make_binary_object((Person*)p, sizeof(Person));
 }
 
 int main() {
@@ -36,12 +33,17 @@ int main() {
         p1.setEmail("jlennon@gmail.com");
 
         save(p1);
-        load();
+
+        Person *p2 = new Person;
+        load(p2);
+        p2->printPersonInfo();
     }
-    catch( const exception &e) {
+    catch( const exception &e ) {
         cerr << e.what() << endl;
     }
 
 
     return 0;
 }
+
+// g++ -I /usr/local/boost_1_61_0/ Date.cpp Person.cpp mainPerson.cpp -o mainPerson /usr/local/boost_1_61_0/bin.v2/libs/serialization/build/gcc-5.4.0/release/link-static/threading-multi/libboost_serialization.a -std=c++11 -Wall

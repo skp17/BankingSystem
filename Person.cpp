@@ -9,9 +9,8 @@ using uint = unsigned int;
 
 Person::Person() {
     Date birth;
-    setDateofBirth(birth).setSSN(0).setName("", "");
+    setDateofBirth(birth).setSSN(0).setName("Lastname", "Firstname");
     setAddress("").setTelephone("").setEmail("");
-    setAge();
 }
 
 Person::Person(const string &fname, const string &lname, 

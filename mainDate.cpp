@@ -35,3 +35,5 @@ int main() {
 
     return 0;
 }
+
+// g++ -I /usr/local/boost_1_61_0/ Date.cpp mainDate.cpp -o mainDate /usr/local/boost_1_61_0/bin.v2/libs/serialization/build/gcc-5.4.0/release/link-static/threading-multi/libboost_serialization.a -std=c++11 -Wall
