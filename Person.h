@@ -3,8 +3,10 @@
 
 #include "Date.h"
 #include <string>
+#include <boost/serialization/string.hpp>
 
 using namespace std;
+using namespace boost::archive;
 using uint = unsigned int;
 
 class Person {
@@ -15,6 +17,36 @@ class Person {
         uint age;
         string address, telephone, email;
         void setAge();
+
+        friend class boost::serialization::access;
+        template<class Archive>
+        void save(Archive & ar, const uint version /* file_version */) {
+            // Version is always the latest when saving
+            ar & dateOfBirth;
+            ar & SSN ;
+            ar & age;
+            ar & firstName;
+            ar & lastName;
+            ar & address;
+            ar & telephone;
+            ar & email;
+        }
+        template<class Archive>
+        void load(Archive & ar, const uint version) {
+            ar & dateOfBirth;
+            ar & SSN ;
+            ar & age;
+            ar & firstName;
+            ar & lastName;
+            ar & address;
+            ar & telephone;
+            ar & email;
+
+            // Add new data members here in future version
+            // if(version > 0)
+        }
+        BOOST_SERIALIZATION_SPLIT_MEMBER()
+
     public:
         Person();
         Person(const string &firstname, const string &lastname, 
@@ -22,7 +54,7 @@ class Person {
         Person(const string &, const string &, uint day, 
             uint month, uint year, uint);
         Person(const Person&);
-        ~Person();
+        virtual ~Person();
 
         // set functions
         Person &setDateofBirth(const Date&);
@@ -42,9 +74,11 @@ class Person {
         string getAddress() const;
         string getTelephone() const;
         string getEmail() const;
-        const uint getSSN() const;
+        uint getSSN() const;
 
         virtual void printPersonInfo() const;
 };
+
+BOOST_CLASS_VERSION(Person, 0)
 
 #endif /* PERSON_H */

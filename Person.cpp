@@ -11,6 +11,7 @@ Person::Person() {
     Date birth;
     setDateofBirth(birth).setSSN(0).setName("", "");
     setAddress("").setTelephone("").setEmail("");
+    setAge();
 }
 
 Person::Person(const string &fname, const string &lname, 
@@ -53,15 +54,8 @@ Person &Person::setSSN(uint ssn) {
 }
 
 Person &Person::setName(const string &fname, const string &lname) {
-    if (fname != "")
-        firstName = fname;
-    else
-        throw invalid_argument( "must enter first name" );
-
-    if (lname != "")
-        lastName = lname;
-    else
-        throw invalid_argument( "must enter last name" );
+    firstName = fname;
+    lastName = lname;
 
     return *this;
 }
@@ -132,7 +126,7 @@ string Person::getAddress() const {
     return address;
 }
 
-const uint Person::getSSN() const {
+uint Person::getSSN() const {
     return SSN;
 }
 

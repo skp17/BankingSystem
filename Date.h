@@ -17,7 +17,7 @@ class Date {
 
         friend class boost::serialization::access;
         template<class Archive>
-        void save(Archive & ar, const uint /* file_version */) {
+        void save(Archive & ar, const uint version /* file_version */) {
             // Version is always the latest when saving
             ar & m_day & m_month & m_year;
         }
