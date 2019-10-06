@@ -37,4 +37,9 @@
 !*.h
 !*.md
 !Makefile
+!Doxyfile
 !/test/
+!/html/
+!html/*
+!/latex/
+!latex/*

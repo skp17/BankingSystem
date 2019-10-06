@@ -1,0 +1,185 @@
+\hypertarget{classClient}{}\doxysection{Client Class Reference}
+\label{classClient}\index{Client@{Client}}
+
+
+{\ttfamily \#include $<$Client.\+h$>$}
+
+
+
+Inheritance diagram for Client\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=221pt]{classClient__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Client\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=221pt]{classClient__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classClient_ae51af7aa6b8f591496a8f6a4a87a14bf}{Client}} ()
+\item 
+\mbox{\hyperlink{classClient_a15b0acc7be6275873e97a9a3f865fa2c}{Client}} (const string \&first\+Name, const string \&last\+Name, const \mbox{\hyperlink{classDate}{Date}} \&date\+Of\+Birth, \mbox{\hyperlink{Account_8h_a69aa29b598b851b0640aa225a9e5d61d}{uint}} S\+SN, \mbox{\hyperlink{Account_8h_a69aa29b598b851b0640aa225a9e5d61d}{uint}} pin)
+\item 
+\mbox{\hyperlink{classClient_a9500b28b17943a6e99ba2e4e98fb1732}{Client}} (const \mbox{\hyperlink{classClient}{Client}} \&)
+\item 
+\mbox{\hyperlink{classClient}{Client}} \& \mbox{\hyperlink{classClient_aa8151c1cb8caeea387162026dd2913fd}{operator=}} (const \mbox{\hyperlink{classClient}{Client}} \&)
+\item 
+\mbox{\hyperlink{classClient_a840e519ca781888cbd54181572ebe3a7}{$\sim$\+Client}} ()
+\item 
+\mbox{\hyperlink{Account_8h_a69aa29b598b851b0640aa225a9e5d61d}{uint}} \mbox{\hyperlink{classClient_ae0ffdc8dc38dc9e3dc88030014596e87}{create\+Account}} (\mbox{\hyperlink{Client_8h_a840eab7aa2b14eb7c19cabdc063a9780}{account\+Type}})
+\item 
+bool \mbox{\hyperlink{classClient_aacc18405f50b36b61789900ba8daa6d0}{validate\+Login}} (\mbox{\hyperlink{Account_8h_a69aa29b598b851b0640aa225a9e5d61d}{uint}} access\+Number, \mbox{\hyperlink{Account_8h_a69aa29b598b851b0640aa225a9e5d61d}{uint}} pin) const
+\item 
+void \mbox{\hyperlink{classClient_a764862e65b5c72f6d2b91c162d4117ae}{set\+P\+IN}} (\mbox{\hyperlink{Account_8h_a69aa29b598b851b0640aa225a9e5d61d}{uint}} pin)
+\item 
+\mbox{\hyperlink{Account_8h_a69aa29b598b851b0640aa225a9e5d61d}{uint}} \mbox{\hyperlink{classClient_a3c1dedf50cb615712f1ef65cfe3edf7d}{get\+Access\+Num}} () const
+\item 
+\mbox{\hyperlink{Account_8h_a69aa29b598b851b0640aa225a9e5d61d}{uint}} \mbox{\hyperlink{classClient_a50cbc1efad0aa9cd19b5c8fa6e55dd5c}{get\+Num\+Of\+Cheq\+Accounts}} () const
+\item 
+\mbox{\hyperlink{Account_8h_a69aa29b598b851b0640aa225a9e5d61d}{uint}} \mbox{\hyperlink{classClient_a0519236d241194121ee21f79344b7de8}{get\+Num\+Of\+Sav\+Accounts}} () const
+\item 
+double \mbox{\hyperlink{classClient_af388cd20b997230a0beec5c6985a4aab}{get\+Acc\+Balance}} (\mbox{\hyperlink{Account_8h_a69aa29b598b851b0640aa225a9e5d61d}{uint}} account\+Number)
+\item 
+\mbox{\hyperlink{classDate}{Date}} \mbox{\hyperlink{classClient_a8ede25c8b1b8d0b3c1af8a81ae6a1b74}{get\+Acc\+Date\+Creation}} (\mbox{\hyperlink{Account_8h_a69aa29b598b851b0640aa225a9e5d61d}{uint}} account\+Number)
+\item 
+bool \mbox{\hyperlink{classClient_a35ecfb9d199c7571e999478dbb894fad}{deposit\+To\+Account}} (\mbox{\hyperlink{Account_8h_a69aa29b598b851b0640aa225a9e5d61d}{uint}} account\+Number, double amount)
+\item 
+bool \mbox{\hyperlink{classClient_a820843744e630ef90d247dd2a412072c}{withdraw\+From\+Account}} (\mbox{\hyperlink{Account_8h_a69aa29b598b851b0640aa225a9e5d61d}{uint}} account\+Number, double amount)
+\item 
+bool \mbox{\hyperlink{classClient_a7e7a12831cd02117eb806c5d5b8c093f}{delete\+Account}} (\mbox{\hyperlink{Account_8h_a69aa29b598b851b0640aa225a9e5d61d}{uint}} access\+Number)
+\item 
+void \mbox{\hyperlink{classClient_a42150f9e11bccadb8509639d55a0c98c}{lists\+Accounts}} () const
+\item 
+void \mbox{\hyperlink{classClient_aace8d7510ffeddf7f939cf8c56df880e}{print\+Client\+Info}} () const
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classClient_ae51af7aa6b8f591496a8f6a4a87a14bf}\label{classClient_ae51af7aa6b8f591496a8f6a4a87a14bf}} 
+\index{Client@{Client}!Client@{Client}}
+\index{Client@{Client}!Client@{Client}}
+\doxysubsubsection{\texorpdfstring{Client()}{Client()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily Client\+::\+Client (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classClient_a15b0acc7be6275873e97a9a3f865fa2c}\label{classClient_a15b0acc7be6275873e97a9a3f865fa2c}} 
+\index{Client@{Client}!Client@{Client}}
+\index{Client@{Client}!Client@{Client}}
+\doxysubsubsection{\texorpdfstring{Client()}{Client()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily Client\+::\+Client (\begin{DoxyParamCaption}\item[{const string \&}]{first\+Name,  }\item[{const string \&}]{last\+Name,  }\item[{const \mbox{\hyperlink{classDate}{Date}} \&}]{date\+Of\+Birth,  }\item[{\mbox{\hyperlink{Account_8h_a69aa29b598b851b0640aa225a9e5d61d}{uint}}}]{S\+SN,  }\item[{\mbox{\hyperlink{Account_8h_a69aa29b598b851b0640aa225a9e5d61d}{uint}}}]{pin }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classClient_a9500b28b17943a6e99ba2e4e98fb1732}\label{classClient_a9500b28b17943a6e99ba2e4e98fb1732}} 
+\index{Client@{Client}!Client@{Client}}
+\index{Client@{Client}!Client@{Client}}
+\doxysubsubsection{\texorpdfstring{Client()}{Client()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily Client\+::\+Client (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classClient}{Client}} \&}]{c }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classClient_a840e519ca781888cbd54181572ebe3a7}\label{classClient_a840e519ca781888cbd54181572ebe3a7}} 
+\index{Client@{Client}!````~Client@{$\sim$Client}}
+\index{````~Client@{$\sim$Client}!Client@{Client}}
+\doxysubsubsection{\texorpdfstring{$\sim$Client()}{~Client()}}
+{\footnotesize\ttfamily Client\+::$\sim$\+Client (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classClient_ae0ffdc8dc38dc9e3dc88030014596e87}\label{classClient_ae0ffdc8dc38dc9e3dc88030014596e87}} 
+\index{Client@{Client}!createAccount@{createAccount}}
+\index{createAccount@{createAccount}!Client@{Client}}
+\doxysubsubsection{\texorpdfstring{createAccount()}{createAccount()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{Account_8h_a69aa29b598b851b0640aa225a9e5d61d}{uint}} Client\+::create\+Account (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{Client_8h_a840eab7aa2b14eb7c19cabdc063a9780}{account\+Type}}}]{acc\+Type }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classClient_a7e7a12831cd02117eb806c5d5b8c093f}\label{classClient_a7e7a12831cd02117eb806c5d5b8c093f}} 
+\index{Client@{Client}!deleteAccount@{deleteAccount}}
+\index{deleteAccount@{deleteAccount}!Client@{Client}}
+\doxysubsubsection{\texorpdfstring{deleteAccount()}{deleteAccount()}}
+{\footnotesize\ttfamily bool Client\+::delete\+Account (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{Account_8h_a69aa29b598b851b0640aa225a9e5d61d}{uint}}}]{access\+Number }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classClient_a35ecfb9d199c7571e999478dbb894fad}\label{classClient_a35ecfb9d199c7571e999478dbb894fad}} 
+\index{Client@{Client}!depositToAccount@{depositToAccount}}
+\index{depositToAccount@{depositToAccount}!Client@{Client}}
+\doxysubsubsection{\texorpdfstring{depositToAccount()}{depositToAccount()}}
+{\footnotesize\ttfamily bool Client\+::deposit\+To\+Account (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{Account_8h_a69aa29b598b851b0640aa225a9e5d61d}{uint}}}]{account\+Number,  }\item[{double}]{amount }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classClient_af388cd20b997230a0beec5c6985a4aab}\label{classClient_af388cd20b997230a0beec5c6985a4aab}} 
+\index{Client@{Client}!getAccBalance@{getAccBalance}}
+\index{getAccBalance@{getAccBalance}!Client@{Client}}
+\doxysubsubsection{\texorpdfstring{getAccBalance()}{getAccBalance()}}
+{\footnotesize\ttfamily double Client\+::get\+Acc\+Balance (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{Account_8h_a69aa29b598b851b0640aa225a9e5d61d}{uint}}}]{account\+Number }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classClient_a8ede25c8b1b8d0b3c1af8a81ae6a1b74}\label{classClient_a8ede25c8b1b8d0b3c1af8a81ae6a1b74}} 
+\index{Client@{Client}!getAccDateCreation@{getAccDateCreation}}
+\index{getAccDateCreation@{getAccDateCreation}!Client@{Client}}
+\doxysubsubsection{\texorpdfstring{getAccDateCreation()}{getAccDateCreation()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classDate}{Date}} Client\+::get\+Acc\+Date\+Creation (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{Account_8h_a69aa29b598b851b0640aa225a9e5d61d}{uint}}}]{account\+Number }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classClient_a3c1dedf50cb615712f1ef65cfe3edf7d}\label{classClient_a3c1dedf50cb615712f1ef65cfe3edf7d}} 
+\index{Client@{Client}!getAccessNum@{getAccessNum}}
+\index{getAccessNum@{getAccessNum}!Client@{Client}}
+\doxysubsubsection{\texorpdfstring{getAccessNum()}{getAccessNum()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{Account_8h_a69aa29b598b851b0640aa225a9e5d61d}{uint}} Client\+::get\+Access\+Num (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+\mbox{\Hypertarget{classClient_a50cbc1efad0aa9cd19b5c8fa6e55dd5c}\label{classClient_a50cbc1efad0aa9cd19b5c8fa6e55dd5c}} 
+\index{Client@{Client}!getNumOfCheqAccounts@{getNumOfCheqAccounts}}
+\index{getNumOfCheqAccounts@{getNumOfCheqAccounts}!Client@{Client}}
+\doxysubsubsection{\texorpdfstring{getNumOfCheqAccounts()}{getNumOfCheqAccounts()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{Account_8h_a69aa29b598b851b0640aa225a9e5d61d}{uint}} Client\+::get\+Num\+Of\+Cheq\+Accounts (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+\mbox{\Hypertarget{classClient_a0519236d241194121ee21f79344b7de8}\label{classClient_a0519236d241194121ee21f79344b7de8}} 
+\index{Client@{Client}!getNumOfSavAccounts@{getNumOfSavAccounts}}
+\index{getNumOfSavAccounts@{getNumOfSavAccounts}!Client@{Client}}
+\doxysubsubsection{\texorpdfstring{getNumOfSavAccounts()}{getNumOfSavAccounts()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{Account_8h_a69aa29b598b851b0640aa225a9e5d61d}{uint}} Client\+::get\+Num\+Of\+Sav\+Accounts (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+\mbox{\Hypertarget{classClient_a42150f9e11bccadb8509639d55a0c98c}\label{classClient_a42150f9e11bccadb8509639d55a0c98c}} 
+\index{Client@{Client}!listsAccounts@{listsAccounts}}
+\index{listsAccounts@{listsAccounts}!Client@{Client}}
+\doxysubsubsection{\texorpdfstring{listsAccounts()}{listsAccounts()}}
+{\footnotesize\ttfamily void Client\+::lists\+Accounts (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+\mbox{\Hypertarget{classClient_aa8151c1cb8caeea387162026dd2913fd}\label{classClient_aa8151c1cb8caeea387162026dd2913fd}} 
+\index{Client@{Client}!operator=@{operator=}}
+\index{operator=@{operator=}!Client@{Client}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classClient}{Client}} \& Client\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classClient}{Client}} \&}]{client }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classClient_aace8d7510ffeddf7f939cf8c56df880e}\label{classClient_aace8d7510ffeddf7f939cf8c56df880e}} 
+\index{Client@{Client}!printClientInfo@{printClientInfo}}
+\index{printClientInfo@{printClientInfo}!Client@{Client}}
+\doxysubsubsection{\texorpdfstring{printClientInfo()}{printClientInfo()}}
+{\footnotesize\ttfamily void Client\+::print\+Client\+Info (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+\mbox{\Hypertarget{classClient_a764862e65b5c72f6d2b91c162d4117ae}\label{classClient_a764862e65b5c72f6d2b91c162d4117ae}} 
+\index{Client@{Client}!setPIN@{setPIN}}
+\index{setPIN@{setPIN}!Client@{Client}}
+\doxysubsubsection{\texorpdfstring{setPIN()}{setPIN()}}
+{\footnotesize\ttfamily void Client\+::set\+P\+IN (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{Account_8h_a69aa29b598b851b0640aa225a9e5d61d}{uint}}}]{pin }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classClient_aacc18405f50b36b61789900ba8daa6d0}\label{classClient_aacc18405f50b36b61789900ba8daa6d0}} 
+\index{Client@{Client}!validateLogin@{validateLogin}}
+\index{validateLogin@{validateLogin}!Client@{Client}}
+\doxysubsubsection{\texorpdfstring{validateLogin()}{validateLogin()}}
+{\footnotesize\ttfamily bool Client\+::validate\+Login (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{Account_8h_a69aa29b598b851b0640aa225a9e5d61d}{uint}}}]{access\+Number,  }\item[{\mbox{\hyperlink{Account_8h_a69aa29b598b851b0640aa225a9e5d61d}{uint}}}]{pin }\end{DoxyParamCaption}) const}
+
+\mbox{\Hypertarget{classClient_a820843744e630ef90d247dd2a412072c}\label{classClient_a820843744e630ef90d247dd2a412072c}} 
+\index{Client@{Client}!withdrawFromAccount@{withdrawFromAccount}}
+\index{withdrawFromAccount@{withdrawFromAccount}!Client@{Client}}
+\doxysubsubsection{\texorpdfstring{withdrawFromAccount()}{withdrawFromAccount()}}
+{\footnotesize\ttfamily bool Client\+::withdraw\+From\+Account (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{Account_8h_a69aa29b598b851b0640aa225a9e5d61d}{uint}}}]{account\+Number,  }\item[{double}]{amount }\end{DoxyParamCaption})}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{Client_8h}{Client.\+h}}\item 
+\mbox{\hyperlink{Client_8cpp}{Client.\+cpp}}\end{DoxyCompactItemize}
