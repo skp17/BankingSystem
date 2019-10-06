@@ -26,7 +26,7 @@ void save(Client *client, string filename) {
 void load(Client *client, string filename) {
     ifstream ifs(filename.c_str(), ifstream::binary);
     boost::archive::binary_iarchive ia(ifs, boost::archive::no_header);
-    ia >> make_binary_object((Client*)client, sizeof(Account));
+    ia >> make_binary_object((Client*)client, sizeof(Client));
 }
 
 int main() {
@@ -46,7 +46,7 @@ int main() {
         
         Client *client2 = new Client();
         load(client2, filename);
-        cout << "\n\n\nAfter loading archive";
+        cout << "\n\n\nAfter loading archive\n";
         client2->printClientInfo();
 
 

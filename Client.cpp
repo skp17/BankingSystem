@@ -56,6 +56,27 @@ Client::Client(const Client &c)
         savingsAccounts[i] = c.savingsAccounts[i];
 }
 
+Client &Client::operator=(const Client & client) {
+    accessNumber = client.accessNumber;
+    PIN = client.PIN;
+    numOfChequingAcc = client.numOfChequingAcc;
+    numOfSavingsAcc = client.numOfSavingsAcc;
+    chequingAccountsSize = client.chequingAccountsSize;
+    savingsAccountsSize = client.savingsAccountsSize;
+
+    delete [] chequingAccounts;
+    chequingAccounts = new ChequingAccount[numOfChequingAcc];
+    for (uint i = 0; i < numOfChequingAcc; i++)
+        chequingAccounts[i] = client.chequingAccounts[i];
+
+    delete [] savingsAccounts;
+    savingsAccounts = new SavingsAccount[numOfSavingsAcc];
+    for (uint i = 0; i < numOfSavingsAcc; i++)
+        savingsAccounts[i] = client.savingsAccounts[i];
+    
+    return *this;
+}
+
 Client::~Client() {
    delete [] chequingAccounts;
    delete [] savingsAccounts;

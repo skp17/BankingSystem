@@ -33,10 +33,8 @@ class Client: public Person {
             ar.register_type(static_cast<SavingsAccount *>(NULL));
             ar & accessNumber;
             ar & PIN;
-            for(uint i = 0; i < numOfChequingAcc; i++)
-                ar & chequingAccounts[i];
-            for(uint i = 0; i < numOfSavingsAcc; i++)
-                ar & savingsAccounts[i];
+            ar & chequingAccounts;
+            ar & savingsAccounts;
             ar & numOfChequingAcc;
             ar & numOfSavingsAcc;
             ar & chequingAccountsSize;
@@ -50,10 +48,8 @@ class Client: public Person {
             ar.register_type(static_cast<SavingsAccount *>(NULL));
             ar & accessNumber;
             ar & PIN;
-            for(uint i = 0; i < numOfChequingAcc; i++)
-                ar & chequingAccounts[i];
-            for(uint i = 0; i < numOfSavingsAcc; i++)
-                ar & savingsAccounts[i];
+            ar & chequingAccounts;
+            ar & savingsAccounts;
             ar & numOfChequingAcc;
             ar & numOfSavingsAcc;
             ar & chequingAccountsSize;
@@ -67,10 +63,10 @@ class Client: public Person {
         Client(const string &firstName, const string &lastName, 
             const Date &dateOfBirth, uint SSN, uint pin);
         Client(const Client&);
-        Client& operator=(const Client&); // IMPLEMENT
+        Client& operator=(const Client&);
         ~Client();
 
-        uint createAccount(accountType);// Needs modifying
+        uint createAccount(accountType);
         bool validateLogin(uint accessNumber, uint pin) const;
         void setPIN(uint pin);
         uint getAccessNum() const;
@@ -80,7 +76,7 @@ class Client: public Person {
         Date getAccDateCreation(uint accountNumber);
         bool depositToAccount(uint accountNumber, double amount);
         bool withdrawFromAccount(uint accountNumber, double amount);
-        bool deleteAccount(uint accessNumber);  // IMPLEMENT
+        bool deleteAccount(uint accessNumber);
         void listsAccounts() const;
         void printClientInfo() const;
 };

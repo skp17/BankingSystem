@@ -9,7 +9,7 @@ using uint = unsigned int;
 
 Person::Person() {
     Date birth;
-    setDateofBirth(birth).setSSN(0).setName("Lastname", "Firstname");
+    setDateofBirth(birth).setSSN(0).setName("Firstname", "Lastname");
     setAddress("").setTelephone("").setEmail("");
 }
 
