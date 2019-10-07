@@ -19,9 +19,8 @@ TEST_CASE( "Create a new client" ) {
         struct tm *t_now = localtime(&now);
 
         Date dateOfBirth(9, 10,1940);
-        Client client1("John", "Lennon", dateOfBirth, 123456789, 4019);
-        client1.setAddress("9 St-Catherine Est").setTelephone("514-777-7777");
-        client1.setEmail("jlennon@gmail.com");
+        Client client1("John", "Lennon", dateOfBirth, 123456789, 4019, 
+        "9 St-Catherine Est", "514-777-7777", "jlennon@gmail.com");
 
         REQUIRE( client1.getFName() == "John" );
         REQUIRE( client1.getLName() == "Lennon" );
@@ -34,10 +33,8 @@ TEST_CASE( "Create a new client" ) {
         REQUIRE( client1.getTelephone() == "514-777-7777");
         REQUIRE( client1.getEmail() == "jlennon@gmail.com");
 
-        REQUIRE( client1.getNumOfCheqAccounts() == 1);
-        REQUIRE( client1.getNumOfSavAccounts() == 1);
-        REQUIRE( client1.getAccBalance(101001) == 0.0);
-        REQUIRE( client1.getAccBalance(201001) == 0.0);
+        REQUIRE( client1.getNumOfCheqAccounts() == 0);
+        REQUIRE( client1.getNumOfSavAccounts() == 0);
 
         uint accessNumber = client1.getAccessNum();
         REQUIRE( client1.validateLogin(accessNumber, 4019) == true );
@@ -58,8 +55,8 @@ TEST_CASE( "Create a new client" ) {
             REQUIRE( client2.getTelephone() == "514-777-7777");
             REQUIRE( client2.getEmail() == "jlennon@gmail.com");
 
-            REQUIRE( client2.getNumOfCheqAccounts() == 1);
-            REQUIRE( client2.getNumOfSavAccounts() == 1);
+            REQUIRE( client2.getNumOfCheqAccounts() == 0);
+            REQUIRE( client2.getNumOfSavAccounts() == 0);
         }
 
     
@@ -67,7 +64,7 @@ TEST_CASE( "Create a new client" ) {
             client1.setPIN(1111);
             REQUIRE( client1.validateLogin(accessNumber, 1111) == true );
         }
-
+        /*
         SECTION( "Perform transactions" ) {
             client1.depositToAccount(101004, 525.25);
             client1.depositToAccount(201004, 100.00);
@@ -76,6 +73,7 @@ TEST_CASE( "Create a new client" ) {
             // Overdraft
             client1.withdrawFromAccount(201004, 200.00);
         }
+        */
         
         SECTION( "Create another account") {
             uint newAccNum = client1.createAccount(accountType::Chequing);
@@ -109,10 +107,6 @@ TEST_CASE( "Create a new client" ) {
     catch( const exception &e) {
         cerr << "Exception: " << e.what() << endl << endl;
     }
-
-
-
-
-    
-
 } 
+
+// g++ -I /usr/local/boost_1_61_0/ -I ../source/ ../source/Date.cpp ../source/Person.cpp ../source/Account.cpp ../source/ChequingAccount.cpp ../source/SavingsAccount.cpp ../source/Client.cpp  testClient.cpp -o testClient /usr/local/boost_1_61_0/bin.v2/libs/serialization/build/gcc-5.4.0/release/link-static/threading-multi/libboost_serialization.a -std=c++11 -Wall
