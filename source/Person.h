@@ -10,7 +10,7 @@ using namespace boost::archive;
 using uint = unsigned int;
 
 class Person {
-    private:
+    protected:
         Date dateOfBirth;
         uint SSN; // Social Security Number
         string firstName, lastName;

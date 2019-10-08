@@ -54,6 +54,7 @@ Client::Client(const Client &c)
       savingsAccountsSize(c.numOfSavingsAcc)
 {   
     clientCount++;
+    setAge();
     chequingAccounts = new ChequingAccount[numOfChequingAcc];
     for (uint i = 0; i < numOfChequingAcc; i++)
         chequingAccounts[i] = c.chequingAccounts[i];
@@ -64,6 +65,14 @@ Client::Client(const Client &c)
 }
 
 Client &Client::operator=(const Client & client) {
+    firstName = client.firstName;
+    lastName = client.lastName;
+    dateOfBirth = client.dateOfBirth;
+    age = client.age;
+    SSN = client.SSN;
+    address = client.address;
+    telephone = client.telephone;
+    email = client.email;
     accessNumber = client.accessNumber;
     PIN = client.PIN;
     numOfChequingAcc = client.numOfChequingAcc;
@@ -71,23 +80,26 @@ Client &Client::operator=(const Client & client) {
     chequingAccountsSize = client.chequingAccountsSize;
     savingsAccountsSize = client.savingsAccountsSize;
 
-    delete [] chequingAccounts;
+    if(numOfChequingAcc > 0)
+        delete [] chequingAccounts;
     chequingAccounts = new ChequingAccount[numOfChequingAcc];
     for (uint i = 0; i < numOfChequingAcc; i++)
         chequingAccounts[i] = client.chequingAccounts[i];
 
-    delete [] savingsAccounts;
+    if(numOfSavingsAcc > 0)
+        delete [] savingsAccounts;
     savingsAccounts = new SavingsAccount[numOfSavingsAcc];
     for (uint i = 0; i < numOfSavingsAcc; i++)
         savingsAccounts[i] = client.savingsAccounts[i];
     
-    cout << "Operator= invoked\n";
     return *this;
 }
 
 Client::~Client() {
-   delete [] chequingAccounts;
-   delete [] savingsAccounts;
+    if(numOfChequingAcc > 0)
+        delete [] chequingAccounts;
+    if(numOfSavingsAcc > 0)
+        delete [] savingsAccounts;
 }
 
 void Client::setAccessNum() {
@@ -127,7 +139,8 @@ uint Client::createAccount(accountType accType) { // Chequing = 0, Savings = 1
             tmp_arr[i] = chequingAccounts[i];
 
         // Allocate new space for new account
-        delete [] chequingAccounts;
+        if( numOfChequingAcc > 0)
+            delete [] chequingAccounts;
         chequingAccounts = new (nothrow) ChequingAccount[numOfChequingAcc + 1];
         
         // If new allocation fails, restore accounts from tmp_arr
@@ -158,7 +171,8 @@ uint Client::createAccount(accountType accType) { // Chequing = 0, Savings = 1
             tmp_arr[i] = savingsAccounts[i];
 
         // Allocate new space for new account
-        delete [] savingsAccounts;
+        if(numOfSavingsAcc > 0)
+            delete [] savingsAccounts;
         savingsAccounts = new (nothrow) SavingsAccount[numOfSavingsAcc + 1];
         
         // If new allocation fails, restore accounts from tmp_arr

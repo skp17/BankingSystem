@@ -4,54 +4,60 @@
 #include "Client.h"
 #include "Account.h"
 #include <string>
-#include <vector>
-#include <boost/serialization/vector.hpp>
 #include <boost/serialization/string.hpp>
 #include <boost/serialization/version.hpp>
 using namespace std;
+using namespace boost::archive;
 using uint = unsigned int;
 
 enum class typeID {accessNumber, SSN};
 
 class BankManager {
     private:
-        const string bankName;      // Name of the bank
-        const string filename;      // Name of file where data is stored
-        vector<Client *> clients;   // Clients of the bank
+        const string bankName;  // Name of the bank
+        const string filename;  // Name of file where data is stored
+        Client* clients;        // Clients of the bank
         uint nClients;
-        //vector<Account *> accounts;
 
+        friend class boost::serialization::access;
         template<class Archive>
         void save(Archive &ar, const uint version) {
             ar.register_type(static_cast<Client *>(NULL));
             ar & bankName;
             ar & filename;
-            ar & clients;
+            ar & nClients;
+            for(uint i = 0; i < nClients; i++)
+                ar & clients[i];
         }
         template<class Archive>
         void load(Archive &ar, const uint version) {
             ar.register_type(static_cast<Client *>(NULL));
             ar & bankName;
             ar & filename;
-            ar & clients;
+            ar & nClients;
+            clients = new Client[nClients];
+            for(uint i = 0; i < nClients; i++)
+                ar & clients[i];
         }
         BOOST_SERIALIZATION_SPLIT_MEMBER()
 
     public:
         BankManager();
+        BankManager(const BankManager&);
+        BankManager& operator=(const BankManager&);
         ~BankManager();
 
-        Client * getClient(enum typeID, uint number);
-        bool addClient(Client*);
+        Client* getClient(enum typeID, uint number);
+        bool addClient(Client&);
         bool removeClient(uint accessNumber);
         string getBankName() const;
         string getfilename() const;     // Returns name of file where data is stored
         uint getNumOfClients() const;
         void print() const;
 
-        void saveArchive();
-        bool loadArchive();
-        void backupArchive();
+        //void saveArchive();
+        //bool loadArchive();
+        //void backupArchive();
 };
 
 BOOST_CLASS_VERSION(BankManager, 0)

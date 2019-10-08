@@ -18,10 +18,10 @@ void save(const Person &p) {
     oa << make_binary_object((Person*)&p, sizeof(Person));
 }
 
-void load(const Person *p) {
+void load(const Person &p) {
     ifstream ifs("person.dat", ifstream::binary | ifstream::in);
     boost::archive::binary_iarchive ia(ifs, boost::archive::no_header);
-    ia >> make_binary_object((Person*)p, sizeof(Person));
+    ia >> make_binary_object((Person*)&p, sizeof(Person));
 }
 
 int main() {
@@ -34,9 +34,11 @@ int main() {
 
         save(p1);
 
-        Person *p2 = new Person;
-        load(p2);
-        p2->printPersonInfo();
+        Person p2;
+        ifstream ifs("person.dat", ifstream::binary | ifstream::in);
+        boost::archive::binary_iarchive ia(ifs, boost::archive::no_header);
+        ia >> make_binary_object(&p1, sizeof(Person));
+        p1.printPersonInfo();
     }
     catch( const exception &e ) {
         cerr << e.what() << endl;

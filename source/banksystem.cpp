@@ -21,18 +21,20 @@ using boost::serialization::make_binary_object;
 
 const string filename = "bank.dat";
 
-void saveArchive(BankManager *BM) {
-    cout << "Saving\n";
+BankManager *BM;
+
+void saveArchive(BankManager BM) {
+    cout << "Saving...\n";
     ofstream ofs(filename.c_str(), ofstream::binary);
     boost::archive::binary_oarchive oa(ofs, boost::archive::no_header);
-    oa << make_binary_object((BankManager*)BM, sizeof(BankManager));
+    oa << make_binary_object((BankManager*)&BM, sizeof(BankManager));
 }
 
 bool loadArchive(BankManager *BM) {
     bool result = false;
     ifstream ifs(filename.c_str(), ifstream::binary);
     if ( ifs.is_open() ) {
-        cout << "Loading\n";
+        cout << "Loading...\n";
         boost::archive::binary_iarchive ia(ifs, boost::archive::no_header);
         ia >> make_binary_object((BankManager*)BM, sizeof(BankManager));
         result = true;
@@ -41,25 +43,98 @@ bool loadArchive(BankManager *BM) {
     return result;
 }
 
+bool loginSection() {
+    uint accessNumber, pin;
+    termios oldt, newt;
+    bool valid = false;
+    string input;
+
+    cout << "\nEnter 'return' at anytime to go back\n\n";
+
+    do {
+            cout << "Enter your access number: \n";
+            if (isatty(STDIN_FILENO))
+                cout << "prompt> ";
+            cin >> input;
+
+            if( input == "return") break;
+
+            accessNumber = stoi(input);
+            
+            cout << "Enter your pin: \n";
+            if (isatty(STDIN_FILENO))
+                cout << "prompt> ";
+
+            /* Turn echoing off */
+            tcgetattr(STDIN_FILENO, &oldt);
+            termios newt = oldt;
+            newt.c_lflag &= ~ECHO;
+            tcsetattr(STDIN_FILENO, TCSANOW, &newt);
+            
+            /* Read pin */
+            cin >> input;
+            pin = stoi(input);
+            
+            /* Reset terminal */
+            tcsetattr(STDIN_FILENO, TCSAFLUSH, &oldt);
+
+
+            if( BM->getClient(typeID::accessNumber, accessNumber)->
+                validateLogin(accessNumber, pin) ) {
+                valid = true;
+            }
+            else {
+                cout << "Failed to login.\n";
+            }
+    } while(!valid);
+
+    if(valid)
+        cout << "logged in\n";
+
+    return valid;
+}
+
+bool registration() {
+
+}
+
+bool clientProfile() {
+
+}
+
+
 int main() {
 
     try {
-        
-        BankManager *BM = new BankManager;
+        BM = new BankManager;
         loadArchive(BM);
-        cout << "# of clients: " << BM->getNumOfClients() << endl;
-/*
-        Date dateOfBirth(9, 10,1940);
-        Client *newClient = new Client("John", "Lennon", dateOfBirth, 123456789, 4019);
-        newClient->setAddress("9 St-Catherine Est");
-        newClient->setTelephone("514-777-7777");
-        newClient->setEmail("jlennon@gmail.com");
-        newClient->setPIN(1111);
-        BM->addClient(newClient);
         
-        cout << "# of clients: " << BM->getNumOfClients() << endl;
-        */
-        saveArchive(BM);
+        string input = "";
+        while(1) {
+            cout << "Options: \n";
+            cout << "\tEnter 'login' to access acounts.\n";
+            cout << "\tEnter 'new' to become a client at " << BM->getBankName() << ".\n";
+            cout << "\tEnter 'exit' to quit.\n\n";
+            cout << "prompt> ";
+            cin >> input;
+
+            if( input == "login" ) {
+                loginSection();
+            } 
+            else if( input == "new" ) {
+                registration();
+            }
+            else if( input == "exit") {
+                break;
+            }
+            else
+                cerr << "Invalid input\n\n";
+
+            
+
+        }
+
+        //saveArchive(BM);
 
     }
     catch( const exception &e ) {

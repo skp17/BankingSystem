@@ -27,9 +27,9 @@ int main() {
     boost::archive::binary_iarchive ia(ifs, boost::archive::no_header);
 
     // restore date from the archive
-    ia >> make_binary_object(&new_date, sizeof(Date));
+    ia >> make_binary_object(&orig_date, sizeof(Date));
 
-    new_date.printDate();
+    orig_date.printDate();
 
     ifs.close();
 

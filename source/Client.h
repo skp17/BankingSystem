@@ -10,6 +10,8 @@
 #include <boost/serialization/base_object.hpp>
 #include <boost/serialization/version.hpp>
 
+using namespace boost::archive;
+
 enum class accountType {Chequing, Savings};
 
 class Client: public Person {
@@ -27,6 +29,7 @@ class Client: public Person {
         Account* getAccount(uint accountNumber);  // Get account
         void setAccessNum();
 
+        friend class boost::serialization::access;
         template<class Archive>
         void save(Archive &ar, const uint version) {
             ar & boost::serialization::base_object<Person>(*this);

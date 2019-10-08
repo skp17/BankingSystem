@@ -32,7 +32,7 @@ void load(Client *client, string filename) {
 int main() {
     try {
         string filename = "client.dat";
-        Date dateOfBirth(9, 10,1940);
+        Date dateOfBirth(9, 10, 1940);
         Client *client1 = new Client("John", "Lennon", dateOfBirth, 123456789, 4019);
         client1->setAddress("9 St-Catherine Est");
         client1->setTelephone("514-777-7777");
