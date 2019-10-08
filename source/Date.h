@@ -3,6 +3,7 @@
 
 #include <boost/serialization/version.hpp>
 #include <boost/serialization/split_member.hpp>
+#include <boost/serialization/nvp.hpp>
 
 using namespace std;
 using uint = unsigned int;
@@ -13,13 +14,17 @@ class Date {
 
         friend class boost::serialization::access;
         template<class Archive>
-        void save(Archive &ar, const uint version /* file_version */) {
+        void save(Archive &ar, const uint version /* file_version */) const {
             // Version is always the latest when saving
-            ar & m_day & m_month & m_year;
+            ar & BOOST_SERIALIZATION_NVP(m_day); 
+            ar & BOOST_SERIALIZATION_NVP(m_month);
+            ar & BOOST_SERIALIZATION_NVP(m_year);
         }
         template<class Archive>
         void load(Archive &ar, const uint version) {
-            ar & m_day & m_month & m_year;
+            ar & BOOST_SERIALIZATION_NVP(m_day); 
+            ar & BOOST_SERIALIZATION_NVP(m_month);
+            ar & BOOST_SERIALIZATION_NVP(m_year);
 
             // Add new data members here in future version
             // if(version > 0)

@@ -26,8 +26,7 @@ class BankManager {
             ar & bankName;
             ar & filename;
             ar & nClients;
-            for(uint i = 0; i < nClients; i++)
-                ar & clients[i];
+            ar & clients;
         }
         template<class Archive>
         void load(Archive &ar, const uint version) {
@@ -35,9 +34,7 @@ class BankManager {
             ar & bankName;
             ar & filename;
             ar & nClients;
-            clients = new Client[nClients];
-            for(uint i = 0; i < nClients; i++)
-                ar & clients[i];
+            ar & clients;
         }
         BOOST_SERIALIZATION_SPLIT_MEMBER()
 

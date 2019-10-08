@@ -3,6 +3,7 @@
 
 #include "Date.h"
 #include <string>
+#include <boost/serialization/nvp.hpp>
 #include <boost/serialization/string.hpp>
 
 using namespace std;
@@ -20,27 +21,27 @@ class Person {
 
         friend class boost::serialization::access;
         template<class Archive>
-        void save(Archive &ar, const uint version /* file_version */) {
+        void save(Archive &ar, const uint version /* file_version */) const {
             // Version is always the latest when saving
-            ar & dateOfBirth;
-            ar & SSN ;
-            ar & age;
-            ar & firstName;
-            ar & lastName;
-            ar & address;
-            ar & telephone;
-            ar & email;
+            ar & BOOST_SERIALIZATION_NVP(dateOfBirth);
+            ar & BOOST_SERIALIZATION_NVP(SSN) ;
+            ar & BOOST_SERIALIZATION_NVP(age);
+            ar & BOOST_SERIALIZATION_NVP(firstName);
+            ar & BOOST_SERIALIZATION_NVP(lastName);
+            ar & BOOST_SERIALIZATION_NVP(address);
+            ar & BOOST_SERIALIZATION_NVP(telephone);
+            ar & BOOST_SERIALIZATION_NVP(email);
         }
         template<class Archive>
         void load(Archive &ar, const uint version) {
-            ar & dateOfBirth;
-            ar & SSN ;
-            ar & age;
-            ar & firstName;
-            ar & lastName;
-            ar & address;
-            ar & telephone;
-            ar & email;
+            ar & BOOST_SERIALIZATION_NVP(dateOfBirth);
+            ar & BOOST_SERIALIZATION_NVP(SSN) ;
+            ar & BOOST_SERIALIZATION_NVP(age);
+            ar & BOOST_SERIALIZATION_NVP(firstName);
+            ar & BOOST_SERIALIZATION_NVP(lastName);
+            ar & BOOST_SERIALIZATION_NVP(address);
+            ar & BOOST_SERIALIZATION_NVP(telephone);
+            ar & BOOST_SERIALIZATION_NVP(email);
 
             // Add new data members here in future version
             // if(version > 0)

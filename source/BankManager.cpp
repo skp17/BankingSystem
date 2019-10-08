@@ -7,14 +7,7 @@
 #include "SavingsAccount.h"
 #include "BankManager.h"
 
-#include <boost/archive/binary_iarchive.hpp>
-#include <boost/archive/binary_oarchive.hpp>
-#include <boost/serialization/binary_object.hpp>
-#include <boost/serialization/serialization.hpp>
-#include <boost/serialization/vector.hpp>
-
 using namespace std;
-using boost::serialization::make_binary_object;
 
 BankManager::BankManager() 
     : bankName("Bank Personel"), filename("bank.dat") 

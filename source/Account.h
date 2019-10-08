@@ -5,6 +5,7 @@
 #include <boost/serialization/version.hpp>
 #include <boost/serialization/split_member.hpp>
 #include <boost/serialization/assume_abstract.hpp>
+#include <boost/serialization/nvp.hpp>
 
 using uint = unsigned int;
 
@@ -19,18 +20,18 @@ class Account {
 
         friend class boost::serialization::access;
         template<class Archive>
-        void save(Archive &ar, const uint version) {
-            ar & accNum;
-            ar & accountTypeNumber;
-            ar & dateCreated;
-            ar & balance;
+        void save(Archive &ar, const uint version) const {
+            ar & BOOST_SERIALIZATION_NVP(accNum);
+            ar & BOOST_SERIALIZATION_NVP(accountTypeNumber);
+            ar & BOOST_SERIALIZATION_NVP(dateCreated);
+            ar & BOOST_SERIALIZATION_NVP(balance);
         }
         template<class Archive>
         void load(Archive &ar, const uint version) {
-            ar & accNum;
-            ar & accountTypeNumber;
-            ar & dateCreated;
-            ar & balance;
+            ar & BOOST_SERIALIZATION_NVP(accNum);
+            ar & BOOST_SERIALIZATION_NVP(accountTypeNumber);
+            ar & BOOST_SERIALIZATION_NVP(dateCreated);
+            ar & BOOST_SERIALIZATION_NVP(balance);
         }
         BOOST_SERIALIZATION_SPLIT_MEMBER()
 
@@ -51,7 +52,7 @@ class Account {
         virtual void print() const = 0;
 };
 
-BOOST_CLASS_VERSION(Account, 0)
 BOOST_SERIALIZATION_ASSUME_ABSTRACT(Account)
+BOOST_CLASS_VERSION(Account, 0)
 
 #endif /* ACCOUNT_H */

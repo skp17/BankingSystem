@@ -11,16 +11,16 @@ class ChequingAccount: public Account {
 
         friend class boost::serialization::access;
         template<class Archive>
-        void save(Archive &ar, const uint version) {
+        void save(Archive &ar, const uint version) const {
             // save base class information
-            ar & boost::serialization::base_object<Account>(*this);
-            ar & chequingCount;
+            ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(Account);
+            ar & BOOST_SERIALIZATION_NVP(chequingCount);
         }
         template<class Archive>
         void load(Archive &ar, const uint version) {
             // load base class information
-            ar & boost::serialization::base_object<Account>(*this);
-            ar & chequingCount;
+            ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(Account);
+            ar & BOOST_SERIALIZATION_NVP(chequingCount);
         }
         BOOST_SERIALIZATION_SPLIT_MEMBER()
 
