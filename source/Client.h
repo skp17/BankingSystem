@@ -42,7 +42,7 @@ class Client: public Person {
             ar & BOOST_SERIALIZATION_NVP(numOfSavingsAcc);
             ar & BOOST_SERIALIZATION_NVP(chequingAccountsSize);
             ar & BOOST_SERIALIZATION_NVP(savingsAccountsSize);
-            //ar & BOOST_SERIALIZATION_NVP(clientCount);
+            ar & BOOST_SERIALIZATION_NVP(clientCount);
         }
         template<class Archive>
         void load(Archive &ar, const uint version) {
@@ -57,7 +57,7 @@ class Client: public Person {
             ar & BOOST_SERIALIZATION_NVP(numOfSavingsAcc);
             ar & BOOST_SERIALIZATION_NVP(chequingAccountsSize);
             ar & BOOST_SERIALIZATION_NVP(savingsAccountsSize);
-            //ar & BOOST_SERIALIZATION_NVP(clientCount);
+            ar & BOOST_SERIALIZATION_NVP(clientCount);
         }
         BOOST_SERIALIZATION_SPLIT_MEMBER()
 

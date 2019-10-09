@@ -33,10 +33,17 @@ int main() {
         p1.setAddress("9 St-Catherine Est").setTelephone("514-777-7777");
         p1.setEmail("jlennon@gmail.com");
 
+        Date dateOfBirth2(1, 5, 1996);
+        Person p2("Peter", "Parker", dateOfBirth2, 987654321);
+        p2.setAddress("69th Road, Forest Hills");
+        p2.setTelephone("917-777-7777");
+        p2.setEmail("parker@gmail.com");
+
         ofstream ofs(filename.c_str());
         assert(ofs.good());
         boost::archive::xml_oarchive oa(ofs);
         oa << BOOST_SERIALIZATION_NVP(p1);
+        oa << BOOST_SERIALIZATION_NVP(p2);
 
     }
     catch( const exception &e ) {

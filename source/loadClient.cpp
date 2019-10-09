@@ -18,14 +18,14 @@ BOOST_CLASS_EXPORT(Client)
 using namespace std;
 
 void save(Client *client, string filename) {
-    ofstream ofs(filename.c_str(), ofstream::binary);
+    ofstream ofs(filename.c_str());
     boost::archive::xml_oarchive oa(ofs);
     oa << BOOST_SERIALIZATION_NVP(client);
 }
 
 // Notice client passed as reference and not as pointer
 void load(Client &client, string filename) {
-    ifstream ifs(filename.c_str(), ifstream::binary);
+    ifstream ifs(filename.c_str());
     boost::archive::xml_iarchive ia(ifs);
     ia >> BOOST_SERIALIZATION_NVP(client);
 }
@@ -34,9 +34,20 @@ int main() {
     try {
 
         string filename = "client.xml";
-        Client *client = new Client();
-        load(*client, filename);
-        client->printClientInfo();
+        Client *client1 = new Client();
+        Client *client2 = new Client();
+
+        //load(*client, filename);
+
+        ifstream ifs(filename.c_str());
+        boost::archive::xml_iarchive ia(ifs);
+        ia >> BOOST_SERIALIZATION_NVP(client1);
+        ia >> BOOST_SERIALIZATION_NVP(client2);
+
+
+        client1->printClientInfo();
+        client2->printClientInfo();
+
 
     }
     catch ( const exception &e ) {

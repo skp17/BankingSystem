@@ -24,8 +24,11 @@ int main() {
         p1.setAddress("9 St-Catherine Est").setTelephone("514-777-7777");
         p1.setEmail("jlennon@gmail.com");
 
-        Account *cheq = new ChequingAccount();
-        cheq->deposit(500.25);
+        Account *cheq1 = new ChequingAccount();
+        cheq1->deposit(500.25);
+
+        Account *cheq2 = new ChequingAccount();
+        cheq2->deposit(100.00);
 
         Account *sav = new SavingsAccount();
         sav->deposit(700.50);
@@ -34,7 +37,8 @@ int main() {
         assert(ofs.good());
         boost::archive::xml_oarchive oa(ofs);
         oa << BOOST_SERIALIZATION_NVP(p1);
-        oa << BOOST_SERIALIZATION_NVP(cheq);
+        oa << BOOST_SERIALIZATION_NVP(cheq1);
+        oa << BOOST_SERIALIZATION_NVP(cheq2);
         oa << BOOST_SERIALIZATION_NVP(sav);
 
     }
