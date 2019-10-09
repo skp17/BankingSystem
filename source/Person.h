@@ -23,22 +23,22 @@ class Person {
         template<class Archive>
         void save(Archive &ar, const uint version /* file_version */) const {
             // Version is always the latest when saving
-            ar & BOOST_SERIALIZATION_NVP(dateOfBirth);
-            ar & BOOST_SERIALIZATION_NVP(SSN) ;
-            ar & BOOST_SERIALIZATION_NVP(age);
             ar & BOOST_SERIALIZATION_NVP(firstName);
             ar & BOOST_SERIALIZATION_NVP(lastName);
+            ar & BOOST_SERIALIZATION_NVP(dateOfBirth);
+            ar & BOOST_SERIALIZATION_NVP(age);
+            ar & BOOST_SERIALIZATION_NVP(SSN);
             ar & BOOST_SERIALIZATION_NVP(address);
             ar & BOOST_SERIALIZATION_NVP(telephone);
             ar & BOOST_SERIALIZATION_NVP(email);
         }
         template<class Archive>
         void load(Archive &ar, const uint version) {
-            ar & BOOST_SERIALIZATION_NVP(dateOfBirth);
-            ar & BOOST_SERIALIZATION_NVP(SSN) ;
-            ar & BOOST_SERIALIZATION_NVP(age);
             ar & BOOST_SERIALIZATION_NVP(firstName);
             ar & BOOST_SERIALIZATION_NVP(lastName);
+            ar & BOOST_SERIALIZATION_NVP(dateOfBirth);
+            ar & BOOST_SERIALIZATION_NVP(age);
+            ar & BOOST_SERIALIZATION_NVP(SSN);
             ar & BOOST_SERIALIZATION_NVP(address);
             ar & BOOST_SERIALIZATION_NVP(telephone);
             ar & BOOST_SERIALIZATION_NVP(email);

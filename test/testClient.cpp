@@ -18,6 +18,8 @@ TEST_CASE( "Create a new client" ) {
         time_t now = time(0);
         struct tm *t_now = localtime(&now);
 
+        uint cheqAccountNumber;
+
         Date dateOfBirth(9, 10,1940);
         Client client1("John", "Lennon", dateOfBirth, 123456789, 4019, 
         "9 St-Catherine Est", "514-777-7777", "jlennon@gmail.com");
@@ -39,7 +41,7 @@ TEST_CASE( "Create a new client" ) {
         uint accessNumber = client1.getAccessNum();
         REQUIRE( client1.validateLogin(accessNumber, 4019) == true );
 
-        client1.listsAccounts();
+        //client1.listsAccounts();
 
         SECTION( "Copy client object") {
             Client client2 = client1;
@@ -64,36 +66,46 @@ TEST_CASE( "Create a new client" ) {
             client1.setPIN(1111);
             REQUIRE( client1.validateLogin(accessNumber, 1111) == true );
         }
-        /*
-        SECTION( "Perform transactions" ) {
-            client1.depositToAccount(101004, 525.25);
-            client1.depositToAccount(201004, 100.00);
-            client1.withdrawFromAccount(101001, 125.25);
-            REQUIRE( client1.getAccBalance(101001) == (525.25-125.25));
+        
+        SECTION( "Create accounts and perform transactions" ) {
+            uint newAccountNumber;
+            newAccountNumber = client1.createAccount(accountType::Chequing);
+            client1.depositToAccount(newAccountNumber, 525.25);
+
+            newAccountNumber = client1.createAccount(accountType::Savings);
+            client1.depositToAccount(newAccountNumber, 225.25);
+            client1.withdrawFromAccount(newAccountNumber, 125.25);
+            REQUIRE( client1.getAccBalance(newAccountNumber) == (225.25-125.25));
+            
             // Overdraft
-            client1.withdrawFromAccount(201004, 200.00);
+            client1.withdrawFromAccount(newAccountNumber, 200.00);
         }
-        */
+        
         
         SECTION( "Create another account") {
-            uint newAccNum = client1.createAccount(accountType::Chequing);
-            REQUIRE( client1.getNumOfCheqAccounts() == 2);
-            REQUIRE( client1.getNumOfSavAccounts() == 1);
-            REQUIRE( client1.getAccBalance(newAccNum) == 0);
-            client1.depositToAccount(newAccNum, 50.75);
-            REQUIRE( client1.getAccBalance(newAccNum) == 50.75);
+            uint cheqAccountNumber = client1.createAccount(accountType::Chequing);
+            REQUIRE( client1.getNumOfCheqAccounts() == 2 );
+            REQUIRE( client1.getNumOfSavAccounts() == 1 );
+            REQUIRE( client1.getAccBalance(cheqAccountNumber) == 0 );
+            client1.depositToAccount(cheqAccountNumber, 50.75);
+            REQUIRE( client1.getAccBalance(cheqAccountNumber) == 50.75 );
             
-            newAccNum = client1.createAccount(accountType::Savings);
-            REQUIRE( client1.getNumOfCheqAccounts() == 2);
-            REQUIRE( client1.getNumOfSavAccounts() == 2);
-            REQUIRE( client1.getAccBalance(newAccNum) == 0);
+            uint newAccNum = client1.createAccount(accountType::Savings);
+            REQUIRE( client1.getNumOfCheqAccounts() == 2 );
+            REQUIRE( client1.getNumOfSavAccounts() == 2 );
+            REQUIRE( client1.getAccBalance(newAccNum) == 0 );
             client1.depositToAccount(newAccNum, 90.20);
-            REQUIRE( client1.getAccBalance(newAccNum) == 90.20);
+            REQUIRE( client1.getAccBalance(newAccNum) == 90.20 );
         }
         
 
         SECTION( "Delete account" ) {
-
+            bool isdeleted = client1.deleteAccount(cheqAccountNumber);
+            REQUIRE( isdeleted == false );
+            client1.withdrawFromAccount(cheqAccountNumber, 50.75);
+            isdeleted = client1.deleteAccount(cheqAccountNumber);
+            REQUIRE( client1.getNumOfCheqAccounts() == 1 );
+            REQUIRE( client1.getNumOfSavAccounts() == 2 );
         }
 
 

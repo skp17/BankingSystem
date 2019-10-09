@@ -7,6 +7,8 @@
 #include "SavingsAccount.h"
 #include "ChequingAccount.h"
 #include <ctime>
+#include <vector>
+#include <boost/serialization/vector.hpp>
 #include <boost/serialization/base_object.hpp>
 
 using namespace boost::archive;
@@ -17,12 +19,8 @@ class Client: public Person {
     private:
         uint accessNumber;          // user's banking access number 
         uint PIN;                   // user's pin 
-        Account *chequingAccounts;  // Contains pointers to chequing accounts
-        Account *savingsAccounts;   // Contains pointers to savings accounts
-        uint numOfChequingAcc;      // no. of chequing accounts user has
-        uint numOfSavingsAcc;       // no. of savings accounts user has
-        uint chequingAccountsSize;  // Current size of chequingAccounts array
-        uint savingsAccountsSize;   // Current size of savingsAccounts array
+        vector<Account*> chequingAccounts;  // Contains pointers to chequing accounts
+        vector<Account*> savingsAccounts;   // Contains pointers to savings accounts
         static uint clientCount;    // Keep track of number of clients created
 
         Account* getAccount(uint accountNumber);  // Get account
@@ -38,10 +36,6 @@ class Client: public Person {
             ar & BOOST_SERIALIZATION_NVP(PIN);
             ar & BOOST_SERIALIZATION_NVP(chequingAccounts);
             ar & BOOST_SERIALIZATION_NVP(savingsAccounts);
-            ar & BOOST_SERIALIZATION_NVP(numOfChequingAcc);
-            ar & BOOST_SERIALIZATION_NVP(numOfSavingsAcc);
-            ar & BOOST_SERIALIZATION_NVP(chequingAccountsSize);
-            ar & BOOST_SERIALIZATION_NVP(savingsAccountsSize);
             ar & BOOST_SERIALIZATION_NVP(clientCount);
         }
         template<class Archive>
@@ -53,10 +47,6 @@ class Client: public Person {
             ar & BOOST_SERIALIZATION_NVP(PIN);
             ar & BOOST_SERIALIZATION_NVP(chequingAccounts);
             ar & BOOST_SERIALIZATION_NVP(savingsAccounts);
-            ar & BOOST_SERIALIZATION_NVP(numOfChequingAcc);
-            ar & BOOST_SERIALIZATION_NVP(numOfSavingsAcc);
-            ar & BOOST_SERIALIZATION_NVP(chequingAccountsSize);
-            ar & BOOST_SERIALIZATION_NVP(savingsAccountsSize);
             ar & BOOST_SERIALIZATION_NVP(clientCount);
         }
         BOOST_SERIALIZATION_SPLIT_MEMBER()
@@ -82,8 +72,8 @@ class Client: public Person {
         bool withdrawFromAccount(uint accountNumber, double amount);
         bool deleteAccount(uint accountNumber);
         bool deleteAllAccounts();
-        void listsAccounts() const;
-        void printClientInfo() const;
+        void listsAccounts();
+        void printClientInfo();
 };
 
 BOOST_CLASS_VERSION(Client, 0)

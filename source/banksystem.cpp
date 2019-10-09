@@ -1,42 +1,42 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <termios.h>
+#include <boost/archive/xml_iarchive.hpp>
+#include <boost/archive/xml_oarchive.hpp>
+#include <boost/serialization/export.hpp>
+#include <boost/serialization/vector.hpp>
+
 #include "Date.h"
 #include "Person.h"
 #include "Account.h"
 #include "ChequingAccount.h"
+BOOST_CLASS_EXPORT(ChequingAccount)
 #include "SavingsAccount.h"
+BOOST_CLASS_EXPORT(SavingsAccount)
 #include "Client.h"
+BOOST_CLASS_EXPORT(Client)
 #include "BankManager.h"
-#include <iostream>
-#include <fstream>
-#include <string>
-#include <unistd.h>
-#include <termios.h>
-
-#include <boost/archive/binary_iarchive.hpp>
-#include <boost/archive/binary_oarchive.hpp>
-#include <boost/serialization/binary_object.hpp>
-#include <boost/serialization/serialization.hpp>
 
 using namespace std;
-using boost::serialization::make_binary_object;
 
-const string filename = "bank.dat";
+BankManager BM;
+const string filename = "bank.xml";
 
-BankManager *BM;
-
-void saveArchive(BankManager BM) {
+void saveArchive(BankManager &BM) {
     cout << "Saving...\n";
-    ofstream ofs(filename.c_str(), ofstream::binary);
-    boost::archive::binary_oarchive oa(ofs, boost::archive::no_header);
-    oa << make_binary_object((BankManager*)&BM, sizeof(BankManager));
+    ofstream ofs(filename.c_str());
+    boost::archive::xml_oarchive oa(ofs);
+    oa << BOOST_SERIALIZATION_NVP(BM);
 }
 
-bool loadArchive(BankManager *BM) {
+bool loadArchive(BankManager &BM) {
     bool result = false;
-    ifstream ifs(filename.c_str(), ifstream::binary);
+    ifstream ifs(filename.c_str());
     if ( ifs.is_open() ) {
         cout << "Loading...\n";
-        boost::archive::binary_iarchive ia(ifs, boost::archive::no_header);
-        ia >> make_binary_object((BankManager*)BM, sizeof(BankManager));
+        boost::archive::xml_iarchive ia(ifs);
+        ia >> BOOST_SERIALIZATION_NVP(BM);
         result = true;
     }
 
@@ -79,8 +79,9 @@ bool loginSection() {
             tcsetattr(STDIN_FILENO, TCSAFLUSH, &oldt);
 
 
-            if( BM->getClient(typeID::accessNumber, accessNumber)->
-                validateLogin(accessNumber, pin) ) {
+            if( BM.getClient(typeID::accessNumber, accessNumber)
+                ->validateLogin(accessNumber, pin) ) 
+            {
                 valid = true;
             }
             else {
@@ -106,14 +107,14 @@ bool clientProfile() {
 int main() {
 
     try {
-        BM = new BankManager;
         loadArchive(BM);
+        BM.print();
         
         string input = "";
         while(1) {
             cout << "Options: \n";
             cout << "\tEnter 'login' to access acounts.\n";
-            cout << "\tEnter 'new' to become a client at " << BM->getBankName() << ".\n";
+            cout << "\tEnter 'new' to become a client at " << BM.getBankName() << ".\n";
             cout << "\tEnter 'exit' to quit.\n\n";
             cout << "prompt> ";
             cin >> input;

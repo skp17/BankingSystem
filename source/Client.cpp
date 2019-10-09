@@ -14,10 +14,6 @@ uint Client::clientCount = 0;
 
 Client::Client() {
     clientCount++;
-    numOfChequingAcc = 0;
-    numOfSavingsAcc = 0;
-    chequingAccountsSize = 0;
-    savingsAccountsSize = 0;
     setAccessNum();
 }
 
@@ -29,69 +25,43 @@ Client::Client(const string &firstName, const string &lastName,
     clientCount++;
     this->PIN = pin;
     setAccessNum();
-    numOfChequingAcc = 0;
-    numOfSavingsAcc = 0;
-    chequingAccountsSize = 0;
-    savingsAccountsSize = 0;
 }
 
 Client::Client(const Client &c)
     : Person( c.getFName(), c.getLName(), c.getBirthDay(),
       c.getBirthMonth(), c.getBirthYear(), c.getSSN(),
       c.getAddress(), c.getTelephone(), c.getEmail() ),
-      accessNumber(c.accessNumber), PIN(c.PIN),
-      numOfChequingAcc(c.numOfChequingAcc),
-      numOfSavingsAcc(c.numOfSavingsAcc),
-      chequingAccountsSize(c.numOfChequingAcc),
-      savingsAccountsSize(c.numOfSavingsAcc)
+      accessNumber(c.accessNumber), PIN(c.PIN)
 {   
     clientCount++;
     setAge();
-    chequingAccounts = new ChequingAccount[numOfChequingAcc];
-    for (uint i = 0; i < numOfChequingAcc; i++)
-        chequingAccounts[i] = c.chequingAccounts[i];
-
-    savingsAccounts = new SavingsAccount[numOfSavingsAcc];
-    for (uint i = 0; i < numOfSavingsAcc; i++)
-        savingsAccounts[i] = c.savingsAccounts[i];
+    chequingAccounts.assign(c.chequingAccounts.begin(), c.chequingAccounts.end());
+    savingsAccounts.assign(c.savingsAccounts.begin(), c.savingsAccounts.end());
 }
 
-Client &Client::operator=(const Client & client) {
-    firstName = client.firstName;
-    lastName = client.lastName;
-    dateOfBirth = client.dateOfBirth;
-    age = client.age;
-    SSN = client.SSN;
-    address = client.address;
-    telephone = client.telephone;
-    email = client.email;
-    accessNumber = client.accessNumber;
-    PIN = client.PIN;
-    numOfChequingAcc = client.numOfChequingAcc;
-    numOfSavingsAcc = client.numOfSavingsAcc;
-    chequingAccountsSize = client.numOfChequingAcc;
-    savingsAccountsSize = client.numOfSavingsAcc;
+Client &Client::operator=(const Client & c) {
+    firstName = c.firstName;
+    lastName = c.lastName;
+    dateOfBirth = c.dateOfBirth;
+    age = c.age;
+    SSN = c.SSN;
+    address = c.address;
+    telephone = c.telephone;
+    email = c.email;
+    accessNumber = c.accessNumber;
+    PIN = c.PIN;
 
-    if(numOfChequingAcc > 0)
-        delete [] chequingAccounts;
-    chequingAccounts = new ChequingAccount[numOfChequingAcc];
-    for (uint i = 0; i < numOfChequingAcc; i++)
-        chequingAccounts[i] = client.chequingAccounts[i];
+    chequingAccounts.clear();
+    savingsAccounts.clear();
+    chequingAccounts.assign(c.chequingAccounts.begin(), c.chequingAccounts.end());
+    savingsAccounts.assign(c.savingsAccounts.begin(), c.savingsAccounts.end());
 
-    if(numOfSavingsAcc > 0)
-        delete [] savingsAccounts;
-    savingsAccounts = new SavingsAccount[numOfSavingsAcc];
-    for (uint i = 0; i < numOfSavingsAcc; i++)
-        savingsAccounts[i] = client.savingsAccounts[i];
-    
     return *this;
 }
 
 Client::~Client() {
-    if(numOfChequingAcc > 0)
-        delete [] chequingAccounts;
-    if(numOfSavingsAcc > 0)
-        delete [] savingsAccounts;
+    chequingAccounts.clear();
+    savingsAccounts.clear();
 }
 
 void Client::setAccessNum() {
@@ -104,16 +74,20 @@ void Client::setAccessNum() {
 Account* Client::getAccount(uint accNum) {
 
     // Search chequing accounts
-    for (uint i = 0; i < numOfChequingAcc; i++) {
-        if (chequingAccounts[i].getAccNum() == accNum) {
-            return &chequingAccounts[i];
+    for (vector<Account*>::iterator it = chequingAccounts.begin(); 
+        it != chequingAccounts.end(); ++it) 
+    {
+        if ( (*it)->getAccNum() == accNum ) {
+            return *it;
         }
     }
 
     // Search savings accounts
-    for (uint i = 0; i < numOfSavingsAcc; i++) {
-        if (savingsAccounts[i].getAccNum() == accNum) {
-            return &savingsAccounts[i];
+    for (vector<Account*>::iterator it = savingsAccounts.begin(); 
+        it != savingsAccounts.end(); ++it) 
+    {
+        if ( (*it)->getAccNum() == accNum) {
+            return *it;
         }
     }
 
@@ -123,75 +97,22 @@ Account* Client::getAccount(uint accNum) {
 
 uint Client::createAccount(accountType accType) { // Chequing = 0, Savings = 1
     uint newAccountNumber = 0;
+    vector<Account*>::iterator it;
     if(accType == accountType::Chequing) { // Create new Chequing account
-        
-        // Create temporary space to store accounts
-        Account *tmp_arr = new ChequingAccount[numOfChequingAcc];
-        for(uint i = 0; i < numOfChequingAcc; i++)
-            tmp_arr[i] = chequingAccounts[i];
-
-        // Allocate new space for new account
-        if( numOfChequingAcc > 0)
-            delete [] chequingAccounts;
-        chequingAccounts = new (nothrow) ChequingAccount[numOfChequingAcc + 1];
-        
-        // If new allocation fails, restore accounts from tmp_arr
-        if (chequingAccounts == nullptr) {
-            chequingAccounts = new ChequingAccount[numOfChequingAcc];
-            for(uint i = 0; i < numOfChequingAcc; i++)
-                chequingAccounts[i] = tmp_arr[i];
-        }
-        else { // Continue if allocation is succesful
-
-            ChequingAccount cheqAcc; // Create new ChequingAccount
-            uint i = 0;
-            for (; i < numOfChequingAcc; i++) {
-                chequingAccounts[i] = tmp_arr[i];
-            }
-            chequingAccounts[i] = cheqAcc;
-            numOfChequingAcc++;
-            newAccountNumber =  cheqAcc.getAccNum();
-        }
-        delete [] tmp_arr;
+        chequingAccounts.push_back( new ChequingAccount );
+        newAccountNumber = chequingAccounts.back()->getAccNum();
     }
         
     if (accType == accountType::Savings) { // Create new Savings account
-        
-        // Create temporary space to store accounts
-        Account *tmp_arr = new SavingsAccount[numOfSavingsAcc];
-        for(uint i = 0; i < numOfSavingsAcc; i++)
-            tmp_arr[i] = savingsAccounts[i];
-
-        // Allocate new space for new account
-        if(numOfSavingsAcc > 0)
-            delete [] savingsAccounts;
-        savingsAccounts = new (nothrow) SavingsAccount[numOfSavingsAcc + 1];
-        
-        // If new allocation fails, restore accounts from tmp_arr
-        if (savingsAccounts == nullptr) {
-            savingsAccounts = new SavingsAccount[numOfSavingsAcc];
-            for(uint i = 0; i < numOfSavingsAcc; i++)
-                savingsAccounts[i] = tmp_arr[i];
-        }
-        else { // Continue if allocation is succesful
-
-            SavingsAccount SavAcc; // Create new SavingsAccount
-            uint i = 0;
-            for (; i < numOfSavingsAcc; i++) {
-                savingsAccounts[i] = tmp_arr[i];
-            }
-            savingsAccounts[i] = SavAcc;
-            numOfSavingsAcc++;
-            newAccountNumber =  SavAcc.getAccNum();
-        }
-        delete [] tmp_arr;
+        savingsAccounts.push_back( new SavingsAccount );
+        newAccountNumber = savingsAccounts.back()->getAccNum();
     }
 
     return newAccountNumber;
 }
 
-bool Client::validateLogin(uint accNum, uint pin) const {
-    if(accessNumber == accNum && PIN == pin)
+bool Client::validateLogin(uint accessNum, uint pin) const {
+    if(accessNumber == accessNum && PIN == pin)
         return true;
     else 
         return false;
@@ -206,11 +127,11 @@ uint Client::getAccessNum() const {
 }
 
 uint Client::getNumOfCheqAccounts() const {
-    return numOfChequingAcc;
+    return chequingAccounts.size();
 }
 
 uint Client::getNumOfSavAccounts() const {
-    return numOfSavingsAcc;
+    return savingsAccounts.size();
 }
 
 double Client::getAccBalance(uint accountNum) {
@@ -260,30 +181,30 @@ bool Client::deleteAccount(uint accountNum) {
     if( getAccount(accountNum) != NULL ) {
         // Check if account is empty
         if( getAccount(accountNum)->getBalance() == 0 ) {
+
             // Check if account is a chequing account
             if( getAccount(accountNum)->getAccTypeNum() == 101 ) { 
 
                 // Search for account inside chequing account array
-                for (uint i = 0; i < numOfChequingAcc; i++) {
-                    // if found, relocate all the elements after the erased segment
-                    if (chequingAccounts[i].getAccNum() == accountNum) {
-                        for(uint j = i; j < (numOfChequingAcc-1); j++) {
-                            chequingAccounts[j] = chequingAccounts[j + 1];
-                        }
+                for (vector<Account*>::iterator it = chequingAccounts.begin();
+                    it != chequingAccounts.end(); ++it) 
+                {   // Remove account from vector
+                    if( (*it)->getAccNum() == accountNum ) {
+                        chequingAccounts.erase(it);
                         result = true;
                         break;
                     }
                 }
             }
-            // Check if account is a chequing account
+
+            // Check if account is a savings account
             if( getAccount(accountNum)->getAccTypeNum() == 201 ) {
                 // Search for account inside savings account array
-                for (uint i = 0; i < numOfSavingsAcc; i++) {
-                    // if found, relocate all the elements after the erased segment
-                    if (savingsAccounts[i].getAccNum() == accountNum) {
-                        for(uint j = i; j < (numOfSavingsAcc-1); j++) {
-                            savingsAccounts[j] = savingsAccounts[j + 1];
-                        }
+                for (vector<Account*>::iterator it = savingsAccounts.begin();
+                    it != savingsAccounts.end(); ++it) 
+                {   // if found, relocate all the elements after the erased segment
+                    if ( (*it)->getAccNum() == accountNum ) {
+                        savingsAccounts.erase(it);
                         result = true;
                         break;
                     }
@@ -301,46 +222,55 @@ bool Client::deleteAccount(uint accountNum) {
 }
 
 bool Client::deleteAllAccounts() {
-    bool result = true;
+    bool ready_to_delete;
+    bool allDeleted = true;
 
     // delete all chequing accounts if empty
-    for(uint i = 0; (i < numOfChequingAcc) && result; i++) {
-        result = deleteAccount( chequingAccounts[i].getAccNum() );
-        if (result == false)
-            break;
+    for(vector<Account*>::iterator it = chequingAccounts.begin(); it != chequingAccounts.end(); ) {
+        ready_to_delete = deleteAccount( (*it)->getAccNum() ); // Return true if account is ready to be deleted
+        if (ready_to_delete == true)
+            it = chequingAccounts.erase(it);
+        else {
+            allDeleted = false;
+            ++it;
+        }
     }
 
     // delete all savings accounts if empty
-    for(uint i = 0; (i < numOfSavingsAcc) && result; i++) {
-        result = deleteAccount( savingsAccounts[i].getAccNum() );
-        if (result == false)
-            break;
+    for(vector<Account*>::iterator it = savingsAccounts.begin(); it != savingsAccounts.end(); ) {
+        ready_to_delete = deleteAccount( (*it)->getAccNum() ); // Return true if account is ready to be deleted
+        if (ready_to_delete == true)
+            it = savingsAccounts.erase(it);
+        else {
+            ++it;
+            allDeleted = false;
+        }
     }
 
-    return result;
+    return allDeleted;
 }
 
-void Client::listsAccounts() const {
-    for(uint i = 0; i < numOfChequingAcc; i++)
-        chequingAccounts[i].print();
+void Client::listsAccounts() {
+    for(vector<Account*>::iterator it = chequingAccounts.begin(); it != chequingAccounts.end(); ++it)
+        (*it)->print();
 
-    for(uint i = 0; i < numOfSavingsAcc; i++)
-        savingsAccounts[i].print();
+    for(vector<Account*>::iterator it = savingsAccounts.begin(); it != savingsAccounts.end(); ++it)
+        (*it)->print();
 }
 
-void Client::printClientInfo() const {
+void Client::printClientInfo() {
     Person::printPersonInfo();
     cout << endl;
     cout << "Banking profile:\n";
     cout << "  Access Number: " << accessNumber << endl;
-    cout << "  Number of Chequing Accounts: " << numOfChequingAcc;
+    cout << "  Number of Chequing Accounts: " << getNumOfCheqAccounts();
     cout << endl << endl;
-    for(uint i = 0; i < numOfChequingAcc; i++)
-        chequingAccounts[i].print();
+    for(vector<Account*>::iterator it = chequingAccounts.begin(); it != chequingAccounts.end(); ++it)
+        (*it)->print();
 
-    cout << "  Number of Savings Accounts: " << numOfSavingsAcc;
+    cout << "  Number of Savings Accounts: " << getNumOfSavAccounts();
     cout << endl << endl;
-    for(uint i = 0; i < numOfSavingsAcc; i++)
-        savingsAccounts[i].print();
+    for(vector<Account*>::iterator it = savingsAccounts.begin(); it != savingsAccounts.end(); ++it)
+        (*it)->print();
     cout << endl;
 }

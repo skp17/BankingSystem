@@ -8,22 +8,20 @@
 #include "SavingsAccount.h"
 #include "BankManager.h"
 
-#include <boost/archive/binary_iarchive.hpp>
-#include <boost/archive/binary_oarchive.hpp>
-#include <boost/serialization/binary_object.hpp>
+#include <boost/archive/xml_iarchive.hpp>
+#include <boost/archive/xml_oarchive.hpp>
 #include <boost/serialization/serialization.hpp>
 
 using namespace std;
-using boost::serialization::make_binary_object;
 
 BankManager::BankManager() 
-    : bankName("Bank Personel"), filename("bank.dat") 
+    : bankName("Bank Personel"), filename("bank.xml") 
 {
     cout << "Welcome to " << bankName << endl;
 }
 
 BankManager::BankManager(const BankManager &BM)
-    : bankName("Bank Personel"), filename("bank.dat")
+    : bankName("Bank Personel"), filename("bank.xml")
 {
     clients.assign( BM.clients.begin(), BM.clients.end() );
 }
@@ -101,26 +99,23 @@ uint BankManager::getNumOfClients() const {
 
 void BankManager::print() {
     cout << "# of registered clients: " << clients.size() << "\n\n";
-    for(vector<Client*>::iterator it = clients.begin(); it != clients.end(); ++it) {
+
+    for(vector<Client*>::iterator it = clients.begin(); it != clients.end(); ++it)
         (*it)->printClientInfo();
-
-    }
-
 }
-/*
+
 void BankManager::saveArchive() {
-    ofstream ofs(filename.c_str(), ofstream::binary);
-    boost::archive::binary_oarchive oa(ofs, boost::archive::no_header);
-    oa << make_binary_object((BankManager*)this, sizeof(BankManager));
+    ofstream ofs(filename.c_str());
+    boost::archive::xml_oarchive oa(ofs);
+    oa << BOOST_SERIALIZATION_NVP(*this);
 }
 bool BankManager::loadArchive() {
     bool result = false;
-    ifstream ifs(filename.c_str(), ifstream::binary);
+    ifstream ifs(filename.c_str());
     if ( ifs.is_open() ) {
-        boost::archive::binary_iarchive ia(ifs, boost::archive::no_header);
-        ia >> make_binary_object((BankManager*)this, sizeof(BankManager));
+        boost::archive::xml_iarchive ia(ifs);
+        ia >> BOOST_SERIALIZATION_NVP(*this);
         result = true;
     }
     return result;
 }
-*/
