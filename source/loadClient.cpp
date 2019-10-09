@@ -1,40 +1,41 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <boost/archive/xml_iarchive.hpp>
+#include <boost/archive/xml_oarchive.hpp>
+#include <boost/serialization/export.hpp>
+
 #include "Date.h"
 #include "Person.h"
 #include "Account.h"
 #include "ChequingAccount.h"
+BOOST_CLASS_EXPORT(ChequingAccount)
 #include "SavingsAccount.h"
+BOOST_CLASS_EXPORT(SavingsAccount)
 #include "Client.h"
-#include <iostream>
-#include <fstream>
-#include <string>
-
-#include <boost/archive/binary_iarchive.hpp>
-#include <boost/archive/binary_oarchive.hpp>
-#include <boost/serialization/binary_object.hpp>
-#include <boost/serialization/serialization.hpp>
-#include <boost/serialization/string.hpp>
+BOOST_CLASS_EXPORT(Client)
 
 using namespace std;
-using boost::serialization::make_binary_object;
 
 void save(Client *client, string filename) {
     ofstream ofs(filename.c_str(), ofstream::binary);
-    boost::archive::binary_oarchive oa(ofs, boost::archive::no_header);
-    oa << make_binary_object((Client*)client, sizeof(Client));
+    boost::archive::xml_oarchive oa(ofs);
+    oa << BOOST_SERIALIZATION_NVP(client);
 }
 
-void load(Client *client, string filename) {
+// Notice client passed as reference and not as pointer
+void load(Client &client, string filename) {
     ifstream ifs(filename.c_str(), ifstream::binary);
-    boost::archive::binary_iarchive ia(ifs, boost::archive::no_header);
-    ia >> make_binary_object((Client*)client, sizeof(Client));
+    boost::archive::xml_iarchive ia(ifs);
+    ia >> BOOST_SERIALIZATION_NVP(client);
 }
 
 int main() {
     try {
 
-        string filename = "client.dat";
+        string filename = "client.xml";
         Client *client = new Client();
-        load(client, filename);
+        load(*client, filename);
         client->printClientInfo();
 
     }
@@ -45,4 +46,4 @@ int main() {
     return 0;
 }
 
-// g++ -I /usr/local/boost_1_61_0/ Date.cpp Person.cpp Account.cpp ChequingAccount.cpp SavingsAccount.cpp Client.cpp mainClient.cpp -o mainClient /usr/local/boost_1_61_0/bin.v2/libs/serialization/build/gcc-5.4.0/release/link-static/threading-multi/libboost_serialization.a -std=c++11 -Wall
+// g++ -I /usr/local/boost_1_61_0/ Date.cpp Person.cpp Account.cpp ChequingAccount.cpp SavingsAccount.cpp Client.cpp loadClient.cpp -o loadClient /usr/local/boost_1_61_0/bin.v2/libs/serialization/build/gcc-5.4.0/release/link-static/threading-multi/libboost_serialization.a -std=c++11 -Wall

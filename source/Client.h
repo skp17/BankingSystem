@@ -8,7 +8,6 @@
 #include "ChequingAccount.h"
 #include <ctime>
 #include <boost/serialization/base_object.hpp>
-#include <boost/serialization/version.hpp>
 
 using namespace boost::archive;
 
@@ -31,34 +30,34 @@ class Client: public Person {
 
         friend class boost::serialization::access;
         template<class Archive>
-        void save(Archive &ar, const uint version) {
-            ar & boost::serialization::base_object<Person>(*this);
+        void save(Archive &ar, const uint version) const {
+            ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(Person);
             ar.register_type(static_cast<ChequingAccount *>(NULL));
             ar.register_type(static_cast<SavingsAccount *>(NULL));
-            ar & accessNumber;
-            ar & PIN;
-            ar & chequingAccounts;
-            ar & savingsAccounts;
-            ar & numOfChequingAcc;
-            ar & numOfSavingsAcc;
-            ar & chequingAccountsSize;
-            ar & savingsAccountsSize;
-            ar & clientCount;
+            ar & BOOST_SERIALIZATION_NVP(accessNumber);
+            ar & BOOST_SERIALIZATION_NVP(PIN);
+            ar & BOOST_SERIALIZATION_NVP(chequingAccounts);
+            ar & BOOST_SERIALIZATION_NVP(savingsAccounts);
+            ar & BOOST_SERIALIZATION_NVP(numOfChequingAcc);
+            ar & BOOST_SERIALIZATION_NVP(numOfSavingsAcc);
+            ar & BOOST_SERIALIZATION_NVP(chequingAccountsSize);
+            ar & BOOST_SERIALIZATION_NVP(savingsAccountsSize);
+            //ar & BOOST_SERIALIZATION_NVP(clientCount);
         }
         template<class Archive>
         void load(Archive &ar, const uint version) {
-            ar & boost::serialization::base_object<Person>(*this);
+            ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(Person);
             ar.register_type(static_cast<ChequingAccount *>(NULL));
             ar.register_type(static_cast<SavingsAccount *>(NULL));
-            ar & accessNumber;
-            ar & PIN;
-            ar & chequingAccounts;
-            ar & savingsAccounts;
-            ar & numOfChequingAcc;
-            ar & numOfSavingsAcc;
-            ar & chequingAccountsSize;
-            ar & savingsAccountsSize;
-            ar & clientCount;
+            ar & BOOST_SERIALIZATION_NVP(accessNumber);
+            ar & BOOST_SERIALIZATION_NVP(PIN);
+            ar & BOOST_SERIALIZATION_NVP(chequingAccounts);
+            ar & BOOST_SERIALIZATION_NVP(savingsAccounts);
+            ar & BOOST_SERIALIZATION_NVP(numOfChequingAcc);
+            ar & BOOST_SERIALIZATION_NVP(numOfSavingsAcc);
+            ar & BOOST_SERIALIZATION_NVP(chequingAccountsSize);
+            ar & BOOST_SERIALIZATION_NVP(savingsAccountsSize);
+            //ar & BOOST_SERIALIZATION_NVP(clientCount);
         }
         BOOST_SERIALIZATION_SPLIT_MEMBER()
 

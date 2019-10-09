@@ -14,14 +14,10 @@ uint Client::clientCount = 0;
 
 Client::Client() {
     clientCount++;
-    /*
-    chequingAccounts = new ChequingAccount[1];
-    savingsAccounts = new SavingsAccount[1];
-    numOfChequingAcc = 1;
-    numOfSavingsAcc = 1;
-    */
     numOfChequingAcc = 0;
     numOfSavingsAcc = 0;
+    chequingAccountsSize = 0;
+    savingsAccountsSize = 0;
     setAccessNum();
 }
 
@@ -33,14 +29,10 @@ Client::Client(const string &firstName, const string &lastName,
     clientCount++;
     this->PIN = pin;
     setAccessNum();
-    /*
-    chequingAccounts = new ChequingAccount[1];
-    savingsAccounts = new SavingsAccount[1];
-    numOfChequingAcc = 1;
-    numOfSavingsAcc = 1;
-    */
     numOfChequingAcc = 0;
     numOfSavingsAcc = 0;
+    chequingAccountsSize = 0;
+    savingsAccountsSize = 0;
 }
 
 Client::Client(const Client &c)
@@ -77,8 +69,8 @@ Client &Client::operator=(const Client & client) {
     PIN = client.PIN;
     numOfChequingAcc = client.numOfChequingAcc;
     numOfSavingsAcc = client.numOfSavingsAcc;
-    chequingAccountsSize = client.chequingAccountsSize;
-    savingsAccountsSize = client.savingsAccountsSize;
+    chequingAccountsSize = client.numOfChequingAcc;
+    savingsAccountsSize = client.numOfSavingsAcc;
 
     if(numOfChequingAcc > 0)
         delete [] chequingAccounts;
@@ -264,12 +256,16 @@ bool Client::withdrawFromAccount(uint accountNum, double amount) {
 
 bool Client::deleteAccount(uint accountNum) {
     bool result = false;
+    // Check if account exist
     if( getAccount(accountNum) != NULL ) {
+        // Check if account is empty
         if( getAccount(accountNum)->getBalance() == 0 ) {
-            if( getAccount(accountNum)->getAccTypeNum() == 101 ) {
+            // Check if account is a chequing account
+            if( getAccount(accountNum)->getAccTypeNum() == 101 ) { 
 
                 // Search for account inside chequing account array
                 for (uint i = 0; i < numOfChequingAcc; i++) {
+                    // if found, relocate all the elements after the erased segment
                     if (chequingAccounts[i].getAccNum() == accountNum) {
                         for(uint j = i; j < (numOfChequingAcc-1); j++) {
                             chequingAccounts[j] = chequingAccounts[j + 1];
@@ -279,10 +275,11 @@ bool Client::deleteAccount(uint accountNum) {
                     }
                 }
             }
-
+            // Check if account is a chequing account
             if( getAccount(accountNum)->getAccTypeNum() == 201 ) {
                 // Search for account inside savings account array
                 for (uint i = 0; i < numOfSavingsAcc; i++) {
+                    // if found, relocate all the elements after the erased segment
                     if (savingsAccounts[i].getAccNum() == accountNum) {
                         for(uint j = i; j < (numOfSavingsAcc-1); j++) {
                             savingsAccounts[j] = savingsAccounts[j + 1];
