@@ -108,7 +108,6 @@ int main() {
 
     try {
         loadArchive(BM);
-        BM.print();
         
         string input = "";
         while(1) {

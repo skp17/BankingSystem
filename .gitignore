@@ -39,6 +39,9 @@
 !Makefile
 !Doxyfile
 !/test/
+!test/*.cpp
+!/test/boost_test/
+!test/boost_test/*
 !/html/
 !html/*
 !/latex/
