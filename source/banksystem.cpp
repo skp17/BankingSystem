@@ -2,6 +2,7 @@
 #include <fstream>
 #include <string>
 #include <termios.h>
+#include <stdlib.h> 
 #include <boost/archive/xml_iarchive.hpp>
 #include <boost/archive/xml_oarchive.hpp>
 #include <boost/serialization/export.hpp>
@@ -20,8 +21,75 @@ BOOST_CLASS_EXPORT(Client)
 
 using namespace std;
 
+void wait() {
+    char input;
+    cout << "Enter a character to continue...";
+    cin >> input;
+}
+
 BankManager BM;
 const string filename = "bank.xml";
+
+void saveArchive(BankManager&);
+
+bool loadArchive(BankManager&);
+
+void loginSection();
+
+void registration();
+
+void clientProfile(Client*);
+
+bool deposit(Client*);
+
+bool withdraw(Client*);
+
+bool createAccount(Client*);
+
+bool deleteAccount(Client*);
+
+
+int main() { ///////////////////////////////////////////////////////---Main---//////////////////////////////////////////////////////
+
+    try {
+        loadArchive(BM);
+        
+        char input;
+        do {
+            system("clear");
+            cout << "Options: \n";
+            cout << "\t(1) Login to access acounts\n";
+            cout << "\t(2) Become a client at " << BM.getBankName() << endl;
+            cout << "\t(3) Exit\n\n";
+            cout << "\tSelect your option (1-3)\n";
+            cout << "prompt> ";
+            cin >> input;
+            system("clear");
+
+            switch(input) {
+                case '1':
+                    loginSection();
+                    break;
+                case '2':
+                    registration();
+                    break;
+                case '3':
+                    cout << "Thank you for using " << BM.getBankName() << endl;
+                    break;
+                default:
+                    cout << "Invalid input\n";
+            }
+
+        } while(input != '3');
+
+    }
+    catch( const exception &e ) {
+        cerr << "Exception: "  << e.what() << "\n\n";
+    }
+
+    saveArchive(BM);
+    return 0;
+} /////////////////////////////////////////////////////////---Main---////////////////////////////////////////////////////////////
 
 void saveArchive(BankManager &BM) {
     cout << "Saving...\n";
@@ -43,13 +111,13 @@ bool loadArchive(BankManager &BM) {
     return result;
 }
 
-bool loginSection() {
+void loginSection() {
+    system("clear");
+    Client *client;
     uint accessNumber, pin;
     termios oldt, newt;
     bool valid = false;
     string input;
-
-    cout << "\nEnter 'return' at anytime to go back\n\n";
 
     do {
             cout << "Enter your access number: \n";
@@ -78,70 +146,108 @@ bool loginSection() {
             /* Reset terminal */
             tcsetattr(STDIN_FILENO, TCSAFLUSH, &oldt);
 
+            client = BM.getClient(typeID::accessNumber, accessNumber);
+            if( client != nullptr ) {
+                if( client->validateLogin(accessNumber, pin) ) {
+                    valid = true;
+                }
+            }
 
-            if( BM.getClient(typeID::accessNumber, accessNumber)
-                ->validateLogin(accessNumber, pin) ) 
-            {
-                valid = true;
-            }
-            else {
-                cout << "Failed to login.\n";
-            }
+            if(!valid)
+                cout << "Failed to login\n\n";
+
     } while(!valid);
 
     if(valid)
-        cout << "logged in\n";
-
-    return valid;
+        clientProfile(client);
 }
 
-bool registration() {
-
-}
-
-bool clientProfile() {
+void registration() {
 
 }
 
+void clientProfile(Client *client) {
+    system("clear");
+    cout << "Welcome\n\n";
+    client->printClientInfo();
+    char input;
+    
+    do {
+        cout << "\t(1) Make a deposit\n";
+        cout << "\t(2) Make a withdrawal\n";
+        cout << "\t(3) Create an account\n";
+        cout << "\t(4) Delete an account\n";
+        cout << "\t(5) Display banking information\n";
+        cout << "\t(6) Logout\n";
+        cout << "\tSelect your option (1-6)\n";
+        cout << "prompt> ";
+        cin >> input;
 
-int main() {
-
-    try {
-        loadArchive(BM);
-        
-        string input = "";
-        while(1) {
-            cout << "Options: \n";
-            cout << "\tEnter 'login' to access acounts.\n";
-            cout << "\tEnter 'new' to become a client at " << BM.getBankName() << ".\n";
-            cout << "\tEnter 'exit' to quit.\n\n";
-            cout << "prompt> ";
-            cin >> input;
-
-            if( input == "login" ) {
-                loginSection();
-            } 
-            else if( input == "new" ) {
-                registration();
-            }
-            else if( input == "exit") {
+        switch(input) {
+            case '1':
+                deposit(client)?
+                    cout << "Deposit succsessful\n" :
+                    cout << "Deposit failed\n";
+                    break;
+            case '2':
+                withdraw(client)?
+                    cout << "Withdrawal succsessful\n" :
+                    cout << "Withdrawal failed\n";
+                    break;
+            case '3':
+                createAccount(client);
                 break;
-            }
-            else
-                cerr << "Invalid input\n\n";
-
-            
-
+            case '4':
+                deleteAccount(client);
+                break;
+            case '5':
+                client->printClientInfo();
+            case '6':
+                break;
+            default:
+                cout << "Invalid input\n";
         }
 
-        //saveArchive(BM);
+    } while(input != '6');
 
-    }
-    catch( const exception &e ) {
-        cerr << "Exception: "  << e.what() << "\n\n";
-    }
+}
 
-    return 0;
+bool deposit(Client *client) {
+    system("clear");
+    uint accountNumber, amount;
+    cout << "Enter account number\n";
+    cout << "prompt> ";
+    cin >> accountNumber;
+    cout << "Enter amount to deposit\n";
+    cout << "prompt> ";
+    cin >> amount;
+    bool result = client->depositToAccount(
+            accountNumber,
+            amount);
+    return result;
+}
+
+bool withdraw(Client *client) {
+    system("clear");
+    uint accountNumber, amount;
+    cout << "Enter account number\n";
+    cout << "prompt> ";
+    cin >> accountNumber;
+    cout << "Enter amount to deposit\n";
+    cout << "prompt> ";
+    cin >> amount;
+    bool result = client->withdrawFromAccount(
+            accountNumber,
+            amount);
+    return result;
+}
+
+bool createAccount(Client*) {
+    cout << "account created\n";
+}
+
+bool deleteAccount(Client*) {
+    cout << "account deleted\n";
 }
 
 // g++ -I /usr/local/boost_1_61_0/ Date.cpp Person.cpp Account.cpp ChequingAccount.cpp SavingsAccount.cpp Client.cpp BankManager.cpp banksystem.cpp -o banksystem /usr/local/boost_1_61_0/bin.v2/libs/serialization/build/gcc-5.4.0/release/link-static/threading-multi/libboost_serialization.a -std=c++11 -Wall

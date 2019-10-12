@@ -41,7 +41,7 @@ class BankManager {
         BankManager(const BankManager&);
         ~BankManager();
 
-        Client * getClient(enum typeID, uint number);
+        Client *getClient(enum typeID, uint number);
         bool addClient(Client*);
         bool removeClient(uint accessNumber); // FINISH IMPLEMENTING
         string getBankName() const;

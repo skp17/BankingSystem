@@ -36,7 +36,14 @@ void loadArchive(BankManager &BM) {
 int main() {
     BankManager BM;
     loadArchive(BM);
-    BM.print();
+    //BM.print();
+    uint accessNumber = 11009;
+    uint pin = 4019;
+    Client *client = BM.getClient(typeID::accessNumber, accessNumber);
+    if(client == nullptr)
+        cout << "Invalid Access Number\n";
+    else
+        client->printClientInfo();
     saveArchive(BM);
 
     return 0;
