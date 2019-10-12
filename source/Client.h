@@ -53,8 +53,8 @@ class Client: public Person {
 
     public:
         Client();
-        Client(const string &firstName, const string &lastName, 
-            const Date &dateOfBirth, uint SSN, uint pin,
+        Client(const string firstName, const string lastName, 
+            const Date dateOfBirth, uint SSN, uint pin,
             string address = "", string telephone = "", string email = "");
         Client(const Client&);
         Client& operator=(const Client&);
@@ -72,7 +72,8 @@ class Client: public Person {
         bool withdrawFromAccount(uint accountNumber, double amount);
         bool deleteAccount(uint accountNumber);
         bool deleteAllAccounts();
-        void listsAccounts();
+        void printAccount(uint accountNumber);
+        void listAccounts();
         void printClientInfo();
 };
 

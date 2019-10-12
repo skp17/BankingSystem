@@ -17,8 +17,8 @@ Client::Client() {
     setAccessNum();
 }
 
-Client::Client(const string &firstName, const string &lastName, 
-    const Date &dateOfBirth, uint SSN, uint pin,
+Client::Client(const string firstName, const string lastName, 
+    const Date dateOfBirth, uint SSN, uint pin,
     string address, string telephone, string email)
     : Person(firstName, lastName, dateOfBirth, SSN, address, telephone, email) 
 {
@@ -250,17 +250,14 @@ bool Client::deleteAllAccounts() {
     return allDeleted;
 }
 
-void Client::listsAccounts() {
-    for(vector<Account*>::iterator it = chequingAccounts.begin(); it != chequingAccounts.end(); ++it)
-        (*it)->print();
-
-    for(vector<Account*>::iterator it = savingsAccounts.begin(); it != savingsAccounts.end(); ++it)
-        (*it)->print();
+void Client::printAccount(uint accountNumber) {
+    if( getAccount(accountNumber) != NULL )
+        getAccount(accountNumber)->print();
+    else
+        cerr << "No account with account number " << accountNumber << " exists.\n";
 }
 
-void Client::printClientInfo() {
-    Person::printPersonInfo();
-    cout << endl;
+void Client::listAccounts() {
     cout << "Banking profile:\n";
     cout << "  Access Number: " << accessNumber << endl;
     cout << "  Number of Chequing Accounts: " << getNumOfCheqAccounts();
@@ -273,4 +270,10 @@ void Client::printClientInfo() {
     for(vector<Account*>::iterator it = savingsAccounts.begin(); it != savingsAccounts.end(); ++it)
         (*it)->print();
     cout << endl;
+}
+
+void Client::printClientInfo() {
+    Person::printPersonInfo();
+    cout << endl;
+    listAccounts();
 }
