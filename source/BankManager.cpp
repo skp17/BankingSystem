@@ -17,7 +17,7 @@ using namespace std;
 BankManager::BankManager() 
     : bankName("Bank Personel"), filename("bank.xml") 
 {
-    cout << "Welcome to " << bankName << endl;
+    
 }
 
 BankManager::BankManager(const BankManager &BM)

@@ -1,5 +1,7 @@
 #include <iostream>
+#include <iomanip>
 #include <fstream>
+#include <sstream>
 #include <string>
 #include <termios.h>
 #include <stdlib.h> 
@@ -21,31 +23,23 @@ BOOST_CLASS_EXPORT(Client)
 
 using namespace std;
 
-void wait() {
-    char input;
-    cout << "Enter a character to continue...";
-    cin >> input;
-}
-
 BankManager BM;
 const string filename = "bank.xml";
 
+//functions
+void wait();
 void saveArchive(BankManager&);
-
 bool loadArchive(BankManager&);
-
+void getInput(uint&); 
+void getInput(double&);
 void loginSection();
-
-void registration();
-
+bool extractDate(string&, Date&);
+bool registration();
+void editProfile(Client*);
 void clientProfile(Client*);
-
 bool deposit(Client*);
-
 bool withdraw(Client*);
-
 bool createAccount(Client*);
-
 bool deleteAccount(Client*);
 
 
@@ -57,8 +51,9 @@ int main() { //////////////////////////////////////////////---Main---///////////
         char input;
         do {
             system("clear");
+            cout << "Welcome to " << BM.getBankName() << endl;
             cout << "Options: \n";
-            cout << "\t(1) Login to access acounts\n";
+            cout << "\t(1) Login to access accounts\n";
             cout << "\t(2) Become a client at " << BM.getBankName() << endl;
             cout << "\t(3) Exit\n\n";
             cout << "\tSelect your option (1-3)\n";
@@ -91,6 +86,12 @@ int main() { //////////////////////////////////////////////---Main---///////////
     return 0;
 } /////////////////////////////////////////////////////////---Main---////////////////////////////////////////////////////////////
 
+void wait() {
+    char input;
+    cout << "Enter any character to continue...\n";
+    cin >> input;
+}
+
 void saveArchive(BankManager &BM) {
     cout << "Saving...\n";
     ofstream ofs(filename.c_str());
@@ -111,6 +112,28 @@ bool loadArchive(BankManager &BM) {
     return result;
 }
 
+void getInput(uint &input) {
+    while ( !(cin >> input) ) {
+        //clear bad input flag
+        cin.clear();
+        //discard input
+        cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
+        cout << "Invalid input; please re-enter.\n";
+        cout << "prompt> ";
+    }
+}
+
+void getInput(double &input) {
+    while ( !(cin >> input) ) {
+        //clear bad input flag
+        cin.clear();
+        //discard input
+        cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
+        cout << "Invalid input; please re-enter.\n";
+        cout << "prompt> ";
+    }
+}
+
 void loginSection() {
     system("clear");
     Client *client;
@@ -120,14 +143,15 @@ void loginSection() {
     string input;
 
     do {
+            cout << "***Enter 'r' at any moment to return to previous menu\n\n";
             cout << "Enter your access number: \n";
             if (isatty(STDIN_FILENO))
                 cout << "prompt> ";
             cin >> input;
 
-            if( input == "return") break;
+            if( input == "r") break;
 
-            accessNumber = stoi(input);
+            accessNumber = strtol(input.c_str(), nullptr, 10);
             
             cout << "Enter your pin: \n";
             if (isatty(STDIN_FILENO))
@@ -141,7 +165,7 @@ void loginSection() {
             
             /* Read pin */
             cin >> input;
-            pin = stoi(input);
+            pin = strtol(input.c_str(), nullptr, 10);
             
             /* Reset terminal */
             tcsetattr(STDIN_FILENO, TCSAFLUSH, &oldt);
@@ -154,7 +178,7 @@ void loginSection() {
             }
 
             if(!valid)
-                cout << "Failed to login\n\n";
+                cout << "\n\nFailed to login\n\n";
 
     } while(!valid);
 
@@ -162,8 +186,30 @@ void loginSection() {
         clientProfile(client);
 }
 
-void registration() {
+bool extractDate(string &s, Date &dt) {
+	// function expects the string in format dd/mm/yyyy:
+    bool result;
+	istringstream is(s);
+	char delimiter;
+	unsigned int d, m, y;
+
+	if (is >> d >> delimiter >> m >> delimiter >> y) {
+        dt.setDate(d, m, y);
+        result = true;
+	}
+	else {
+		cerr << "Invalid date format";
+        result = false;
+    }
+
+	return result;
+}
+
+bool registration() {
     system("clear");
+    bool active = true;
+    termios oldt, newt;
+    Client *newClient;
     string firstName, lastName;
     string stringDate; // dd/mm/yyyy
     int day, month, year;
@@ -174,6 +220,11 @@ void registration() {
     string telephone;
     string email;
     Date dateOfBirth;
+    bool result = false;
+
+    cout << "In order for your to become a client at " << BM.getBankName()
+        << " you will need to create a profile\n";
+    cout << "Please enter your information below\n\n";
     
     cout << "Enter your firstname\n";
     cout << "prompt> ";
@@ -181,12 +232,14 @@ void registration() {
     cout << "Enter your lastname\n";
     cout << "prompt> ";
     cin >> lastName;
-    cout << "Enter your date of birth (dd/mm/yyyy)\n";
-    cout << "prompt> ";
-    cin >> stringDate;
+    cout << "Enter your date of birth in dd/mm/yyyy format\n";
+    do {
+        cout << "prompt> ";
+        cin >> stringDate;
+    } while ( !extractDate(stringDate, dateOfBirth) );
     cout << "Enter your social security number\n";
     cout << "prompt> ";
-    cin >> SSN;
+    getInput(SSN);
     cout << "Enter your home address\n";
     cout << "prompt> ";
     cin >> address;
@@ -196,48 +249,83 @@ void registration() {
     cout << "Enter your email address\n";
     cout << "prompt> ";
     cin >> email;
-    // Hide
+
+    /* Turn echoing off */
+    tcgetattr(STDIN_FILENO, &oldt);
+    termios newt = oldt;
+    newt.c_lflag &= ~ECHO;
+    tcsetattr(STDIN_FILENO, TCSANOW, &newt);
+
     do {
         cout << "Enter your pin\n";
         cout << "prompt> ";
-        cin >> pin;
+        getInput(pin);
         cout << "Please confirm your pin\n";
-        cin >> confirmPIN;
+        getInput(confirmPIN);
         if( pin == confirmPIN )
             pinConfirmed = true;
     } while(!pinConfirmed);
 
-    Client newClient( firstName, lastName, dateOfBirth, SSN, pin,
+    /* Reset terminal */
+        tcsetattr(STDIN_FILENO, TCSAFLUSH, &oldt);
+
+    newClient = new Client( firstName, lastName, dateOfBirth, SSN, pin,
         address, telephone, email );
+        cout << string(65, '-') << endl;
+        cout << "Your access number is " << newClient->getAccessNum() << endl;
+        cout << string(65, '-') << endl;
+
+    char input;
+    do {
+        newClient->printClientInfo();
+        cout << "Enter 'e' to edit your information or 's' to save\n";
+        cout << "prompt> ";
+        cin >> input;
+
+        if( input == 'e' ) {
+            editProfile(newClient);
+        }
+        else if( input == 's' ) {
+            BM.addClient(newClient);
+            result = true;
+        }
+    } while (input != 's');
+
+    delete newClient;
+
+    return result;
+}
+
+void editProfile(Client *client) {
+    system("clear");
+    client->printClientInfo();
 
 }
 
 void clientProfile(Client *client) {
     system("clear");
-    cout << "Welcome " << client->getName() <<"\n\n";
     char input;
     
     do {
+        cout << "Welcome " << client->getName() <<"\n\n";
         cout << "\t(1) Make a deposit\n";
         cout << "\t(2) Make a withdrawal\n";
         cout << "\t(3) Create an account\n";
         cout << "\t(4) Delete an account\n";
         cout << "\t(5) Display banking information\n";
-        cout << "\t(6) Logout\n";
-        cout << "\tSelect your option (1-6)\n";
+        cout << "\t(6) Edit banking profile information\n"; // set up
+        cout << "\t(7) Delete banking profile (deletes all info and accounts if empty)\n"; // set up
+        cout << "\t(8) Logout\n";
+        cout << "\tSelect your option (1-8)\n";
         cout << "prompt> ";
         cin >> input;
 
         switch(input) {
             case '1':
-                deposit(client)?
-                    cout << "Deposit succsessful\n" :
-                    cout << "Deposit failed\n";
+                deposit(client);
                 break;
             case '2':
-                withdraw(client)?
-                    cout << "Withdrawal succsessful\n" :
-                    cout << "Withdrawal failed\n";
+                withdraw(client);
                 break;
             case '3':
                 createAccount(client);
@@ -246,6 +334,7 @@ void clientProfile(Client *client) {
                 deleteAccount(client);
                 break;
             case '5':
+                cout << "\n\n";
                 client->printClientInfo();
             case '6':
                 break;
@@ -260,23 +349,30 @@ void clientProfile(Client *client) {
 bool deposit(Client *client) {
     system("clear");
     client->listAccounts();
-    uint accountNumber, amount;
-    cout << "Enter account number\n";
+    uint accountNumber;
+    double amount;
+    cout << "Enter the number of the account you would like to deposit to\n";
     cout << "prompt> ";
-    cin >> accountNumber;
+    getInput(accountNumber);
     cout << "Enter amount to deposit\n";
     cout << "prompt> ";
-    cin >> amount;
+    getInput(amount);
     bool result = client->depositToAccount(
             accountNumber, amount);
+    
+    result?
+        cout << "Deposit succsessful\n" :
+        cout << "Deposit failed\n";
+
     return result;
 }
 
 bool withdraw(Client *client) {
     system("clear");
     client->listAccounts();
-    uint accountNumber, amount;
-    cout << "Enter account number\n";
+    uint accountNumber; 
+    double amount;
+    cout << "Enter the number of the account you would like to withdraw from\n";
     cout << "prompt> ";
     cin >> accountNumber;
     cout << "Enter amount to deposit\n";
@@ -284,6 +380,11 @@ bool withdraw(Client *client) {
     cin >> amount;
     bool result = client->withdrawFromAccount(
             accountNumber, amount);
+
+    result?
+        cout << "Withdrawal succsessful\n" :
+        cout << "Withdrawal failed\n";
+
     return result;
 }
 
@@ -292,11 +393,12 @@ bool createAccount(Client *client) {
     bool active = true;
     char input;
     uint newAccountNumber;
-    uint amount;
+    double amount;
     bool deposited;
     bool result = false;
 
     while(active) {
+        cout << "Options:\n";
         cout << "\t(1) Create a checking account\n";
         cout << "\t(2) Create a savings account\n";
         cout << "\t(3) Return to previous menu\n";
@@ -310,10 +412,10 @@ bool createAccount(Client *client) {
                 cout << "Error. Could not create account\n";
                 break;
             }
-            cout << "Chequing Account created\n";
+            cout << "\nChequing Account created\n";
             cout << "Enter amount to deposit\n";
             cout << "prompt> ";
-            cin >> amount;
+            getInput(amount);
 
             deposited = client->depositToAccount(
                 newAccountNumber, amount);
@@ -331,10 +433,10 @@ bool createAccount(Client *client) {
                 cout << "Error. Could not create account\n";
                 break;
             }
-            cout << "Savings Account created\n";
+            cout << "\nSavings Account created\n";
             cout << "Enter amount to deposit\n";
             cout << "prompt> ";
-            cin >> amount;
+            getInput(amount);
 
             deposited = client->depositToAccount(
                 newAccountNumber, amount);
@@ -353,7 +455,7 @@ bool createAccount(Client *client) {
 
     if(result) {
         client->printAccount(newAccountNumber);
-        cout << "\nEnter a character to return to previous menu\n";
+        cout << "\nEnter any character to return to previous menu\n";
         cin >> input;
     }
     return result;
@@ -363,15 +465,17 @@ bool deleteAccount(Client *client) {
     system("clear");
     uint accountNumber;
     bool result = false;
-    do {
-        client->listAccounts();
-        cout << "Enter the account number of the account you want to delete\n";
-        cout << "prompt> ";
-        cin >> accountNumber;
-        result = client->deleteAccount(accountNumber);
-        if(result)
-            cout << "account deleted\n";
-    } while(!result);
+
+    client->listAccounts();
+    cout << "Enter the account number of the account you want to delete\n";
+    cout << "prompt> ";
+    getInput(accountNumber);
+    result = client->deleteAccount(accountNumber);
+
+    if(result)
+        cout << "account deleted\n";
+
+    return result;
 }
 
 // g++ -I /usr/local/boost_1_61_0/ Date.cpp Person.cpp Account.cpp ChequingAccount.cpp SavingsAccount.cpp Client.cpp BankManager.cpp banksystem.cpp -o banksystem /usr/local/boost_1_61_0/bin.v2/libs/serialization/build/gcc-5.4.0/release/link-static/threading-multi/libboost_serialization.a -std=c++11 -Wall

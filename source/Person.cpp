@@ -88,6 +88,10 @@ string Person::getLName() const {
     return lastName; 
 }
 
+string Person::getName() const {
+    return (firstName + " " + lastName);
+}
+
 uint Person::getBirthDay() const {
     return dateOfBirth.getDay();
 }

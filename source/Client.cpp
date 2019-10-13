@@ -150,27 +150,35 @@ Date Client::getAccDateCreation(uint accountNum) {
 
 bool Client::depositToAccount(uint accountNum, double amount) {
     bool success = false;
-    if( getAccount(accountNum) != NULL) {
-        getAccount(accountNum)->deposit(amount);
-        success = true;
+    if( amount > 0 ) {
+        if( getAccount(accountNum) != NULL) {
+            getAccount(accountNum)->deposit(amount);
+            success = true;
+        }
+        else {
+            cerr << "No account with account number " << accountNum << " exists.\n";
+            success = false;
+        }
     }
-    else {
-        cerr << "No account with account number " << accountNum << " exists.\n";
-        success = false;
-    }
+    else
+        cerr << "Please enter a postive amount\n";
 
     return success;
 }
 
 bool Client::withdrawFromAccount(uint accountNum, double amount) {
     bool success = false;
-    if( getAccount(accountNum) != NULL) {
-        success = getAccount(accountNum)->withdraw(amount);
+    if( amount > 0 ) {
+        if( getAccount(accountNum) != NULL) {
+            success = getAccount(accountNum)->withdraw(amount);
+        }
+        else {
+            cerr << "No account with account number " << accountNum << " exists.\n";
+            success = false;
+        }
     }
-    else {
-        cerr << "No account with account number " << accountNum << " exists.\n";
-        success = false;
-    }
+    else
+        cerr << "Please enter a postive amount\n";
     
     return success; 
 }

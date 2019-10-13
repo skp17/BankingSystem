@@ -70,6 +70,7 @@ class Person {
         // get functions
         string getFName() const;
         string getLName() const;
+        string getName() const;
         Date getBirthDate() const;
         uint getBirthDay() const;
         uint getBirthMonth() const;
