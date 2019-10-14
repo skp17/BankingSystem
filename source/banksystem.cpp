@@ -216,7 +216,7 @@ bool registration() {
     uint SSN;
     uint pin, confirmPIN;
     bool pinConfirmed = false;
-    string address;
+    char address[256];
     string telephone;
     string email;
     Date dateOfBirth;
@@ -242,7 +242,7 @@ bool registration() {
     getInput(SSN);
     cout << "Enter your home address\n";
     cout << "prompt> ";
-    cin >> address; // TODO fix spaces between words
+    cin.getline(address, sizeof(address)); // TODO fix spaces between words
     cout << "Enter your telephone number\n";
     cout << "prompt> ";
     cin >> telephone;
@@ -307,6 +307,7 @@ bool registration() {
 void editProfile(Client *client) {
     bool active = true;
     string str;
+    char address[256];
     char input;
     Date date;
 
@@ -356,8 +357,8 @@ void editProfile(Client *client) {
                 system("clear");
                 cout << "Edit address and save\n";
                 cout << "prompt> ";
-                cin >> str;
-                client->setAddress(str); // TODO fix space between words
+                cin.getline(address, sizeof(address));
+                client->setAddress(address); // TODO fix space between words
                 cout << "\nProfile updated\n";
                 break;
             case '5':
