@@ -18,7 +18,7 @@ enum class accountType {Chequing, Savings};
 class Client: public Person {
     private:
         uint accessNumber;          // user's banking access number 
-        uint PIN;                   // user's pin 
+        uint PIN; // TODO make sure pin is 4 digits                  // user's pin 
         vector<Account*> chequingAccounts;  // Contains pointers to chequing accounts
         vector<Account*> savingsAccounts;   // Contains pointers to savings accounts
         static uint clientCount;    // Keep track of number of clients created

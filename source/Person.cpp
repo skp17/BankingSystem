@@ -54,6 +54,16 @@ Person &Person::setSSN(uint ssn) {
     return *this;
 }
 
+Person &Person::setFName(const string &fname) {
+    firstName = fname;
+    return *this;
+}
+
+Person &Person::setLName(const string &lname) {
+    lastName = lname;
+    return *this;
+}
+
 Person &Person::setName(const string &fname, const string &lname) {
     firstName = fname;
     lastName = lname;

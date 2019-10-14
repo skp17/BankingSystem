@@ -55,7 +55,7 @@ bool BankManager::addClient(Client *client) {
     // Determine if person already is registered with the bank
     for(vector<Client*>::iterator it = clients.begin(); it != clients.end(); ++it) {
         if( client->getSSN() == (*it)->getSSN() ) {
-            cerr << "You already have a file with our bank."
+            cerr << "\nYou already have a file with our bank."
                 << "Please login with you existing credentials.\n";
             result = false;
             break;
@@ -63,7 +63,7 @@ bool BankManager::addClient(Client *client) {
     }
 
     if ( client->getAge() < 18 ) {
-        cerr << "You must be at least 18 years of age to open a bank account\n";
+        cerr << "\nYou must be at least 18 years of age to open a bank account\n";
         result = false;
     }
     else {

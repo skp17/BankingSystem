@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<!DOCTYPE boost_serialization>
+<boost_serialization signature="serialization::archive" version="14">
+<BM class_id="0" tracking_level="0" version="0">
+	<bankName>Bank Personel</bankName>
+	<filename>bank.xml</filename>
+	<clients class_id="2" tracking_level="0" version="0">
+		<count>3</count>
+		<item_version>0</item_version>
+		<item class_id="1" tracking_level="1" version="0" object_id="_0">
+			<Person class_id="3" tracking_level="0" version="0">
+				<firstName>John</firstName>
+				<lastName>Lennon</lastName>
+				<dateOfBirth class_id="4" tracking_level="0" version="0">
+					<m_day>9</m_day>
+					<m_month>10</m_month>
+					<m_year>1940</m_year>
+				</dateOfBirth>
+				<age>79</age>
+				<SSN>123456789</SSN>
+				<address>9 St-Catherine Est</address>
+				<telephone>514-777-7777</telephone>
+				<email>jlennon@gmail.com</email>
+			</Person>
+			<accessNumber>11009</accessNumber>
+			<PIN>4019</PIN>
+			<chequingAccounts class_id="7" tracking_level="0" version="0">
+				<count>1</count>
+				<item_version>0</item_version>
+				<item class_id="5" tracking_level="1" version="0" object_id="_1">
+					<Account class_id="8" tracking_level="0" version="0">
+						<accNum>101001</accNum>
+						<accountTypeNumber>101</accountTypeNumber>
+						<dateCreated>
+							<m_day>11</m_day>
+							<m_month>10</m_month>
+							<m_year>2019</m_year>
+						</dateCreated>
+						<balance>4.00250000000000000e+02</balance>
+					</Account>
+					<chequingCount>2</chequingCount>
+				</item>
+			</chequingAccounts>
+			<savingsAccounts>
+				<count>2</count>
+				<item_version>0</item_version>
+				<item class_id="6" tracking_level="1" version="0" object_id="_2">
+					<Account>
+						<accNum>201001</accNum>
+						<accountTypeNumber>201</accountTypeNumber>
+						<dateCreated>
+							<m_day>11</m_day>
+							<m_month>10</m_month>
+							<m_year>2019</m_year>
+						</dateCreated>
+						<balance>4.00000000000000000e+02</balance>
+					</Account>
+					<savingsCount>3</savingsCount>
+				</item>
+				<item class_id_reference="6" object_id="_3">
+					<Account>
+						<accNum>201003</accNum>
+						<accountTypeNumber>201</accountTypeNumber>
+						<dateCreated>
+							<m_day>12</m_day>
+							<m_month>10</m_month>
+							<m_year>2019</m_year>
+						</dateCreated>
+						<balance>1.00000000000000000e+03</balance>
+					</Account>
+					<savingsCount>3</savingsCount>
+				</item>
+			</savingsAccounts>
+			<clientCount>8</clientCount>
+		</item>
+		<item class_id_reference="1" object_id="_4">
+			<Person>
+				<firstName>Peter</firstName>
+				<lastName>Parker</lastName>
+				<dateOfBirth>
+					<m_day>1</m_day>
+					<m_month>6</m_month>
+					<m_year>1996</m_year>
+				</dateOfBirth>
+				<age>23</age>
+				<SSN>987654321</SSN>
+				<address>69th Road, Forest Hills</address>
+				<telephone>917-777-7777</telephone>
+				<email>parker@gmail.com</email>
+			</Person>
+			<accessNumber>20601</accessNumber>
+			<PIN>9619</PIN>
+			<chequingAccounts>
+				<count>1</count>
+				<item_version>0</item_version>
+				<item class_id_reference="5" object_id="_5">
+					<Account>
+						<accNum>101002</accNum>
+						<accountTypeNumber>101</accountTypeNumber>
+						<dateCreated>
+							<m_day>11</m_day>
+							<m_month>10</m_month>
+							<m_year>2019</m_year>
+						</dateCreated>
+						<balance>7.55000000000000000e+01</balance>
+					</Account>
+					<chequingCount>2</chequingCount>
+				</item>
+			</chequingAccounts>
+			<savingsAccounts>
+				<count>0</count>
+				<item_version>0</item_version>
+			</savingsAccounts>
+			<clientCount>8</clientCount>
+		</item>
+		<item class_id_reference="1" object_id="_6">
+			<Person>
+				<firstName>Peters</firstName>
+				<lastName>peters</lastName>
+				<dateOfBirth>
+					<m_day>17</m_day>
+					<m_month>12</m_month>
+					<m_year>1992</m_year>
+				</dateOfBirth>
+				<age>26</age>
+				<SSN>147258369</SSN>
+				<address>5334</address>
+				<telephone>514-882-8681</telephone>
+				<email>steven_peters07@hotmail.com</email>
+			</Person>
+			<accessNumber>71217</accessNumber>
+			<PIN>1234</PIN>
+			<chequingAccounts>
+				<count>0</count>
+				<item_version>0</item_version>
+			</chequingAccounts>
+			<savingsAccounts>
+				<count>0</count>
+				<item_version>0</item_version>
+			</savingsAccounts>
+			<clientCount>8</clientCount>
+		</item>
+	</clients>
+</BM>
+</boost_serialization>
+

@@ -55,8 +55,8 @@ int main() { //////////////////////////////////////////////---Main---///////////
             cout << "Options: \n";
             cout << "\t(1) Login to access accounts\n";
             cout << "\t(2) Become a client at " << BM.getBankName() << endl;
-            cout << "\t(3) Exit\n\n";
-            cout << "\tSelect your option (1-3)\n";
+            cout << "\t(3) Exit\n";
+            cout << "\n\tSelect your option (1-3)\n";
             cout << "prompt> ";
             cin >> input;
             system("clear");
@@ -143,42 +143,42 @@ void loginSection() {
     string input;
 
     do {
-            cout << "***Enter 'r' at any moment to return to previous menu\n\n";
-            cout << "Enter your access number: \n";
-            if (isatty(STDIN_FILENO))
-                cout << "prompt> ";
-            cin >> input;
 
-            if( input == "r") break;
+        cout << "***Enter 'r' at any moment to return to previous menu\n\n";
+        cout << "Enter your access number: \n";
+        if (isatty(STDIN_FILENO))
+            cout << "prompt> ";
+        cin >> input;
 
-            accessNumber = strtol(input.c_str(), nullptr, 10);
+        if( input == "r") break;
+        accessNumber = strtol(input.c_str(), nullptr, 10);
             
-            cout << "Enter your pin: \n";
-            if (isatty(STDIN_FILENO))
-                cout << "prompt> ";
+        cout << "Enter your pin: \n";
+        if (isatty(STDIN_FILENO))
+            cout << "prompt> ";
 
-            /* Turn echoing off */
-            tcgetattr(STDIN_FILENO, &oldt);
-            termios newt = oldt;
-            newt.c_lflag &= ~ECHO;
-            tcsetattr(STDIN_FILENO, TCSANOW, &newt);
+        /* Turn echoing off */
+        tcgetattr(STDIN_FILENO, &oldt);
+        newt = oldt;
+        newt.c_lflag &= ~ECHO;
+        tcsetattr(STDIN_FILENO, TCSANOW, &newt);
             
-            /* Read pin */
-            cin >> input;
-            pin = strtol(input.c_str(), nullptr, 10);
+        /* Read pin */
+        cin >> input;
+        pin = strtol(input.c_str(), nullptr, 10);
             
-            /* Reset terminal */
-            tcsetattr(STDIN_FILENO, TCSAFLUSH, &oldt);
+        /* Reset terminal */
+        tcsetattr(STDIN_FILENO, TCSAFLUSH, &oldt);
 
-            client = BM.getClient(typeID::accessNumber, accessNumber);
-            if( client != nullptr ) {
-                if( client->validateLogin(accessNumber, pin) ) {
-                    valid = true;
-                }
+        client = BM.getClient(typeID::accessNumber, accessNumber);
+        if( client != nullptr ) {
+            if( client->validateLogin(accessNumber, pin) ) {
+                valid = true;
             }
+        }
 
-            if(!valid)
-                cout << "\n\nFailed to login\n\n";
+        if(!valid)
+            cout << "\n\nFailed to login\n\n";
 
     } while(!valid);
 
@@ -198,7 +198,8 @@ bool extractDate(string &s, Date &dt) {
         result = true;
 	}
 	else {
-		cerr << "Invalid date format";
+		cerr << "Invalid date format\n";
+        cerr << "Please enter you date of birth in mm/dd/yyyy format\n";
         result = false;
     }
 
@@ -212,7 +213,6 @@ bool registration() {
     Client *newClient;
     string firstName, lastName;
     string stringDate; // dd/mm/yyyy
-    int day, month, year;
     uint SSN;
     uint pin, confirmPIN;
     bool pinConfirmed = false;
@@ -226,10 +226,10 @@ bool registration() {
         << " you will need to create a profile\n";
     cout << "Please enter your information below\n\n";
     
-    cout << "Enter your firstname\n";
+    cout << "Enter your first name\n";
     cout << "prompt> ";
     cin >> firstName;
-    cout << "Enter your lastname\n";
+    cout << "Enter your last name\n";
     cout << "prompt> ";
     cin >> lastName;
     cout << "Enter your date of birth in dd/mm/yyyy format\n";
@@ -242,7 +242,7 @@ bool registration() {
     getInput(SSN);
     cout << "Enter your home address\n";
     cout << "prompt> ";
-    cin >> address;
+    cin >> address; // TODO fix spaces between words
     cout << "Enter your telephone number\n";
     cout << "prompt> ";
     cin >> telephone;
@@ -252,7 +252,7 @@ bool registration() {
 
     /* Turn echoing off */
     tcgetattr(STDIN_FILENO, &oldt);
-    termios newt = oldt;
+    newt = oldt;
     newt.c_lflag &= ~ECHO;
     tcsetattr(STDIN_FILENO, TCSANOW, &newt);
 
@@ -260,20 +260,22 @@ bool registration() {
         cout << "Enter your pin\n";
         cout << "prompt> ";
         getInput(pin);
-        cout << "Please confirm your pin\n";
+        cout << "\nPlease confirm your pin\n";
         getInput(confirmPIN);
         if( pin == confirmPIN )
             pinConfirmed = true;
+        else
+            cerr << "\nError: PIN is not the same\nPlease try again\n\n";
     } while(!pinConfirmed);
 
     /* Reset terminal */
-        tcsetattr(STDIN_FILENO, TCSAFLUSH, &oldt);
+    tcsetattr(STDIN_FILENO, TCSAFLUSH, &oldt);
 
     newClient = new Client( firstName, lastName, dateOfBirth, SSN, pin,
         address, telephone, email );
-        cout << string(65, '-') << endl;
-        cout << "Your access number is " << newClient->getAccessNum() << endl;
-        cout << string(65, '-') << endl;
+    cout << string(65, '-') << endl;
+    cout << "Your access number is " << newClient->getAccessNum() << endl;
+    cout << string(65, '-') << endl;
 
     char input;
     do {
@@ -286,8 +288,14 @@ bool registration() {
             editProfile(newClient);
         }
         else if( input == 's' ) {
-            BM.addClient(newClient);
-            result = true;
+            if( BM.addClient(newClient) ){
+                result = true;
+                cout << "\nYou are now registered with " << BM.getBankName();
+                cout << " The next step is to login and open an account\n";
+            }
+            else
+                cerr << "\nCould not register.\n";
+            wait();
         }
     } while (input != 's');
 
@@ -297,8 +305,87 @@ bool registration() {
 }
 
 void editProfile(Client *client) {
-    system("clear");
-    client->printClientInfo();
+    bool active = true;
+    string str;
+    char input;
+    Date date;
+
+    do {
+        system("clear");
+        cout << "-----Edit Profile-----\n\n";
+        client->printPersonInfo();
+        cout << "\n\t(1) Edit first name\n";
+        cout << "\t(2) Edit last name\n";
+        cout << "\t(3) Edit date of birth\n";
+        cout << "\t(4) Edit address\n";
+        cout << "\t(5) Edit telephone\n";
+        cout << "\t(6) Edit email\n";
+        cout << "\t(7) Return to previous menu\n";
+        cout << "\n\tSelect your option (1-7)\n";
+        cout << "prompt> ";
+        cin >> input;
+
+        switch(input) {
+            case '1':
+                system("clear");
+                cout << "Edit first name and save\n";
+                cout << "prompt> ";
+                cin >> str;
+                client->setFName(str);
+                cout << "\nProfile updated\n";
+                break;
+            case '2':
+                system("clear");
+                cout << "Edit last name and save\n";
+                cout << "prompt> ";
+                cin >> str;
+                client->setLName(str);
+                cout << "\nProfile updated\n";
+                break;
+            case '3':
+                system("clear");
+                cout << "Edit date of birth and save\n";
+                do {
+                    cout << "prompt> ";
+                    cin >> str;
+                } while ( !extractDate(str, date) );
+                client->setDateofBirth(date);
+                cout << "\nProfile updated\n";
+                break;
+            case '4':
+                system("clear");
+                cout << "Edit address and save\n";
+                cout << "prompt> ";
+                cin >> str;
+                client->setAddress(str); // TODO fix space between words
+                cout << "\nProfile updated\n";
+                break;
+            case '5':
+                system("clear");
+                cout << "Edit telephone number and save\n";
+                cout << "prompt> ";
+                cin >> str;
+                client->setTelephone(str);
+                cout << "\nProfile updated\n";
+                break;
+            case '6':
+                system("clear");
+                cout << "Edit email and save\n";
+                cout << "prompt> ";
+                cin >> str;
+                client->setEmail(str);
+                cout << "\nProfile updated\n";
+                break;
+            case '7':
+                active = false;
+                break;
+            default:
+                cout << "Invalid Input\n";
+                break;
+        }
+
+
+    } while(active);
 
 }
 
@@ -313,10 +400,10 @@ void clientProfile(Client *client) {
         cout << "\t(3) Create an account\n";
         cout << "\t(4) Delete an account\n";
         cout << "\t(5) Display banking information\n";
-        cout << "\t(6) Edit banking profile information\n"; // set up
+        cout << "\t(6) Edit banking profile information\n";
         cout << "\t(7) Delete banking profile (deletes all info and accounts if empty)\n"; // set up
         cout << "\t(8) Logout\n";
-        cout << "\tSelect your option (1-8)\n";
+        cout << "\n\tSelect your option (1-8)\n";
         cout << "prompt> ";
         cin >> input;
 
@@ -337,12 +424,23 @@ void clientProfile(Client *client) {
                 cout << "\n\n";
                 client->printClientInfo();
             case '6':
+                editProfile(client);
+                system("clear");
+                break;
+            case '7':
+                // TODO delete profile
+                cout << "\nAre you sure you want to delete your profile";
+                cout << " All of your information and empty bank accounts will be deleted\n";
+                cout << "Enter 'Yes' to proceed\n";
+                cout << "Enter 'No' to return\n";
+                break;
+            case '8':
                 break;
             default:
                 cout << "Invalid input\n";
         }
 
-    } while(input != '6');
+    } while(input != '8');
 
 }
 
@@ -402,7 +500,7 @@ bool createAccount(Client *client) {
         cout << "\t(1) Create a checking account\n";
         cout << "\t(2) Create a savings account\n";
         cout << "\t(3) Return to previous menu\n";
-        cout << "Select your option (1-3)\n";
+        cout << "\n\tSelect your option (1-3)\n";
         cout << "prompt> ";
         cin >> input;
 

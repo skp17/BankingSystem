@@ -21,13 +21,13 @@ Date &Date::setDate(uint day, uint month, uint year) {
     bool isValid = true;
     if (day < 1 || day > 31) {
 		isValid = false;
-		throw invalid_argument( "day must be 1-31" );
+		cerr << "day must be 1-31\n";
 	} else if (month < 1 || month > 12) {
 		isValid = false;
-		throw invalid_argument( "month must be 1-12" );
+		cerr << "month must be 1-12\n";
 	} else if (year < 1900 || year > current_year) {
 		isValid = false;
-		throw invalid_argument( "year must be between 1900 and current year" );
+		cerr << "year must be between 1900 and current year\n";
 	}
 
 	if ((month == 4 || month == 6 || month == 9 || month == 11)
@@ -42,7 +42,7 @@ Date &Date::setDate(uint day, uint month, uint year) {
 	if (isValid) {
         m_day = day; m_month = month; m_year = year;}
     else
-		throw invalid_argument( "Invalid Date" );
+		cerr << "Invalid Date\n";
 
     return *this;
 }

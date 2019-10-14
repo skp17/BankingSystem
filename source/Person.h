@@ -62,6 +62,8 @@ class Person {
         // set functions
         Person &setDateofBirth(const Date&);
         Person &setSSN(uint);
+        Person &setFName(const string&);
+        Person &setLName(const string&);
         Person &setName(const string&, const string&);
         Person &setAddress(const string&);
         Person &setTelephone(const string&);
