@@ -36,7 +36,7 @@ int main() {
         
         // Client 1
         Date dateOfBirth(9, 10, 1940);
-        Client *client1 = new Client("John", "Lennon", dateOfBirth, 123456789, 4019);
+        Client *client1 = new Client("John", "Lennon", dateOfBirth, 123456789, "4019");
         client1->setAddress("9 St-Catherine Est");
         client1->setTelephone("514-777-7777");
         client1->setEmail("jlennon@gmail.com");
@@ -48,8 +48,9 @@ int main() {
         client1->depositToAccount(newAccountNum, 10000.00);
         //client1->printClientInfo();
 
+        // Client 2
         Date dateOfBirth2(1, 6, 1996);
-        Client *client2 = new Client("Peter", "Parker", dateOfBirth2, 987654321, 9619);
+        Client *client2 = new Client("Peter", "Parker", dateOfBirth2, 987654321, "9619");
         client2->setAddress("69th Road, Forest Hills");
         client2->setTelephone("917-777-7777");
         client2->setEmail("parker@gmail.com");

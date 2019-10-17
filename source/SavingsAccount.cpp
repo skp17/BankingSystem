@@ -32,6 +32,10 @@ void SavingsAccount::setAccNum() {
     accNum = accountTypeNumber*1e3 + savingsCount;
 }
 
+uint SavingsAccount::getAccTypeNum() const {
+    return accountTypeNumber;
+}
+
 void SavingsAccount::print() const {
     cout << "----Savings Account----\n";
     cout << "  Account number: " << accNum << endl;

@@ -32,6 +32,10 @@ void ChequingAccount::setAccNum() {
     accNum = accountTypeNumber*1e3 + chequingCount;
 }
 
+uint ChequingAccount::getAccTypeNum() const {
+    return accountTypeNumber;
+}
+
 void ChequingAccount::print() const {
     cout << "----Checking Account----\n";
     cout << "  Account number: " << accNum << endl;

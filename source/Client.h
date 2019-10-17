@@ -8,17 +8,20 @@
 #include "ChequingAccount.h"
 #include <ctime>
 #include <vector>
+#include <string>
 #include <boost/serialization/vector.hpp>
+#include <boost/serialization/string.hpp>
 #include <boost/serialization/base_object.hpp>
 
 using namespace boost::archive;
+using namespace std;
 
 enum class accountType {Chequing, Savings};
 
 class Client: public Person {
     private:
         uint accessNumber;          // user's banking access number 
-        uint PIN; // TODO make sure pin is 4 digits                  // user's pin 
+        string PIN;                 // user's pin 
         vector<Account*> chequingAccounts;  // Contains pointers to chequing accounts
         vector<Account*> savingsAccounts;   // Contains pointers to savings accounts
         static uint clientCount;    // Keep track of number of clients created
@@ -54,15 +57,15 @@ class Client: public Person {
     public:
         Client();
         Client(const string firstName, const string lastName, 
-            const Date dateOfBirth, uint SSN, uint pin,
+            const Date dateOfBirth, uint SSN, string pin,
             string address = "", string telephone = "", string email = "");
         Client(const Client&);
         Client& operator=(const Client&);
         ~Client();
 
         uint createAccount(accountType);
-        bool validateLogin(uint accessNumber, uint pin) const;
-        void setPIN(uint pin);
+        bool validateLogin(uint accessNumber, string pin) const;
+        void setPIN(string pin);
         uint getAccessNum() const;
         uint getNumOfCheqAccounts() const;
         uint getNumOfSavAccounts() const;

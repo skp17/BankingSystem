@@ -43,7 +43,7 @@ class Account {
 
         uint getAccNum() const;
         void setAccTypeNum(uint);
-        uint getAccTypeNum() const;
+        virtual uint getAccTypeNum() const;
         double getBalance() const;
         void deposit(double);
         bool withdraw(double);

@@ -18,7 +18,7 @@ Client::Client() {
 }
 
 Client::Client(const string firstName, const string lastName, 
-    const Date dateOfBirth, uint SSN, uint pin,
+    const Date dateOfBirth, uint SSN, string pin,
     string address, string telephone, string email)
     : Person(firstName, lastName, dateOfBirth, SSN, address, telephone, email) 
 {
@@ -111,14 +111,14 @@ uint Client::createAccount(accountType accType) { // Chequing = 0, Savings = 1
     return newAccountNumber;
 }
 
-bool Client::validateLogin(uint accessNum, uint pin) const {
+bool Client::validateLogin(uint accessNum, string pin) const {
     if(accessNumber == accessNum && PIN == pin)
         return true;
     else 
         return false;
 }
 
-void Client::setPIN(uint pin) {
+void Client::setPIN(string pin) {
     PIN = pin;
 }
 
@@ -203,10 +203,8 @@ bool Client::deleteAccount(uint accountNum) {
                         break;
                     }
                 }
-            }
-
-            // Check if account is a savings account
-            if( getAccount(accountNum)->getAccTypeNum() == 201 ) {
+            } // Check if account is a savings account
+            else if( getAccount(accountNum)->getAccTypeNum() == 201 ) {
                 // Search for account inside savings account array
                 for (vector<Account*>::iterator it = savingsAccounts.begin();
                     it != savingsAccounts.end(); ++it) 
@@ -230,30 +228,15 @@ bool Client::deleteAccount(uint accountNum) {
 }
 
 bool Client::deleteAllAccounts() {
-    bool ready_to_delete;
     bool allDeleted = true;
 
     // delete all chequing accounts if empty
-    for(vector<Account*>::iterator it = chequingAccounts.begin(); it != chequingAccounts.end(); ) {
-        ready_to_delete = deleteAccount( (*it)->getAccNum() ); // Return true if account is ready to be deleted
-        if (ready_to_delete == true)
-            it = chequingAccounts.erase(it);
-        else {
-            allDeleted = false;
-            ++it;
-        }
-    }
+    for(uint i = 0; i < chequingAccounts.size(); i++)
+        allDeleted = deleteAccount( chequingAccounts[i]->getAccNum() ); // Return true if account is deleted
 
     // delete all savings accounts if empty
-    for(vector<Account*>::iterator it = savingsAccounts.begin(); it != savingsAccounts.end(); ) {
-        ready_to_delete = deleteAccount( (*it)->getAccNum() ); // Return true if account is ready to be deleted
-        if (ready_to_delete == true)
-            it = savingsAccounts.erase(it);
-        else {
-            ++it;
-            allDeleted = false;
-        }
-    }
+    for(uint i = 0; i < savingsAccounts.size(); i++)
+        allDeleted = deleteAccount( savingsAccounts[i]->getAccNum() ); // Return true if account is deleted
 
     return allDeleted;
 }

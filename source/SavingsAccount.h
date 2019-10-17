@@ -30,6 +30,7 @@ class SavingsAccount: public Account {
         SavingsAccount& operator=(const SavingsAccount&);
         virtual ~SavingsAccount();
 
+        virtual uint getAccTypeNum() const;
         virtual void print() const;
 };
 

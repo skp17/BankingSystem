@@ -27,7 +27,7 @@ BankManager BM;
 const string filename = "bank.xml";
 
 //functions
-void wait();
+void Pause();
 void saveArchive(BankManager&);
 bool loadArchive(BankManager&);
 void getInput(uint&); 
@@ -86,10 +86,10 @@ int main() { //////////////////////////////////////////////---Main---///////////
     return 0;
 } /////////////////////////////////////////////////////////---Main---////////////////////////////////////////////////////////////
 
-void wait() {
-    char input;
-    cout << "Enter any character to continue...\n";
-    cin >> input;
+void Pause() {
+  cout << endl << "Press any key to continue...";
+  cin.ignore();
+  getchar();
 }
 
 void saveArchive(BankManager &BM) {
@@ -134,10 +134,43 @@ void getInput(double &input) {
     }
 }
 
+string read4DigitPIN()
+{
+    bool ok = true;
+    string result;
+    while (ok) {
+    
+        cin >> result;
+        if (result.length() == 4) 
+        {
+            bool allDigits = true;
+            for(unsigned index = 0; index < 4; ++index)
+            {
+                allDigits = allDigits && ( 
+                    (result[index] >= '0') && 
+                    (result[index] <='9') 
+                    );
+            }
+            if(allDigits)	
+            	break;
+            else {
+            	cerr << "\nPIN must be between 0000 and 9999. Please try again\n";
+            	cout << "prompt> ";
+            }
+        }
+        else {
+        	cerr << "\nPIN must be 4 digits. Please try again\n";
+        	cout << "prompt> ";
+        }
+    }
+    return result;
+}
+
 void loginSection() {
     system("clear");
     Client *client;
-    uint accessNumber, pin;
+    uint accessNumber;
+    string pin;
     termios oldt, newt;
     bool valid = false;
     string input;
@@ -151,7 +184,7 @@ void loginSection() {
         cin >> input;
 
         if( input == "r") break;
-        accessNumber = strtol(input.c_str(), nullptr, 10);
+        accessNumber = strtoul(input.c_str(), nullptr, 10);
             
         cout << "Enter your pin: \n";
         if (isatty(STDIN_FILENO))
@@ -164,8 +197,7 @@ void loginSection() {
         tcsetattr(STDIN_FILENO, TCSANOW, &newt);
             
         /* Read pin */
-        cin >> input;
-        pin = strtol(input.c_str(), nullptr, 10);
+        pin = read4DigitPIN();
             
         /* Reset terminal */
         tcsetattr(STDIN_FILENO, TCSAFLUSH, &oldt);
@@ -214,7 +246,7 @@ bool registration() {
     string firstName, lastName;
     string stringDate; // dd/mm/yyyy
     uint SSN;
-    uint pin, confirmPIN;
+    string pin, confirmPIN; 
     bool pinConfirmed = false;
     char address[256];
     string telephone;
@@ -242,7 +274,7 @@ bool registration() {
     getInput(SSN);
     cout << "Enter your home address\n";
     cout << "prompt> ";
-    cin.getline(address, sizeof(address)); // TODO fix spaces between words
+    cin.getline(address, sizeof(address));
     cout << "Enter your telephone number\n";
     cout << "prompt> ";
     cin >> telephone;
@@ -259,9 +291,9 @@ bool registration() {
     do {
         cout << "Enter your pin\n";
         cout << "prompt> ";
-        getInput(pin);
+        pin = read4DigitPIN();
         cout << "\nPlease confirm your pin\n";
-        getInput(confirmPIN);
+        confirmPIN = read4DigitPIN();
         if( pin == confirmPIN )
             pinConfirmed = true;
         else
@@ -295,7 +327,7 @@ bool registration() {
             }
             else
                 cerr << "\nCould not register.\n";
-            wait();
+            Pause();
         }
     } while (input != 's');
 
@@ -325,6 +357,7 @@ void editProfile(Client *client) {
         cout << "\n\tSelect your option (1-7)\n";
         cout << "prompt> ";
         cin >> input;
+        cin.ignore();
 
         switch(input) {
             case '1':
@@ -358,7 +391,7 @@ void editProfile(Client *client) {
                 cout << "Edit address and save\n";
                 cout << "prompt> ";
                 cin.getline(address, sizeof(address));
-                client->setAddress(address); // TODO fix space between words
+                client->setAddress(address);
                 cout << "\nProfile updated\n";
                 break;
             case '5':
@@ -393,7 +426,11 @@ void editProfile(Client *client) {
 void clientProfile(Client *client) {
     system("clear");
     char input;
-    
+    string str;
+    bool active;
+    bool isDeleted = false;
+    bool exit = false;
+
     do {
         cout << "Welcome " << client->getName() <<"\n\n";
         cout << "\t(1) Make a deposit\n";
@@ -424,6 +461,7 @@ void clientProfile(Client *client) {
             case '5':
                 cout << "\n\n";
                 client->printClientInfo();
+                break;
             case '6':
                 editProfile(client);
                 system("clear");
@@ -433,15 +471,38 @@ void clientProfile(Client *client) {
                 cout << "\nAre you sure you want to delete your profile";
                 cout << " All of your information and empty bank accounts will be deleted\n";
                 cout << "Enter 'Yes' to proceed\n";
-                cout << "Enter 'No' to return\n";
+                cout << "Enter 'no' to return\n";
+                active = true;
+                while(active) {
+                    cout << "prompt> ";
+                    cin >> str;
+                    if(str == "Yes") {
+                        isDeleted = BM.removeClient( client->getAccessNum() );
+                        active = false;
+                    } else if (str == "no") {
+                        active = false;
+                    } else
+                        cerr << "\nInvalid input\n";
+                }
+
+                if(str == "Yes" && isDeleted) {
+                    cout << "\nAll of your information and accounts have been deleted. We are sad to see you go.\n";
+                    Pause();
+                    exit = true;
+                } else if(str == "Yes" && !isDeleted) {
+                    cout << "\nProfile could not be deleted\n";
+                    Pause();
+                }
+                
                 break;
             case '8':
+                exit = true;
                 break;
             default:
                 cout << "Invalid input\n";
         }
 
-    } while(input != '8');
+    } while( !exit );
 
 }
 
@@ -473,10 +534,10 @@ bool withdraw(Client *client) {
     double amount;
     cout << "Enter the number of the account you would like to withdraw from\n";
     cout << "prompt> ";
-    cin >> accountNumber;
+    getInput(accountNumber);
     cout << "Enter amount to deposit\n";
     cout << "prompt> ";
-    cin >> amount;
+    getInput(amount);
     bool result = client->withdrawFromAccount(
             accountNumber, amount);
 
@@ -519,11 +580,11 @@ bool createAccount(Client *client) {
             deposited = client->depositToAccount(
                 newAccountNumber, amount);
             if(deposited) { 
-                cout << "Deposit succsessful\n";
+                cout << "\nDeposit succsessful\n";
                 result = true;
             }
             else
-                cout << "Deposit failed\n";
+                cout << "\nDeposit failed\n";
             break;
         }
         if(input == '2') {
@@ -540,11 +601,11 @@ bool createAccount(Client *client) {
             deposited = client->depositToAccount(
                 newAccountNumber, amount);
             if(deposited) { 
-                cout << "Deposit succsessful\n";
+                cout << "\nDeposit succsessful\n";
                 result = true;
             }
             else
-                cout << "Deposit failed\n";
+                cout << "\nDeposit failed\n";
             break;
         }
         if(input == '3')
@@ -554,8 +615,7 @@ bool createAccount(Client *client) {
 
     if(result) {
         client->printAccount(newAccountNumber);
-        cout << "\nEnter any character to return to previous menu\n";
-        cin >> input;
+        Pause();
     }
     return result;
 }

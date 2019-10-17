@@ -30,6 +30,7 @@ class ChequingAccount: public Account {
         ChequingAccount& operator=(const ChequingAccount&);
         virtual ~ChequingAccount();
 
+        virtual uint getAccTypeNum() const;
         virtual void print() const;
 };
 

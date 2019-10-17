@@ -56,7 +56,7 @@ bool BankManager::addClient(Client *client) {
     for(vector<Client*>::iterator it = clients.begin(); it != clients.end(); ++it) {
         if( client->getSSN() == (*it)->getSSN() ) {
             cerr << "\nYou already have a file with our bank."
-                << "Please login with you existing credentials.\n";
+                << " Please login with you existing credentials.\n";
             result = false;
             break;
         }
@@ -74,10 +74,18 @@ bool BankManager::addClient(Client *client) {
     return result;
 }
 
-bool BankManager::removeClient(uint accessNumber) {
+bool BankManager::removeClient(uint accessNumber) { //TODO complete removeClient memeber function
     bool result = false;
     if( getClient(typeID::accessNumber, accessNumber) != nullptr ) {
         result = getClient(typeID::accessNumber, accessNumber)->deleteAllAccounts();
+        if(result) {
+            for(vector<Client*>::iterator it = clients.begin(); it != clients.end(); ++it) {
+                if ( (*it)->getAccessNum() == accessNumber ) {
+                    clients.erase(it);
+                    break;
+                }
+            }
+        }
     }
     else
         cerr << "Invalid access number";

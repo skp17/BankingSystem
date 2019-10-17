@@ -71,7 +71,7 @@ bool Account::withdraw(double amount) {
     return success;
 }
 
-bool Account::deleteAccount() { // Needs modifying
+bool Account::deleteAccount() { // TODO Needs modifying
     if (balance == 0) {
         return true;
     }
@@ -84,7 +84,7 @@ Date Account::getDateCreated() const {
     return dateCreated;
 }
 
-void Account::setAccNum() {
+void Account::setAccNum() { // TODO delete 999
     accountTypeNumber = 999;
     accNum = accountTypeNumber*1e3;
 }
