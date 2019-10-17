@@ -1,0 +1,31 @@
+<map id="Date.h" name="Date.h">
+<area shape="rect" id="node1" title=" " alt="" coords="2459,5,2520,32"/>
+<area shape="rect" id="node2" href="$Account_8h.html" title=" " alt="" coords="1223,80,1305,107"/>
+<area shape="rect" id="node4" href="$Client_8h.html" title=" " alt="" coords="1441,229,1508,256"/>
+<area shape="rect" id="node5" href="$BankManager_8cpp.html" title=" " alt="" coords="773,379,899,405"/>
+<area shape="rect" id="node7" href="$banksystem_8cpp.html" title=" " alt="" coords="1294,379,1413,405"/>
+<area shape="rect" id="node8" href="$loadBank_8cpp.html" title=" " alt="" coords="1631,379,1732,405"/>
+<area shape="rect" id="node9" href="$saveBank_8cpp.html" title=" " alt="" coords="1757,379,1862,405"/>
+<area shape="rect" id="node11" href="$loadClient_8cpp.html" title=" " alt="" coords="886,304,991,331"/>
+<area shape="rect" id="node12" href="$main_8cpp.html" title=" " alt="" coords="2523,304,2597,331"/>
+<area shape="rect" id="node13" href="$saveClient_8cpp.html" title=" " alt="" coords="1833,304,1943,331"/>
+<area shape="rect" id="node15" href="$loadAccount_8cpp.html" title=" " alt="" coords="1045,229,1163,256"/>
+<area shape="rect" id="node16" href="$mainAccount_8cpp.html" title=" " alt="" coords="1684,229,1807,256"/>
+<area shape="rect" id="node17" href="$saveAccount_8cpp.html" title=" " alt="" coords="1881,229,2004,256"/>
+<area shape="rect" id="node21" href="$Person_8h.html" title=" " alt="" coords="2257,155,2332,181"/>
+<area shape="rect" id="node22" href="$loadPerson_8cpp.html" title=" " alt="" coords="2433,229,2545,256"/>
+<area shape="rect" id="node23" href="$mainPerson_8cpp.html" title=" " alt="" coords="2570,229,2686,256"/>
+<area shape="rect" id="node24" href="$Person_8cpp.html" title=" " alt="" coords="2761,229,2849,256"/>
+<area shape="rect" id="node25" href="$savePerson_8cpp.html" title=" " alt="" coords="2874,229,2990,256"/>
+<area shape="rect" id="node26" href="$Date_8cpp.html" title=" " alt="" coords="3167,80,3241,107"/>
+<area shape="rect" id="node27" href="$loadDate_8cpp.html" title=" " alt="" coords="3265,80,3364,107"/>
+<area shape="rect" id="node28" href="$mainDate_8cpp.html" title=" " alt="" coords="3389,80,3491,107"/>
+<area shape="rect" id="node29" href="$saveDate_8cpp.html" title=" " alt="" coords="3515,80,3618,107"/>
+<area shape="rect" id="node3" href="$Account_8cpp.html" title=" " alt="" coords="423,155,518,181"/>
+<area shape="rect" id="node6" href="$BankManager_8h.html" title=" " alt="" coords="1543,304,1657,331"/>
+<area shape="rect" id="node10" href="$Client_8cpp.html" title=" " alt="" coords="1234,304,1315,331"/>
+<area shape="rect" id="node14" href="$SavingsAccount_8h.html" title=" " alt="" coords="717,155,845,181"/>
+<area shape="rect" id="node18" href="$SavingsAccount_8cpp.html" title=" " alt="" coords="347,229,490,256"/>
+<area shape="rect" id="node19" href="$ChequingAccount_8h.html" title=" " alt="" coords="1285,155,1421,181"/>
+<area shape="rect" id="node20" href="$ChequingAccount_8cpp.html" title=" " alt="" coords="870,229,1021,256"/>
+</map>

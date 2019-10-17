@@ -42,7 +42,7 @@
 !test/*.cpp
 !/test/boost_test/
 !test/boost_test/*
-!/html/
-!html/*
+!/docs/
+!docs/*
 !/latex/
 !latex/*
