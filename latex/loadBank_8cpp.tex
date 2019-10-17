@@ -1,0 +1,68 @@
+\hypertarget{loadBank_8cpp}{}\doxysection{load\+Bank.\+cpp File Reference}
+\label{loadBank_8cpp}\index{loadBank.cpp@{loadBank.cpp}}
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include $<$fstream$>$}\newline
+{\ttfamily \#include $<$string$>$}\newline
+{\ttfamily \#include $<$boost/archive/xml\+\_\+iarchive.\+hpp$>$}\newline
+{\ttfamily \#include $<$boost/archive/xml\+\_\+oarchive.\+hpp$>$}\newline
+{\ttfamily \#include $<$boost/serialization/export.\+hpp$>$}\newline
+{\ttfamily \#include $<$boost/serialization/vector.\+hpp$>$}\newline
+{\ttfamily \#include \char`\"{}Date.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Person.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Account.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Chequing\+Account.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Savings\+Account.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Client.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Bank\+Manager.\+h\char`\"{}}\newline
+Include dependency graph for load\+Bank.\+cpp\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{loadBank_8cpp__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{loadBank_8cpp_ab3e168e5442d2796b470404f6a39d218}{save\+Archive}} (\mbox{\hyperlink{classBankManager}{Bank\+Manager}} \&\mbox{\hyperlink{banksystem_8cpp_aa7344907c035f5ff79406934d1254754}{BM}})
+\item 
+void \mbox{\hyperlink{loadBank_8cpp_a4c2546282320161f7e3394b99d26c23f}{load\+Archive}} (\mbox{\hyperlink{classBankManager}{Bank\+Manager}} \&\mbox{\hyperlink{banksystem_8cpp_aa7344907c035f5ff79406934d1254754}{BM}})
+\item 
+int \mbox{\hyperlink{loadBank_8cpp_ae66f6b31b5ad750f1fe042a706a4e3d4}{main}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+const string \mbox{\hyperlink{loadBank_8cpp_ae481aa99ddc0fb8a143ff9c561df47a9}{filename}} = \char`\"{}bank.\+xml\char`\"{}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{loadBank_8cpp_a4c2546282320161f7e3394b99d26c23f}\label{loadBank_8cpp_a4c2546282320161f7e3394b99d26c23f}} 
+\index{loadBank.cpp@{loadBank.cpp}!loadArchive@{loadArchive}}
+\index{loadArchive@{loadArchive}!loadBank.cpp@{loadBank.cpp}}
+\doxysubsubsection{\texorpdfstring{loadArchive()}{loadArchive()}}
+{\footnotesize\ttfamily void load\+Archive (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classBankManager}{Bank\+Manager}} \&}]{BM }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{loadBank_8cpp_ae66f6b31b5ad750f1fe042a706a4e3d4}\label{loadBank_8cpp_ae66f6b31b5ad750f1fe042a706a4e3d4}} 
+\index{loadBank.cpp@{loadBank.cpp}!main@{main}}
+\index{main@{main}!loadBank.cpp@{loadBank.cpp}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{loadBank_8cpp_ab3e168e5442d2796b470404f6a39d218}\label{loadBank_8cpp_ab3e168e5442d2796b470404f6a39d218}} 
+\index{loadBank.cpp@{loadBank.cpp}!saveArchive@{saveArchive}}
+\index{saveArchive@{saveArchive}!loadBank.cpp@{loadBank.cpp}}
+\doxysubsubsection{\texorpdfstring{saveArchive()}{saveArchive()}}
+{\footnotesize\ttfamily void save\+Archive (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classBankManager}{Bank\+Manager}} \&}]{BM }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{loadBank_8cpp_ae481aa99ddc0fb8a143ff9c561df47a9}\label{loadBank_8cpp_ae481aa99ddc0fb8a143ff9c561df47a9}} 
+\index{loadBank.cpp@{loadBank.cpp}!filename@{filename}}
+\index{filename@{filename}!loadBank.cpp@{loadBank.cpp}}
+\doxysubsubsection{\texorpdfstring{filename}{filename}}
+{\footnotesize\ttfamily const string filename = \char`\"{}bank.\+xml\char`\"{}}
+

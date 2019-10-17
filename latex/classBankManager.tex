@@ -1,0 +1,159 @@
+\hypertarget{classBankManager}{}\doxysection{Bank\+Manager Class Reference}
+\label{classBankManager}\index{BankManager@{BankManager}}
+
+
+{\ttfamily \#include $<$Bank\+Manager.\+h$>$}
+
+
+
+Collaboration diagram for Bank\+Manager\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=187pt]{classBankManager__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$class Archive $>$ }\\void \mbox{\hyperlink{classBankManager_ab9042273595df3037f9958a9e009d4c4}{save}} (Archive \&ar, const \mbox{\hyperlink{Account_8h_a69aa29b598b851b0640aa225a9e5d61d}{uint}} version) const
+\item 
+{\footnotesize template$<$class Archive $>$ }\\void \mbox{\hyperlink{classBankManager_a40f430ccc16f9c749296a6a5a0d68f64}{load}} (Archive \&ar, const \mbox{\hyperlink{Account_8h_a69aa29b598b851b0640aa225a9e5d61d}{uint}} version)
+\item 
+\mbox{\hyperlink{classBankManager_a40130ff86c316e0c74c2b51e4143a1e5}{Bank\+Manager}} ()
+\item 
+\mbox{\hyperlink{classBankManager_a1cd64d61baaee9ebdbc54f62b3d191e4}{Bank\+Manager}} (const \mbox{\hyperlink{classBankManager}{Bank\+Manager}} \&)
+\item 
+\mbox{\hyperlink{classBankManager_a472bfb7ce81bc54c42478c4a79d3468b}{$\sim$\+Bank\+Manager}} ()
+\item 
+\mbox{\hyperlink{classClient}{Client}} $\ast$ \mbox{\hyperlink{classBankManager_abe2cb67e7d8dc44bfeae4f405979b23d}{get\+Client}} (enum \mbox{\hyperlink{BankManager_8h_ab3e4d18fc94fb75a104d9dccb0cec8e7}{type\+ID}}, \mbox{\hyperlink{Account_8h_a69aa29b598b851b0640aa225a9e5d61d}{uint}} number)
+\item 
+bool \mbox{\hyperlink{classBankManager_a522deb6411092e3ec570674f963fb60f}{add\+Client}} (\mbox{\hyperlink{classClient}{Client}} $\ast$)
+\item 
+bool \mbox{\hyperlink{classBankManager_a5ea3b946197514eb565f116dc6c6a43b}{remove\+Client}} (\mbox{\hyperlink{Account_8h_a69aa29b598b851b0640aa225a9e5d61d}{uint}} \mbox{\hyperlink{BankManager_8h_ab3e4d18fc94fb75a104d9dccb0cec8e7a482e633b8e54fa9576e4d513cdf8a73c}{access\+Number}})
+\item 
+string \mbox{\hyperlink{classBankManager_a23322d8bf00fd33d8307827269a24f86}{get\+Bank\+Name}} () const
+\item 
+string \mbox{\hyperlink{classBankManager_aef1053a6beef09c577fa3e299db99dd5}{getfilename}} () const
+\item 
+\mbox{\hyperlink{Account_8h_a69aa29b598b851b0640aa225a9e5d61d}{uint}} \mbox{\hyperlink{classBankManager_a2233998d2d119a57b6ead1f75a23dd8f}{get\+Num\+Of\+Clients}} () const
+\item 
+void \mbox{\hyperlink{classBankManager_a8a7266bbc252a8bccb7250b7a507f6f9}{print}} ()
+\item 
+void \mbox{\hyperlink{classBankManager_a64023467587113f5c4dc6ecaf7269c9d}{save\+Archive}} ()
+\item 
+bool \mbox{\hyperlink{classBankManager_aa04e0ba32776f483b12d262474cae340}{load\+Archive}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classBankManager_ac98d07dd8f7b70e16ccb9a01abf56b9c}{boost\+::serialization\+::access}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classBankManager_a40130ff86c316e0c74c2b51e4143a1e5}\label{classBankManager_a40130ff86c316e0c74c2b51e4143a1e5}} 
+\index{BankManager@{BankManager}!BankManager@{BankManager}}
+\index{BankManager@{BankManager}!BankManager@{BankManager}}
+\doxysubsubsection{\texorpdfstring{BankManager()}{BankManager()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Bank\+Manager\+::\+Bank\+Manager (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classBankManager_a1cd64d61baaee9ebdbc54f62b3d191e4}\label{classBankManager_a1cd64d61baaee9ebdbc54f62b3d191e4}} 
+\index{BankManager@{BankManager}!BankManager@{BankManager}}
+\index{BankManager@{BankManager}!BankManager@{BankManager}}
+\doxysubsubsection{\texorpdfstring{BankManager()}{BankManager()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Bank\+Manager\+::\+Bank\+Manager (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classBankManager}{Bank\+Manager}} \&}]{BM }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classBankManager_a472bfb7ce81bc54c42478c4a79d3468b}\label{classBankManager_a472bfb7ce81bc54c42478c4a79d3468b}} 
+\index{BankManager@{BankManager}!````~BankManager@{$\sim$BankManager}}
+\index{````~BankManager@{$\sim$BankManager}!BankManager@{BankManager}}
+\doxysubsubsection{\texorpdfstring{$\sim$BankManager()}{~BankManager()}}
+{\footnotesize\ttfamily Bank\+Manager\+::$\sim$\+Bank\+Manager (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classBankManager_a522deb6411092e3ec570674f963fb60f}\label{classBankManager_a522deb6411092e3ec570674f963fb60f}} 
+\index{BankManager@{BankManager}!addClient@{addClient}}
+\index{addClient@{addClient}!BankManager@{BankManager}}
+\doxysubsubsection{\texorpdfstring{addClient()}{addClient()}}
+{\footnotesize\ttfamily bool Bank\+Manager\+::add\+Client (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classClient}{Client}} $\ast$}]{client }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classBankManager_a23322d8bf00fd33d8307827269a24f86}\label{classBankManager_a23322d8bf00fd33d8307827269a24f86}} 
+\index{BankManager@{BankManager}!getBankName@{getBankName}}
+\index{getBankName@{getBankName}!BankManager@{BankManager}}
+\doxysubsubsection{\texorpdfstring{getBankName()}{getBankName()}}
+{\footnotesize\ttfamily string Bank\+Manager\+::get\+Bank\+Name (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+\mbox{\Hypertarget{classBankManager_abe2cb67e7d8dc44bfeae4f405979b23d}\label{classBankManager_abe2cb67e7d8dc44bfeae4f405979b23d}} 
+\index{BankManager@{BankManager}!getClient@{getClient}}
+\index{getClient@{getClient}!BankManager@{BankManager}}
+\doxysubsubsection{\texorpdfstring{getClient()}{getClient()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classClient}{Client}} $\ast$ Bank\+Manager\+::get\+Client (\begin{DoxyParamCaption}\item[{enum \mbox{\hyperlink{BankManager_8h_ab3e4d18fc94fb75a104d9dccb0cec8e7}{type\+ID}}}]{ID,  }\item[{\mbox{\hyperlink{Account_8h_a69aa29b598b851b0640aa225a9e5d61d}{uint}}}]{number }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classBankManager_aef1053a6beef09c577fa3e299db99dd5}\label{classBankManager_aef1053a6beef09c577fa3e299db99dd5}} 
+\index{BankManager@{BankManager}!getfilename@{getfilename}}
+\index{getfilename@{getfilename}!BankManager@{BankManager}}
+\doxysubsubsection{\texorpdfstring{getfilename()}{getfilename()}}
+{\footnotesize\ttfamily string Bank\+Manager\+::getfilename (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+\mbox{\Hypertarget{classBankManager_a2233998d2d119a57b6ead1f75a23dd8f}\label{classBankManager_a2233998d2d119a57b6ead1f75a23dd8f}} 
+\index{BankManager@{BankManager}!getNumOfClients@{getNumOfClients}}
+\index{getNumOfClients@{getNumOfClients}!BankManager@{BankManager}}
+\doxysubsubsection{\texorpdfstring{getNumOfClients()}{getNumOfClients()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{Account_8h_a69aa29b598b851b0640aa225a9e5d61d}{uint}} Bank\+Manager\+::get\+Num\+Of\+Clients (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+\mbox{\Hypertarget{classBankManager_a40f430ccc16f9c749296a6a5a0d68f64}\label{classBankManager_a40f430ccc16f9c749296a6a5a0d68f64}} 
+\index{BankManager@{BankManager}!load@{load}}
+\index{load@{load}!BankManager@{BankManager}}
+\doxysubsubsection{\texorpdfstring{load()}{load()}}
+{\footnotesize\ttfamily template$<$class Archive $>$ \\
+void Bank\+Manager\+::load (\begin{DoxyParamCaption}\item[{Archive \&}]{ar,  }\item[{const \mbox{\hyperlink{Account_8h_a69aa29b598b851b0640aa225a9e5d61d}{uint}}}]{version }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classBankManager_aa04e0ba32776f483b12d262474cae340}\label{classBankManager_aa04e0ba32776f483b12d262474cae340}} 
+\index{BankManager@{BankManager}!loadArchive@{loadArchive}}
+\index{loadArchive@{loadArchive}!BankManager@{BankManager}}
+\doxysubsubsection{\texorpdfstring{loadArchive()}{loadArchive()}}
+{\footnotesize\ttfamily bool Bank\+Manager\+::load\+Archive (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classBankManager_a8a7266bbc252a8bccb7250b7a507f6f9}\label{classBankManager_a8a7266bbc252a8bccb7250b7a507f6f9}} 
+\index{BankManager@{BankManager}!print@{print}}
+\index{print@{print}!BankManager@{BankManager}}
+\doxysubsubsection{\texorpdfstring{print()}{print()}}
+{\footnotesize\ttfamily void Bank\+Manager\+::print (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classBankManager_a5ea3b946197514eb565f116dc6c6a43b}\label{classBankManager_a5ea3b946197514eb565f116dc6c6a43b}} 
+\index{BankManager@{BankManager}!removeClient@{removeClient}}
+\index{removeClient@{removeClient}!BankManager@{BankManager}}
+\doxysubsubsection{\texorpdfstring{removeClient()}{removeClient()}}
+{\footnotesize\ttfamily bool Bank\+Manager\+::remove\+Client (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{Account_8h_a69aa29b598b851b0640aa225a9e5d61d}{uint}}}]{access\+Number }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classBankManager_ab9042273595df3037f9958a9e009d4c4}\label{classBankManager_ab9042273595df3037f9958a9e009d4c4}} 
+\index{BankManager@{BankManager}!save@{save}}
+\index{save@{save}!BankManager@{BankManager}}
+\doxysubsubsection{\texorpdfstring{save()}{save()}}
+{\footnotesize\ttfamily template$<$class Archive $>$ \\
+void Bank\+Manager\+::save (\begin{DoxyParamCaption}\item[{Archive \&}]{ar,  }\item[{const \mbox{\hyperlink{Account_8h_a69aa29b598b851b0640aa225a9e5d61d}{uint}}}]{version }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classBankManager_a64023467587113f5c4dc6ecaf7269c9d}\label{classBankManager_a64023467587113f5c4dc6ecaf7269c9d}} 
+\index{BankManager@{BankManager}!saveArchive@{saveArchive}}
+\index{saveArchive@{saveArchive}!BankManager@{BankManager}}
+\doxysubsubsection{\texorpdfstring{saveArchive()}{saveArchive()}}
+{\footnotesize\ttfamily void Bank\+Manager\+::save\+Archive (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Friends And Related Function Documentation}
+\mbox{\Hypertarget{classBankManager_ac98d07dd8f7b70e16ccb9a01abf56b9c}\label{classBankManager_ac98d07dd8f7b70e16ccb9a01abf56b9c}} 
+\index{BankManager@{BankManager}!boost::serialization::access@{boost::serialization::access}}
+\index{boost::serialization::access@{boost::serialization::access}!BankManager@{BankManager}}
+\doxysubsubsection{\texorpdfstring{boost::serialization::access}{boost::serialization::access}}
+{\footnotesize\ttfamily friend class boost\+::serialization\+::access\hspace{0.3cm}{\ttfamily [friend]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{BankManager_8h}{Bank\+Manager.\+h}}\item 
+\mbox{\hyperlink{BankManager_8cpp}{Bank\+Manager.\+cpp}}\end{DoxyCompactItemize}

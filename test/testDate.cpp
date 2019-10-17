@@ -1,58 +1,62 @@
-#define CATCH_CONFIG_MAIN  // This tells Catch to provide a main() - only do this in one cpp file
-#include "catch.hpp"
 #include "Date.h"
+#define BOOST_TEST_MODULE Date test
+#include <boost/test/unit_test.hpp>
+#include <iostream>
 
-SCENARIO( "Ojects of class Date can be created and edited", "[Date]" ) {
-    
-    GIVEN( "an object with default parameters" ) {
-        Date d1;
-        
-        REQUIRE( d1.getDay() == 1 );
-        REQUIRE( d1.getMonth() == 1  );
-        REQUIRE( d1.getYear() == 1970);
-        d1.printDate();
+Date d1;
 
-        WHEN( "date object gets modified" ) {
-            d1.setDate(25, 12, 1999);
+BOOST_AUTO_TEST_CASE(default_contructor__test)
+{
+    BOOST_CHECK(d1.getDay() == 1);
+    BOOST_CHECK(d1.getMonth() == 1);
+    BOOST_CHECK(d1.getYear() == 1970);
+    d1.printDate();
+}
 
-            THEN( "objects data members change" ) {
-                REQUIRE( d1.getDay() == 25 );
-                REQUIRE( d1.getMonth() == 12  );
-                REQUIRE( d1.getYear() == 1999);
-                d1.printDate();
-            }
-        }
+BOOST_AUTO_TEST_CASE(setDate_test)
+{
 
-    GIVEN("object with custom parameters") {
-        try {
-            Date d2(17,12,1992);
+    d1.setDate(25, 12, 1999);
 
-            REQUIRE( d2.getDay() == 17 );
-            REQUIRE( d2.getMonth() == 12 );
-            REQUIRE( d2.getYear() == 1992 );
-            
-            WHEN( "object with invalid parameters") {
-                Date d3(29,2,2019);
-            }
-        }
-        catch(std::exception const& e) {
-            std::cerr << e.what() << '\n';
-        }
+    BOOST_CHECK(d1.getDay() == 25);
+    BOOST_CHECK(d1.getMonth() == 12);
+    BOOST_CHECK(d1.getYear() == 1999);
+    d1.printDate();
+}
+
+BOOST_AUTO_TEST_CASE(overloaded_contructor_test)
+{
+    try
+    {
+        Date d2(17, 12, 1992);
+
+        BOOST_CHECK(d2.getDay() == 17);
+        BOOST_CHECK(d2.getMonth() == 12);
+        BOOST_CHECK(d2.getYear() == 1992);
+
+        // Create invalid date
+        Date d3(29, 2, 2019);
     }
-
-        WHEN("Object is copied") {
-            Date d2(17,12,1992);
-            Date d4 = d2;
-            REQUIRE( d4.getDay() == 17 );
-            REQUIRE( d4.getMonth() == 12 );
-            REQUIRE( d4.getYear() == 1992 );
-            d4.printDate();
-        
-            d1.setDate(19,9,2019);
-            REQUIRE( d1.getDay() == 19 );
-            REQUIRE( d1.getMonth() == 9 );
-            REQUIRE( d1.getYear() == 2019 );
-            d1.printDate();
-        }
+    catch (std::exception const &e)
+    {
+        std::cerr << e.what() << '\n';
     }
 }
+
+BOOST_AUTO_TEST_CASE(copy_constructor_test)
+{
+    Date d2(17, 12, 1992);
+    Date d4 = d2;
+    BOOST_CHECK(d4.getDay() == 17);
+    BOOST_CHECK(d4.getMonth() == 12);
+    BOOST_CHECK(d4.getYear() == 1992);
+    d4.printDate();
+
+    d1.setDate(19, 9, 2019);
+    BOOST_CHECK(d1.getDay() == 19);
+    BOOST_CHECK(d1.getMonth() == 9);
+    BOOST_CHECK(d1.getYear() == 2019);
+    d1.printDate();
+}
+
+// g++ -I /usr/local/boost_1_61_0/ -I ../source/ ../source/Date.cpp testDate.cpp -o testDate ../boost_serialization/libboost_serialization.a boost_test/libboost_unit_test_framework.a -std=c++11 -Wall
