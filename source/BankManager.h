@@ -2,7 +2,6 @@
 #define BANKMANAGER_H
 
 #include "Client.h"
-#include "Account.h"
 #include <string>
 #include <vector>
 #include <boost/serialization/vector.hpp>
@@ -48,10 +47,6 @@ class BankManager {
         string getfilename() const;     // Returns name of file where data is stored
         uint getNumOfClients() const;
         void print();
-
-        void saveArchive();
-        bool loadArchive();
-        //void backupArchive();
 };
 
 BOOST_CLASS_VERSION(BankManager, 0)

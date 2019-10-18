@@ -1,11 +1,45 @@
-#include "Date.h"
-#include "Client.h"
-#include "Account.h"
-#include "ChequingAccount.h"
-#include "SavingsAccount.h"
-#include "BankManager.h"
 #define BOOST_TEST_MODULE BankManager test
 #include <boost/test/unit_test.hpp>
+#include <boost/archive/binary_iarchive.hpp>
+#include <boost/archive/binary_oarchive.hpp>
+#include <boost/serialization/serialization.hpp>
+#include <boost/serialization/export.hpp>
+#include <iostream>
+#include <fstream>
+#include "Date.h"
+#include "Person.h"
+#include "Client.h"
+BOOST_CLASS_EXPORT(Client);
+#include "Account.h"
+#include "ChequingAccount.h"
+BOOST_CLASS_EXPORT(ChequingAccount);
+#include "SavingsAccount.h"
+BOOST_CLASS_EXPORT(SavingsAccount);
+#include "BankManager.h"
+
+
+const string filename = "bank.dat";
+
+void save(BankManager &manager)
+{
+    ofstream ofs(filename.c_str(), ios::binary);
+    boost::archive::binary_oarchive oa(ofs, boost::archive::no_header);
+    oa << manager;
+}
+
+bool load(BankManager &manager)
+{
+    bool result = false;
+    ifstream ifs(filename.c_str(), ios::binary);
+    if (ifs.is_open())
+    {
+        boost::archive::binary_iarchive ia(ifs, boost::archive::no_header);
+        ia >> manager;
+        result = true;
+    }
+
+    return result;
+}
 
 BOOST_AUTO_TEST_CASE( BankManager_test ) {
     BankManager BM;
@@ -42,6 +76,9 @@ BOOST_AUTO_TEST_CASE( BankManager_test ) {
     BM.addClient(client2);
     BOOST_CHECK_EQUAL( BM.getNumOfClients(), 2 );
 
+    // save bank information
+    save(BM);
+
     client1->withdrawFromAccount(101001, 200.25);
     client1->withdrawFromAccount(201001, 500.00);
     client1->withdrawFromAccount(201002, 10000.00);
@@ -49,10 +86,19 @@ BOOST_AUTO_TEST_CASE( BankManager_test ) {
     BOOST_CHECK_EQUAL( BM.getNumOfClients(), 1 );
 
     BM.removeClient( client2->getAccessNum() );
-    BOOST_CHECK_EQUAL( BM.getNumOfClients(), 0 );
+    BOOST_CHECK_EQUAL( BM.getNumOfClients(), 1 );
 
     delete client1;
     delete client2;
+}
+
+BOOST_AUTO_TEST_CASE( load_test ) {
+    BankManager new_bm;
+    load(new_bm);
+
+    new_bm.print();
+
+
 }
 
 // g++ -I /usr/local/boost_1_61_0/ -I ../source/ ../source/Date.cpp ../source/Person.cpp ../source/Account.cpp ../source/ChequingAccount.cpp ../source/SavingsAccount.cpp ../source/Client.cpp ../source/BankManager.cpp  testBankManager.cpp -o testBankManager ../boost_serialization/libboost_serialization.a boost_test/libboost_unit_test_framework.a -std=c++11 -Wall -g
