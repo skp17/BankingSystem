@@ -44,7 +44,7 @@
 !test/boost_test/*
 !/docs/
 !docs/*
-!/docs/html/
-!docs/html/*
-!/docs/html/search/
-!docs/html/search/*
+!/docs/
+!docs/*
+!/docs/search/
+!docs/search/*
