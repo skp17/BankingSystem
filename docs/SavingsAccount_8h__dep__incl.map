@@ -1,11 +1,9 @@
 <map id="source/SavingsAccount.h" name="source/SavingsAccount.h">
-<area shape="rect" id="node1" title=" " alt="" coords="532,5,703,32"/>
-<area shape="rect" id="node2" href="$Client_8h.html" title=" " alt="" coords="411,80,522,107"/>
+<area shape="rect" id="node1" title=" " alt="" coords="337,5,508,32"/>
+<area shape="rect" id="node2" href="$Client_8h.html" title=" " alt="" coords="267,80,378,107"/>
 <area shape="rect" id="node3" href="$BankManager_8cpp.html" title=" " alt="" coords="5,229,176,256"/>
-<area shape="rect" id="node5" href="$banksystem_8cpp.html" title=" " alt="" coords="201,229,362,256"/>
-<area shape="rect" id="node6" href="$loadBank_8cpp.html" title=" " alt="" coords="391,229,535,256"/>
-<area shape="rect" id="node7" href="$saveBank_8cpp.html" title=" " alt="" coords="559,229,707,256"/>
-<area shape="rect" id="node8" href="$Client_8cpp.html" title=" " alt="" coords="555,155,679,181"/>
-<area shape="rect" id="node9" href="$SavingsAccount_8cpp.html" title=" " alt="" coords="806,80,991,107"/>
-<area shape="rect" id="node4" href="$BankManager_8h.html" title=" " alt="" coords="273,155,429,181"/>
+<area shape="rect" id="node5" href="$banksystem_8cpp.html" title=" " alt="" coords="242,229,403,256"/>
+<area shape="rect" id="node6" href="$Client_8cpp.html" title=" " alt="" coords="361,155,485,181"/>
+<area shape="rect" id="node7" href="$SavingsAccount_8cpp.html" title=" " alt="" coords="561,80,746,107"/>
+<area shape="rect" id="node4" href="$BankManager_8h.html" title=" " alt="" coords="129,155,285,181"/>
 </map>
