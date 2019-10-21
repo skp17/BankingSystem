@@ -4,33 +4,29 @@
 
 .PHONY = clean
 
-DEPS = $(wildcard *.h)
-SRCS :=  $(wildcard *.cpp)
-OBJS := $(SRCS:$.cpp=o)
+LDIR = ./libs
 ODIR = ./build
+SDIR = ./source
 TDIR = ./test
-INC_PATH := -I. -I $(ODIR)
+IDIR = /usr/local/boost_1_61_0/
+SRCS := $(wildcard source/*.cpp)
+HEADERS := $(wildcard source/*.h)
+OBJS := $(patsubst source/%.cpp, build/%.o, $(SRCS))
 
 CXX = g++
-CXXFLAGS = -std=c++11 -Wall
-LINKERFLAG = -lm
+CXXFLAGS = -std=c++11 -Wall -I$(IDIR)
+LFLAGS = libs/boost_serialization/libboost_serialization.a
+# -Llibs/boost_serialization/ -lboost_serialization
 
-build: $(SRCS) $(DEPS)
-	$(CXX) $(CXXFLAGS) -c *.cpp
-	mkdir -p $(ODIR)
-	mv *.o $(ODIR)
+MAIN = banksystem
 
-BankingSystem: Date.o Person.o BankingSystem.o
-	$(CXX) $(CXXFLAGS) $(INC_PATH) $^ -o $@
+#all: $(MAIN)
 
-Date: Date.o
-	$(CXX) $(CXXFLAGS) $(INC_PATH) $^ -o $@
+bin/$(MAIN): $(OBJS)
+	$(CXX) -o $@ $^ $(CXXFLAGS) $(LFLAGS)
 
-Client: $(OBJS)
-	$(CXX) $(CXXFLAGS) $(INC_PATH) $^ -o $@
-
-Account: Account.o ChequingAccount.o SavingsAccount.o
-	$(CXX) $(CXXFLAGS) $(INC_PATH) $^ -o $@
+build/%.o: source/%.cpp
+	$(CXX) -c $< -o $@ $(CXXFLAGS)
 
 testDate: Date.o $(TDIR)/testDate.cpp
 	$(CXX) $(CXXFLAGS) $(INC_PATH) $^ -o $(TDIR)/$@

@@ -5,8 +5,8 @@
 #include <string>
 #include <termios.h>
 #include <stdlib.h> 
-#include <boost/archive/xml_iarchive.hpp>
-#include <boost/archive/xml_oarchive.hpp>
+#include <boost/archive/binary_iarchive.hpp>
+#include <boost/archive/binary_oarchive.hpp>
 #include <boost/serialization/export.hpp>
 #include <boost/serialization/vector.hpp>
 
@@ -24,7 +24,7 @@ BOOST_CLASS_EXPORT(Client)
 using namespace std;
 
 BankManager BM;
-const string filename = "bank.xml";
+const string filename = "bank.dat";
 
 //functions
 void Pause();
@@ -94,18 +94,18 @@ void Pause() {
 
 void saveArchive(BankManager &BM) {
     cout << "Saving...\n";
-    ofstream ofs(filename.c_str());
-    boost::archive::xml_oarchive oa(ofs);
-    oa << BOOST_SERIALIZATION_NVP(BM);
+    ofstream ofs(filename.c_str(), ios::binary);
+    boost::archive::binary_oarchive oa(ofs, boost::archive::no_header);
+    oa << BM;
 }
 
 bool loadArchive(BankManager &BM) {
     bool result = false;
-    ifstream ifs(filename.c_str());
+    ifstream ifs(filename.c_str(), ios::binary);
     if ( ifs.is_open() ) {
         cout << "Loading...\n";
-        boost::archive::xml_iarchive ia(ifs);
-        ia >> BOOST_SERIALIZATION_NVP(BM);
+        boost::archive::binary_iarchive ia(ifs, boost::archive::no_header);
+        ia >> BM;
         result = true;
     }
 
