@@ -36,6 +36,7 @@
 !*.cpp
 !*.h
 !*.md
+!CMakeLists.txt
 !Makefile
 !Doxyfile
 !/test/
@@ -48,3 +49,5 @@
 !docs/*
 !/docs/search/
 !docs/search/*
+!/bin/
+!bin/*
