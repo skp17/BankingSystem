@@ -1,5 +1,4 @@
 
-#include "catch.hpp"
 #include "Date.h"
 #include "Person.h"
 #define BOOST_TEST_MODULE Person test
@@ -121,5 +120,3 @@ BOOST_AUTO_TEST_CASE(load_test)
     BOOST_CHECK(p2.getTelephone() == "917-777-7777");
     BOOST_CHECK(p2.getEmail() == "parker@gmail.com");
 }
-
-// g++ -I /usr/local/boost_1_61_0/ -I ../source/ ../source/Date.cpp ../source/Person.cpp testPerson.cpp -o testPerson ../boost_serialization/libboost_serialization.a boost_test/libboost_unit_test_framework.a -std=c++11 -Wall

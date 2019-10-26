@@ -183,4 +183,3 @@ BOOST_AUTO_TEST_CASE(load_test)
     accessNumber = new_client2.getAccessNum();
     BOOST_CHECK(new_client2.validateLogin(accessNumber, "9619") == true);
 }
-// g++ -I /usr/local/boost_1_61_0/ -I ../source/ ../source/Date.cpp ../source/Person.cpp ../source/Account.cpp ../source/ChequingAccount.cpp ../source/SavingsAccount.cpp ../source/Client.cpp testClient.cpp -o testClient ../boost_serialization/libboost_serialization.a boost_test/libboost_unit_test_framework.a -std=c++11 -Wall

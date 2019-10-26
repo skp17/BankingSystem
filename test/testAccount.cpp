@@ -95,5 +95,3 @@ BOOST_AUTO_TEST_CASE(load_test)
 
     delete c;
 }
-
-// g++ -I /usr/local/boost_1_61_0/ -I ../source/ ../source/Date.cpp ../source/Person.cpp ../source/Account.cpp ../source/ChequingAccount.cpp ../source/SavingsAccount.cpp testAccount.cpp -o testAccount ../boost_serialization/libboost_serialization.a boost_test/libboost_unit_test_framework.a -std=c++11 -Wall

@@ -67,5 +67,3 @@ BOOST_AUTO_TEST_CASE( load_test ) {
 
     ifs.close();
 }
-
-// g++ -I /usr/local/boost_1_61_0/ -I ../source/ ../source/Date.cpp testDate.cpp -o testDate ../boost_serialization/libboost_serialization.a boost_test/libboost_unit_test_framework.a -std=c++11 -Wall
