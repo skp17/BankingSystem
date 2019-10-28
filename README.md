@@ -40,7 +40,7 @@ $ mkdir build
 $ cd build
 $ cmake ..
 ```
-Now comile and run
+Now compile and run
 ```
 $ make
 $ ./banksystem
@@ -54,6 +54,7 @@ UML class diagrams were generated using Doxygen and can be viewed here:
 "UML Class Diagram")
 
 View demo
+
 [![View Demo](http://img.youtube.com/vi/nc-04LZ-1fg/0.jpg)](http://www.youtube.com/watch?v=nc-04LZ-1fg)
 
 
