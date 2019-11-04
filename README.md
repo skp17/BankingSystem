@@ -2,7 +2,7 @@
 
 __BankingSystem__ is a command line program that stores client information and allows clients to perform transactions on their accounts.
 
-The project directory is organzed as follows
+The project directory is organized as follows
 ```bash
 .
 ├── build
