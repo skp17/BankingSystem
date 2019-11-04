@@ -2,13 +2,49 @@
 
 __BankingSystem__ is a command line program that stores client information and allows clients to perform transactions on their accounts.
 
+The project directory is organzed as follows
+```bash
+.
+├── build
+├── CMakeLists.txt
+├── Doxyfile
+├── libs
+│   ├── libboost_serialization.a
+│   └── libboost_unit_test_framework.a
+├── README.md
+├── source
+│   ├── Account.cpp
+│   ├── Account.h
+│   ├── BankManager.cpp
+│   ├── BankManager.h
+│   ├── banksystem.cpp
+│   ├── ChequingAccount.cpp
+│   ├── ChequingAccount.h
+│   ├── Client.cpp
+│   ├── Client.h
+│   ├── Date.cpp
+│   ├── Date.h
+│   ├── Person.cpp
+│   ├── Person.h
+│   ├── SavingsAccount.cpp
+│   └── SavingsAccount.h
+└── test
+    ├── build
+    ├── CMakeLists.txt
+    ├── testAccount.cpp
+    ├── testBank.cpp
+    ├── testClient.cpp
+    ├── testDate.cpp
+    └── testPerson.cpp
+```
+
 ## Dependencies
 * boost c++ libraries
 
 This program uses the Boost Serialization library to store all client information in binary format.
 
 #### `boost::serialization`
-``` c++
+```c++
 friend class boost::serialization::access;
 template<class Archive>
 void save(Archive &ar, const uint version) const {
@@ -25,12 +61,12 @@ In order to compile and run program using cmake, simply follow the instructions 
 Inside CMakeLists.txt, 
 
 Change path to boost directory
-```text
+```cmake
 include_directories(<path to boost directory>)
 ```
 
 Change path to boost serialization library
-```text
+```cmake
 SET_TARGET_PROPERTIES(boost_serialization PROPERTIES 
     IMPORTED_LOCATION <path to boost serialisation library>)
 ```
@@ -41,7 +77,7 @@ $ cd build
 $ cmake ..
 ```
 Now compile and run
-```
+```bash
 $ make
 $ ./banksystem
 ```
