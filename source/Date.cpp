@@ -12,7 +12,7 @@ Date::Date(const Date &date)
 
 Date::~Date() {}
 
-Date &Date::setDate(uint day, uint month, uint year) {
+bool Date::setDate(uint day, uint month, uint year) {
     // Get current year
     time_t now = time(0);
     struct tm *t = localtime(&now);
@@ -44,7 +44,7 @@ Date &Date::setDate(uint day, uint month, uint year) {
     else
 		cerr << "Invalid Date\n";
 
-    return *this;
+    return isValid;
 }
 
 uint Date::getDay() const {

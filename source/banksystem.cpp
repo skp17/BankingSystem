@@ -93,7 +93,7 @@ void Pause() {
 }
 
 void saveArchive(BankManager &BM) {
-    cout << "Saving...\n";
+    //cout << "Saving...\n";
     ofstream ofs(filename.c_str(), ios::binary);
     boost::archive::binary_oarchive oa(ofs, boost::archive::no_header);
     oa << BM;
@@ -226,8 +226,7 @@ bool extractDate(string &s, Date &dt) {
 	unsigned int d, m, y;
 
 	if (is >> d >> delimiter >> m >> delimiter >> y) {
-        dt.setDate(d, m, y);
-        result = true;
+        result = dt.setDate(d, m, y);   // Returns true if date is valid, else false.
 	}
 	else {
 		cerr << "Invalid date format\n";
@@ -248,22 +247,22 @@ bool registration() {
     uint SSN;
     string pin, confirmPIN; 
     bool pinConfirmed = false;
-    char address[256];
+    string address;
     string telephone;
     string email;
     Date dateOfBirth;
     bool result = false;
 
     cout << "In order for your to become a client at " << BM.getBankName()
-        << " you will need to create a profile\n";
-    cout << "Please enter your information below\n\n";
+        << ", you will need to create a profile.\n";
+    cout << "Please enter your information below.\n\n";
     
     cout << "Enter your first name\n";
     cout << "prompt> ";
-    cin >> firstName;
+    getline(cin >> ws, firstName);
     cout << "Enter your last name\n";
     cout << "prompt> ";
-    cin >> lastName;
+    getline(cin >> ws, lastName);
     cout << "Enter your date of birth in dd/mm/yyyy format\n";
     do {
         cout << "prompt> ";
@@ -274,13 +273,13 @@ bool registration() {
     getInput(SSN);
     cout << "Enter your home address\n";
     cout << "prompt> ";
-    cin.getline(address, sizeof(address));
+    getline(cin >> ws, address);
     cout << "Enter your telephone number\n";
     cout << "prompt> ";
-    cin >> telephone;
+    getline(cin >> ws, telephone);
     cout << "Enter your email address\n";
     cout << "prompt> ";
-    cin >> email;
+    getline(cin >> ws, email);
 
     /* Turn echoing off */
     tcgetattr(STDIN_FILENO, &oldt);
@@ -322,8 +321,9 @@ bool registration() {
         else if( input == 's' ) {
             if( BM.addClient(newClient) ){
                 result = true;
-                cout << "\nYou are now registered with " << BM.getBankName();
-                cout << " The next step is to login and open an account\n";
+                cout << "\nYou are now registered with " << BM.getBankName() << ".";
+                cout << " The next step is to login and open an account.\n";
+                saveArchive(BM);
             }
             else
                 cerr << "\nCould not register.\n";
@@ -339,7 +339,6 @@ bool registration() {
 void editProfile(Client *client) {
     bool active = true;
     string str;
-    char address[256];
     char input;
     Date date;
 
@@ -390,15 +389,15 @@ void editProfile(Client *client) {
                 system("clear");
                 cout << "Edit address and save\n";
                 cout << "prompt> ";
-                cin.getline(address, sizeof(address));
-                client->setAddress(address);
+                getline(cin, str);
+                client->setAddress(str);
                 cout << "\nProfile updated\n";
                 break;
             case '5':
                 system("clear");
                 cout << "Edit telephone number and save\n";
                 cout << "prompt> ";
-                cin >> str;
+                getline(cin, str);
                 client->setTelephone(str);
                 cout << "\nProfile updated\n";
                 break;
@@ -406,7 +405,7 @@ void editProfile(Client *client) {
                 system("clear");
                 cout << "Edit email and save\n";
                 cout << "prompt> ";
-                cin >> str;
+                getline(cin, str);
                 client->setEmail(str);
                 cout << "\nProfile updated\n";
                 break;
@@ -464,12 +463,12 @@ void clientProfile(Client *client) {
                 break;
             case '6':
                 editProfile(client);
+                saveArchive(BM);
                 system("clear");
                 break;
             case '7':
-                // TODO delete profile
-                cout << "\nAre you sure you want to delete your profile";
-                cout << " All of your information and empty bank accounts will be deleted\n";
+                cout << "\nAre you sure you want to delete your profile.";
+                cout << " All of your information and empty bank accounts will be deleted.\n";
                 cout << "Enter 'Yes' to proceed\n";
                 cout << "Enter 'no' to return\n";
                 active = true;
@@ -520,8 +519,11 @@ bool deposit(Client *client) {
     bool result = client->depositToAccount(
             accountNumber, amount);
     
-    result?
-        cout << "Deposit succsessful\n" :
+    if(result) {
+        cout << "Deposit succsessful\n";
+        saveArchive(BM);
+    }
+    else
         cout << "Deposit failed\n";
 
     return result;
@@ -541,9 +543,12 @@ bool withdraw(Client *client) {
     bool result = client->withdrawFromAccount(
             accountNumber, amount);
 
-    result?
-        cout << "Withdrawal succsessful\n" :
-        cout << "Withdrawal failed\n";
+    if(result) {
+        cout << "Deposit succsessful\n";
+        saveArchive(BM);
+    }
+    else
+        cout << "Deposit failed\n";
 
     return result;
 }
@@ -581,6 +586,7 @@ bool createAccount(Client *client) {
                 newAccountNumber, amount);
             if(deposited) { 
                 cout << "\nDeposit succsessful\n";
+                saveArchive(BM);
                 result = true;
             }
             else
@@ -602,6 +608,7 @@ bool createAccount(Client *client) {
                 newAccountNumber, amount);
             if(deposited) { 
                 cout << "\nDeposit succsessful\n";
+                saveArchive(BM);
                 result = true;
             }
             else
@@ -631,11 +638,10 @@ bool deleteAccount(Client *client) {
     getInput(accountNumber);
     result = client->deleteAccount(accountNumber);
 
-    if(result)
+    if(result) {
         cout << "account deleted\n";
+        saveArchive(BM);
+    }
 
     return result;
 }
-
-// g++ -I /usr/local/boost_1_61_0/ Date.cpp Person.cpp Account.cpp ChequingAccount.cpp SavingsAccount.cpp Client.cpp BankManager.cpp banksystem.cpp -o banksystem /usr/local/boost_1_61_0/bin.v2/libs/serialization/build/gcc-5.4.0/release/link-static/threading-multi/libboost_serialization.a -std=c++11 -Wall
-

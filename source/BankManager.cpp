@@ -11,13 +11,13 @@
 using namespace std;
 
 BankManager::BankManager() 
-    : bankName("Bank Personel"), filename("bank.xml") 
+    : bankName("Bank Personel"), filename("bank.dat") 
 {
     
 }
 
 BankManager::BankManager(const BankManager &BM)
-    : bankName("Bank Personel"), filename("bank.xml")
+    : bankName("Bank Personel"), filename("bank.dat")
 {
     clients.assign( BM.clients.begin(), BM.clients.end() );
 }
@@ -70,7 +70,7 @@ bool BankManager::addClient(Client *client) {
     return result;
 }
 
-bool BankManager::removeClient(uint accessNumber) { //TODO complete removeClient memeber function
+bool BankManager::removeClient(uint accessNumber) {
     bool result = false;
     if( getClient(typeID::accessNumber, accessNumber) != nullptr ) {
         result = getClient(typeID::accessNumber, accessNumber)->deleteAllAccounts();

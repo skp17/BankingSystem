@@ -36,7 +36,7 @@ class Date {
         ~Date();
 
         // Format dd/mm/yyyy
-        Date &setDate(uint m_day, uint m_month, uint m_year); 
+        bool setDate(uint m_day, uint m_month, uint m_year);
 
         uint getDay() const;
         uint getMonth() const;
