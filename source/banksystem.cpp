@@ -230,7 +230,7 @@ bool extractDate(string &s, Date &dt) {
 	}
 	else {
 		cerr << "Invalid date format\n";
-        cerr << "Please enter you date of birth in mm/dd/yyyy format\n";
+        //cerr << "Please enter you date of birth in mm/dd/yyyy format\n";
         result = false;
     }
 
@@ -263,8 +263,8 @@ bool registration() {
     cout << "Enter your last name\n";
     cout << "prompt> ";
     getline(cin >> ws, lastName);
-    cout << "Enter your date of birth in dd/mm/yyyy format\n";
     do {
+        cout << "Enter your date of birth in dd/mm/yyyy format\n";
         cout << "prompt> ";
         cin >> stringDate;
     } while ( !extractDate(stringDate, dateOfBirth) );
