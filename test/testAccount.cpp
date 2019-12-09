@@ -81,6 +81,8 @@ BOOST_AUTO_TEST_CASE(savingsAccount_test)
     s.withdraw(100);
     BOOST_CHECK(s.getBalance() == 0.50);
 
+    s.print();
+
 }
 
 BOOST_AUTO_TEST_CASE(load_test)
