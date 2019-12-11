@@ -71,14 +71,14 @@ bool Account::withdraw(double amount) {
     return success;
 }
 
-bool Account::deleteAccount() {
+/* bool Account::deleteAccount() { // TODO can be deleted
     if (balance == 0) {
         return true;
     }
     else {
         return false;
     }
-}
+} */
 
 Date Account::getDateCreated() const {
     return dateCreated;
