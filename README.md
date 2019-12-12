@@ -97,7 +97,7 @@ View demo
 
 
 ## License
-The MIT License (MIT)
+[The MIT License (MIT)](LICENSE.md)
 
 Copyright (c) 2019 Steven Peters
 
