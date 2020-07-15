@@ -43,48 +43,48 @@ bool createAccount(Client*);
 bool deleteAccount(Client*);
 
 
-int main() { //////////////////////////////////////////////---Main---//////////////////////////////////////////////////////
+//int main() { //////////////////////////////////////////////---Main---//////////////////////////////////////////////////////
 
-    try {
-        loadArchive(BM);
+//    try {
+//        loadArchive(BM);
         
-        char input;
-        do {
-            system("clear");
-            cout << "Welcome to " << BM.getBankName() << endl;
-            cout << "Options: \n";
-            cout << "\t(1) Login to access accounts\n";
-            cout << "\t(2) Become a client at " << BM.getBankName() << endl;
-            cout << "\t(3) Exit\n";
-            cout << "\n\tSelect your option (1-3)\n";
-            cout << "prompt> ";
-            cin >> input;
-            system("clear");
+//        char input;
+//        do {
+//            system("clear");
+//            cout << "Welcome to " << BM.getBankName() << endl;
+//            cout << "Options: \n";
+//            cout << "\t(1) Login to access accounts\n";
+//            cout << "\t(2) Become a client at " << BM.getBankName() << endl;
+//            cout << "\t(3) Exit\n";
+//            cout << "\n\tSelect your option (1-3)\n";
+//            cout << "prompt> ";
+//            cin >> input;
+//            system("clear");
 
-            switch(input) {
-                case '1':
-                    loginSection();
-                    break;
-                case '2':
-                    registration();
-                    break;
-                case '3':
-                    cout << "Thank you for using " << BM.getBankName() << endl;
-                    break;
-                default:
-                    cout << "Invalid input\n";
-            }
+//            switch(input) {
+//                case '1':
+//                    loginSection();
+//                    break;
+//                case '2':
+//                    registration();
+//                    break;
+//                case '3':
+//                    cout << "Thank you for using " << BM.getBankName() << endl;
+//                    break;
+//                default:
+//                    cout << "Invalid input\n";
+//            }
 
-        } while(input != '3');
+//        } while(input != '3');
 
-    }
-    catch( const exception &e ) {
-        cerr << "Exception: "  << e.what() << "\n\n";
-    }
+//    }
+//    catch( const exception &e ) {
+//        cerr << "Exception: "  << e.what() << "\n\n";
+//    }
 
-    saveArchive(BM);
-    return 0;
-} /////////////////////////////////////////////////////////---Main---////////////////////////////////////////////////////////////
+//    saveArchive(BM);
+//    return 0;
+//} /////////////////////////////////////////////////////////---Main---////////////////////////////////////////////////////////////
 
 void Pause() {
   cout << endl << "Press any key to continue...";

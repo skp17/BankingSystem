@@ -36,6 +36,8 @@
 !*.cpp
 !*.h
 !*.md
+!*.pro
+!*.ui
 !CMakeLists.txt
 !Makefile
 !Doxyfile
